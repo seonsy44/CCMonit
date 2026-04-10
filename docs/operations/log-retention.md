@@ -6,7 +6,9 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [operations, retention]
-links: [[[architecture/storage-model]], [[operations/docs-operations]]]
+links:
+  - ../architecture/storage-model.md
+  - docs-operations.md
 ---
 # CCMonit 로그 보존 정책
 

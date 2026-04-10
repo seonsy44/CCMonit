@@ -6,7 +6,9 @@ status: active
 owners: [product]
 updated: 2026-04-10
 tags: [roadmap, mvp]
-links: [[[product/PRD]], [[operations/release-readiness-checklist]]]
+links:
+  - PRD.md
+  - ../operations/release-readiness-checklist.md
 ---
 
 # CCMonit 제품 로드맵

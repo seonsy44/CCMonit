@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [sources]
-links: [[[registry/source-index]], [[_system/INGEST_WORKFLOW]]]
+links:
+  - ../registry/source-index.md
+  - ../_system/INGEST_WORKFLOW.md
 ---
 
 # Source 페이지 가이드

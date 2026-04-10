@@ -6,7 +6,10 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [source, claude, workflow, docs]
-links: [[[operations/claude-code-session-workflow]], [[../log]], [[../registry/source-index]]]
+links:
+  - ../operations/claude-code-session-workflow.md
+  - ../log.md
+  - ../registry/source-index.md
 ---
 
 # SRC-0006 Claude skills / workflow / docs alignment

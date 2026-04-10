@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [ownership, governance]
-links: [[[registry/page-index]], [[operations/docs-operations]]]
+links:
+  - page-index.md
+  - ../operations/docs-operations.md
 ---
 
 # 문서 책임 매트릭스

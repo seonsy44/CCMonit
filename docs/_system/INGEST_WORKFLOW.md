@@ -6,7 +6,10 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [workflow, ingest]
-links: [[[_system/DOCS_SCHEMA]], [[registry/source-index]], [[log]]]
+links:
+  - DOCS_SCHEMA.md
+  - ../registry/source-index.md
+  - ../log.md
 ---
 
 # 문서 Ingest 워크플로우
@@ -65,7 +68,7 @@ CCMonit에서는 보통 다음이 함께 움직인다.
 예시:
 ```md
 ## [2026-04-10] ingest | event model revision
-- updated [[architecture/event-flow]]
-- updated [[knowledge/concepts/canonical-event]]
-- added [[sources/SRC-0002-event-model-spec]]
+- updated [architecture/event-flow](../architecture/event-flow.md)
+- updated [knowledge/concepts/canonical-event](../knowledge/concepts/canonical-event.md)
+- added [sources/SRC-0002-event-model-spec](../sources/SRC-0002-event-model-spec.md)
 ```

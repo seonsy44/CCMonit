@@ -6,7 +6,8 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [template, report]
-links: [[reports/queries/README]]
+links:
+  - ../../reports/queries/README.md
 ---
 
 # 보고서 제목

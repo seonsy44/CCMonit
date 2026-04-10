@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [source, modules]
-links: [[[architecture/module-responsibilities]], [[registry/ownership-matrix]]]
+links:
+  - ../architecture/module-responsibilities.md
+  - ../registry/ownership-matrix.md
 ---
 
 # SRC-0003 모듈 책임 명세
@@ -21,6 +23,6 @@ links: [[[architecture/module-responsibilities]], [[registry/ownership-matrix]]]
 - bootstrap/config/command/adapter/parser/store/projector/reporting의 역할이 정의되어 있다.
 
 ## 반영 대상
-- [[architecture/module-responsibilities]]
-- [[registry/ownership-matrix]]
-- [[decisions/ADR-001-monorepo-structure]]
+- [architecture/module-responsibilities](../architecture/module-responsibilities.md)
+- [registry/ownership-matrix](../registry/ownership-matrix.md)
+- [decisions/ADR-001-monorepo-structure](../decisions/ADR-001-monorepo-structure.md)

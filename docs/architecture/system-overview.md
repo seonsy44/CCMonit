@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, overview]
-links: [[[architecture/event-flow]], [[knowledge/overview/project-map]]]
+links:
+  - event-flow.md
+  - ../knowledge/overview/project-map.md
 ---
 # CCMonit 시스템 개요
 

@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, skill]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -26,5 +27,5 @@ Skill은 Claude Code 또는 하네스가 수행하는 재사용 가능한 작업
 - 반복 호출 여부
 
 ## 관련 문서
-- [[knowledge/entities/tool-usage]]
-- [[operations/token-strategy-guide]]
+- [knowledge/entities/tool-usage](tool-usage.md)
+- [operations/token-strategy-guide](../../operations/token-strategy-guide.md)

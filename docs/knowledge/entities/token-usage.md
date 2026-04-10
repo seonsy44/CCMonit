@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, token-usage]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -31,6 +32,6 @@ Token Usage는 session / agent / task / skill / tool 수준에서 측정하거�
 - retry / loop와 함께 증가했는가
 
 ## 관련 문서
-- [[knowledge/concepts/token-accuracy]]
-- [[operations/token-strategy-guide]]
-- [[knowledge/syntheses/token-optimization-hypotheses]]
+- [knowledge/concepts/token-accuracy](../concepts/token-accuracy.md)
+- [operations/token-strategy-guide](../../operations/token-strategy-guide.md)
+- [knowledge/syntheses/token-optimization-hypotheses](../syntheses/token-optimization-hypotheses.md)

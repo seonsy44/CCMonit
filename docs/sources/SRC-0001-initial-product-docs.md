@@ -6,7 +6,10 @@ status: active
 owners: [product]
 updated: 2026-04-10
 tags: [source, product]
-links: [[[product/PRD]], [[product/기능명세서]], [[product/화면명세서]]]
+links:
+  - ../product/PRD.md
+  - ../product/기능명세서.md
+  - ../product/화면명세서.md
 ---
 
 # SRC-0001 초기 제품 문서 묶음
@@ -21,7 +24,7 @@ links: [[[product/PRD]], [[product/기능명세서]], [[product/화면명세서]
 - TUI 중심의 운영 도구와 사후 회고 도구를 함께 목표로 한다.
 
 ## 반영 대상
-- [[product/PRD]]
-- [[product/기능명세서]]
-- [[product/화면명세서]]
-- [[knowledge/overview/project-map]]
+- [product/PRD](../product/PRD.md)
+- [product/기능명세서](../product/기능명세서.md)
+- [product/화면명세서](../product/화면명세서.md)
+- [knowledge/overview/project-map](../knowledge/overview/project-map.md)

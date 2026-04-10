@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [report, docs-health]
-links: [[[_system/LINT_WORKFLOW]], [[index]]]
+links:
+  - ../_system/LINT_WORKFLOW.md
+  - ../index.md
 ---
 
 # 문서 건강 상태 베이스라인

@@ -6,7 +6,8 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [source, reference]
-links: [[[sources/SRC-0005-llm-wiki-concept]]]
+links:
+  - SRC-0005-llm-wiki-concept.md
 ---
 
 # LLM Wiki 컨셉 원문 참조 메모

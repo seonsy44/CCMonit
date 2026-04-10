@@ -6,7 +6,8 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [template, source]
-links: [[sources/README]]
+links:
+  - ../../sources/README.md
 ---
 
 # Source 제목

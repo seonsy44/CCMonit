@@ -6,7 +6,10 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [source, workflow]
-links: [[[operations/claude-code-session-workflow]], [[operations/docs-operations]], [[product/roadmap]]]
+links:
+  - ../operations/claude-code-session-workflow.md
+  - ../operations/docs-operations.md
+  - ../product/roadmap.md
 ---
 
 # SRC-0004 저비용 플랜용 워크플로우 플레이북
@@ -23,7 +26,7 @@ links: [[[operations/claude-code-session-workflow]], [[operations/docs-operation
 - 문서도 구현과 함께 갱신되어야 한다.
 
 ## 반영 대상
-- [[operations/claude-code-session-workflow]]
-- [[operations/docs-operations]]
-- [[product/roadmap]]
-- [[reports/docs-health-baseline]]
+- [operations/claude-code-session-workflow](../operations/claude-code-session-workflow.md)
+- [operations/docs-operations](../operations/docs-operations.md)
+- [product/roadmap](../product/roadmap.md)
+- [reports/docs-health-baseline](../reports/docs-health-baseline.md)

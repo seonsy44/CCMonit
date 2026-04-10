@@ -6,7 +6,10 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [docs-system, operations]
-links: [[[_system/MAINTENANCE_POLICY]], [[reports/docs-health-baseline]], [[operations/claude-code-session-workflow]]]
+links:
+  - ../_system/MAINTENANCE_POLICY.md
+  - ../reports/docs-health-baseline.md
+  - claude-code-session-workflow.md
 ---
 
 # 문서 운영 가이드

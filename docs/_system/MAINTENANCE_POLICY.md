@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [maintenance, operations]
-links: [[[operations/docs-operations]], [[log]]]
+links:
+  - ../operations/docs-operations.md
+  - ../log.md
 ---
 
 # 문서 유지보수 정책

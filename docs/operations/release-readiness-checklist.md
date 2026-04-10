@@ -6,7 +6,9 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [release, checklist]
-links: [[[product/roadmap]], [[reports/docs-health-baseline]]]
+links:
+  - ../product/roadmap.md
+  - ../reports/docs-health-baseline.md
 ---
 
 # 릴리스 준비 체크리스트

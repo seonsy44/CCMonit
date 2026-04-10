@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [template, adr]
-links: [[decisions/ADR-001-monorepo-structure]]
+links:
+  - ../../decisions/ADR-001-monorepo-structure.md
 ---
 
 # ADR-XXX: 제목

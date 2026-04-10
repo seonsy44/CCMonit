@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [adr, monorepo]
-links: [[[architecture/module-responsibilities]]]
+links:
+  - ../architecture/module-responsibilities.md
 ---
 # ADR-001: 모노레포 구조 채택
 

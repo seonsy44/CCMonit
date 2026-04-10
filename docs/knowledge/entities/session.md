@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, session]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -28,6 +29,6 @@ CCMonit에서 session은 한 번의 Claude Code 실행 맥락을 나타내는 �
 - 관련 agent / task 수
 
 ## 관련 문서
-- [[architecture/event-flow]]
-- [[knowledge/entities/agent]]
-- [[knowledge/entities/token-usage]]
+- [architecture/event-flow](../../architecture/event-flow.md)
+- [knowledge/entities/agent](agent.md)
+- [knowledge/entities/token-usage](token-usage.md)

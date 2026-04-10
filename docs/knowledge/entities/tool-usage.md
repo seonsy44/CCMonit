@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, tool-usage]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -28,5 +29,5 @@ Tool Usage는 특정 skill 또는 task 안에서 실제 도구 호출이 일어�
 - 관련 파일 활동
 
 ## 관련 문서
-- [[knowledge/entities/token-usage]]
-- [[operations/token-strategy-guide]]
+- [knowledge/entities/token-usage](token-usage.md)
+- [operations/token-strategy-guide](../../operations/token-strategy-guide.md)

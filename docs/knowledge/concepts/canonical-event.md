@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [concept, canonical-event]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -31,5 +32,5 @@ links: [[[knowledge/overview/project-map]]]
 - correlation / causation / trace
 
 ## 관련 문서
-- [[architecture/event-flow]]
-- [[knowledge/concepts/read-model]]
+- [architecture/event-flow](../../architecture/event-flow.md)
+- [knowledge/concepts/read-model](read-model.md)

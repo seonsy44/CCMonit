@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [log, append-only]
-links: [[[index]], [[reports/docs-health-baseline]]]
+links:
+  - index.md
+  - reports/docs-health-baseline.md
 ---
 
 # CCMonit 문서 운영 로그
@@ -21,7 +23,7 @@ links: [[[index]], [[reports/docs-health-baseline]]]
 
 ## [2026-04-10] ingest | existing project docs
 - 초기 기획서, 기능명세서, 화면명세서, 아키텍처 요약, 토큰 전략 가이드를 현재 위키 구조에 편입했다.
-- source pages: [[sources/SRC-0001-initial-product-docs]], [[sources/SRC-0002-event-model-spec]], [[sources/SRC-0003-module-responsibility-spec]], [[sources/SRC-0004-workflow-playbook]], [[sources/SRC-0005-llm-wiki-concept]]
+- source pages: [sources/SRC-0001-initial-product-docs](sources/SRC-0001-initial-product-docs.md), [sources/SRC-0002-event-model-spec](sources/SRC-0002-event-model-spec.md), [sources/SRC-0003-module-responsibility-spec](sources/SRC-0003-module-responsibility-spec.md), [sources/SRC-0004-workflow-playbook](sources/SRC-0004-workflow-playbook.md), [sources/SRC-0005-llm-wiki-concept](sources/SRC-0005-llm-wiki-concept.md)
 
 ## [2026-04-10] integrate | docs and .claude alignment
 - 위키형 `docs/` 구조를 실제 프로젝트 통합본에 반영했다.

@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [queries, reports]
-links: [[[_system/QUERY_WORKFLOW]], [[log]]]
+links:
+  - ../../_system/QUERY_WORKFLOW.md
+  - ../../log.md
 ---
 
 # 질의 결과 보관 가이드

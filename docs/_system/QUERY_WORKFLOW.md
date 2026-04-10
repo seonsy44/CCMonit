@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [workflow, query]
-links: [[[index]], [[reports/queries/README]]]
+links:
+  - ../index.md
+  - ../reports/queries/README.md
 ---
 
 # 문서 Query 워크플로우

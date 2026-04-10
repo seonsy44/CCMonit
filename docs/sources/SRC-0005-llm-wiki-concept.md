@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [source, docs-system, wiki]
-links: [[[architecture/doc-system-architecture]], [[decisions/ADR-002-docs-as-wiki]]]
+links:
+  - ../architecture/doc-system-architecture.md
+  - ../decisions/ADR-002-docs-as-wiki.md
 ---
 
 # SRC-0005 LLM Wiki 컨셉

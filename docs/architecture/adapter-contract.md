@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, adapter]
-links: [[[architecture/system-overview]], [[knowledge/concepts/canonical-event]]]
+links:
+  - system-overview.md
+  - ../knowledge/concepts/canonical-event.md
 ---
 # CCMonit 어댑터 계약
 

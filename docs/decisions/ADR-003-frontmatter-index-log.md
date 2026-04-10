@@ -6,7 +6,10 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [adr, frontmatter, index, log]
-links: [[[_system/FRONTMATTER_GUIDE]], [[index]], [[log]]]
+links:
+  - ../_system/FRONTMATTER_GUIDE.md
+  - ../index.md
+  - ../log.md
 ---
 
 # ADR-003: frontmatter, index, log를 표준으로 둔다

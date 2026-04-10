@@ -6,7 +6,10 @@ status: active
 owners: [product]
 updated: 2026-04-10
 tags: [product, prd]
-links: [[[index]], [[product/기능명세서]], [[knowledge/overview/project-map]]]
+links:
+  - ../index.md
+  - 기능명세서.md
+  - ../knowledge/overview/project-map.md
 ---
 # Claude Code Monitor 기획서
 

@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, storage]
-links: [[[operations/log-retention]], [[knowledge/entities/token-usage]]]
+links:
+  - ../operations/log-retention.md
+  - ../knowledge/entities/token-usage.md
 ---
 # CCMonit 스토리지 모델
 

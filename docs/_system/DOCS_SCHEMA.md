@@ -6,7 +6,10 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [schema, docs-system, llm-maintenance]
-links: [[[README]], [[index]], [[registry/page-index]]]
+links:
+  - ../README.md
+  - ../index.md
+  - ../registry/page-index.md
 ---
 
 # CCMonit 문서 스키마
@@ -109,7 +112,7 @@ LLM이 유지하는 실제 지식 계층. 예:
 
 ## 8. 권장 세션 루틴
 
-- 새 문서/아이디어 편입: [[_system/INGEST_WORKFLOW]]
-- 질문 응답을 자산화: [[_system/QUERY_WORKFLOW]]
-- 건강 상태 점검: [[_system/LINT_WORKFLOW]]
-- 주기 운영: [[_system/MAINTENANCE_POLICY]]
+- 새 문서/아이디어 편입: [_system/INGEST_WORKFLOW](INGEST_WORKFLOW.md)
+- 질문 응답을 자산화: [_system/QUERY_WORKFLOW](QUERY_WORKFLOW.md)
+- 건강 상태 점검: [_system/LINT_WORKFLOW](LINT_WORKFLOW.md)
+- 주기 운영: [_system/MAINTENANCE_POLICY](MAINTENANCE_POLICY.md)

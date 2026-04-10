@@ -6,7 +6,9 @@ status: active
 owners: [architecture, docs-steward]
 updated: 2026-04-10
 tags: [adr, docs-system, wiki]
-links: [[[architecture/doc-system-architecture]], [[_system/DOCS_SCHEMA]]]
+links:
+  - ../architecture/doc-system-architecture.md
+  - ../_system/DOCS_SCHEMA.md
 ---
 
 # ADR-002: docs를 지속형 위키로 운영한다

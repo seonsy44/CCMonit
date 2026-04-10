@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [template, concept]
-links: [[knowledge/overview/project-map]]
+links:
+  - ../../knowledge/overview/project-map.md
 ---
 
 # 개념명

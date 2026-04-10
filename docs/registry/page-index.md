@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [registry, page-index]
-links: [[[index]], [[registry/source-index]]]
+links:
+  - ../index.md
+  - source-index.md
 ---
 
 # 문서 페이지 인덱스

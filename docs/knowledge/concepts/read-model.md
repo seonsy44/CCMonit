@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [concept, read-model]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -26,5 +27,5 @@ Append-only event stream을 projector가 해석해 만든 현재 상태 모델�
 - alert summary
 
 ## 관련 문서
-- [[architecture/event-flow]]
-- [[architecture/storage-model]]
+- [architecture/event-flow](../../architecture/event-flow.md)
+- [architecture/storage-model](../../architecture/storage-model.md)

@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, task]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -29,6 +30,6 @@ Task는 사용자가 실제로 이해하고 싶은 **업무 단위**다.
 - stuck 여부
 
 ## 관련 문서
-- [[knowledge/entities/skill]]
-- [[knowledge/entities/tool-usage]]
-- [[knowledge/concepts/stuck-detection]]
+- [knowledge/entities/skill](skill.md)
+- [knowledge/entities/tool-usage](tool-usage.md)
+- [knowledge/concepts/stuck-detection](../concepts/stuck-detection.md)

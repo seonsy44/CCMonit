@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [source, events]
-links: [[[architecture/event-flow]], [[knowledge/concepts/canonical-event]]]
+links:
+  - ../architecture/event-flow.md
+  - ../knowledge/concepts/canonical-event.md
 ---
 
 # SRC-0002 이벤트 모델 명세
@@ -22,8 +24,8 @@ links: [[[architecture/event-flow]], [[knowledge/concepts/canonical-event]]]
 - UI는 raw event가 아니라 read model을 읽는다.
 
 ## 반영 대상
-- [[architecture/event-flow]]
-- [[knowledge/concepts/canonical-event]]
-- [[knowledge/concepts/read-model]]
-- [[knowledge/entities/session]]
-- [[knowledge/entities/task]]
+- [architecture/event-flow](../architecture/event-flow.md)
+- [knowledge/concepts/canonical-event](../knowledge/concepts/canonical-event.md)
+- [knowledge/concepts/read-model](../knowledge/concepts/read-model.md)
+- [knowledge/entities/session](../knowledge/entities/session.md)
+- [knowledge/entities/task](../knowledge/entities/task.md)

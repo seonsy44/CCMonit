@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [concept, docs-as-wiki]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -29,5 +30,5 @@ links: [[[knowledge/overview/project-map]]]
 - `knowledge/*`
 
 ## 관련 문서
-- [[architecture/doc-system-architecture]]
-- [[decisions/ADR-002-docs-as-wiki]]
+- [architecture/doc-system-architecture](../../architecture/doc-system-architecture.md)
+- [decisions/ADR-002-docs-as-wiki](../../decisions/ADR-002-docs-as-wiki.md)

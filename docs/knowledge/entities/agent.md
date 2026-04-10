@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [entity, agent]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -28,5 +29,5 @@ Agent는 session 내부에서 특정 역할을 맡아 실행되는 작업 주체
 - 토큰 소모량
 
 ## 관련 문서
-- [[knowledge/entities/task]]
-- [[operations/token-strategy-guide]]
+- [knowledge/entities/task](task.md)
+- [operations/token-strategy-guide](../../operations/token-strategy-guide.md)

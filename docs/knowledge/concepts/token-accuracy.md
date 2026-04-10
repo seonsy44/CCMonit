@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [concept, token-accuracy]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -26,5 +27,5 @@ links: [[[knowledge/overview/project-map]]]
 수치가 추정일 경우 정확도 상태를 함께 기록한다.
 
 ## 관련 문서
-- [[operations/token-strategy-guide]]
-- [[knowledge/entities/token-usage]]
+- [operations/token-strategy-guide](../../operations/token-strategy-guide.md)
+- [knowledge/entities/token-usage](../entities/token-usage.md)

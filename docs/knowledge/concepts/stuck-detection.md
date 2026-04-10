@@ -6,7 +6,8 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [concept, stuck-detection]
-links: [[[knowledge/overview/project-map]]]
+links:
+  - ../overview/project-map.md
 ---
 
 
@@ -29,5 +30,5 @@ links: [[[knowledge/overview/project-map]]]
 stuck 경고는 민감하게 두되, false positive를 줄이기 위해 threshold와 evidence를 함께 표시해야 한다.
 
 ## 관련 문서
-- [[operations/troubleshooting]]
-- [[knowledge/entities/alert]]
+- [operations/troubleshooting](../../operations/troubleshooting.md)
+- [knowledge/entities/alert](../entities/alert.md)

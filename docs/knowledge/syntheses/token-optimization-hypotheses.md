@@ -6,7 +6,9 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [synthesis, tokens, cost]
-links: [[[operations/token-strategy-guide]], [[product/open-questions]]]
+links:
+  - ../../operations/token-strategy-guide.md
+  - ../../product/open-questions.md
 ---
 
 # 토큰 최적화 가설

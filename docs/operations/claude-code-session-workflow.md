@@ -6,7 +6,10 @@ status: active
 owners: [operations, docs-steward]
 updated: 2026-04-10
 tags: [claude-code, workflow, low-budget]
-links: [[[operations/docs-operations]], [[../README]], [[../log]]]
+links:
+  - docs-operations.md
+  - ../README.md
+  - ../log.md
 ---
 
 # Claude Code 세션 운영 워크플로우

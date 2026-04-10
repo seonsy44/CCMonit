@@ -6,7 +6,9 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [operations, tokens]
-links: [[[knowledge/entities/token-usage]], [[knowledge/syntheses/token-optimization-hypotheses]]]
+links:
+  - ../knowledge/entities/token-usage.md
+  - ../knowledge/syntheses/token-optimization-hypotheses.md
 ---
 # CCMonit 토큰 전략 가이드
 

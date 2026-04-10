@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [docs-system, architecture, wiki]
-links: [[[_system/DOCS_SCHEMA]], [[decisions/ADR-002-docs-as-wiki]]]
+links:
+  - ../_system/DOCS_SCHEMA.md
+  - ../decisions/ADR-002-docs-as-wiki.md
 ---
 
 # 문서 시스템 아키텍처

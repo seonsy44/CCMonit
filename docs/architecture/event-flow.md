@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, events]
-links: [[[knowledge/concepts/canonical-event]], [[knowledge/concepts/read-model]]]
+links:
+  - ../knowledge/concepts/canonical-event.md
+  - ../knowledge/concepts/read-model.md
 ---
 # CCMonit 이벤트 모델 명세서
 

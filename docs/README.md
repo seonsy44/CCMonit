@@ -6,7 +6,10 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [docs-system, wiki, guide]
-links: [[[index]], [[log]], [[_system/DOCS_SCHEMA]]]
+links:
+  - index.md
+  - log.md
+  - _system/DOCS_SCHEMA.md
 ---
 
 # CCMonit 문서 시스템 안내
@@ -39,10 +42,10 @@ links: [[[index]], [[log]], [[_system/DOCS_SCHEMA]]]
 
 ## 가장 먼저 읽을 문서
 
-1. [[index]]
-2. [[_system/DOCS_SCHEMA]]
-3. [[registry/page-index]]
-4. [[reports/docs-health-baseline]]
+1. [index](index.md)
+2. [_system/DOCS_SCHEMA](_system/DOCS_SCHEMA.md)
+3. [registry/page-index](registry/page-index.md)
+4. [reports/docs-health-baseline](reports/docs-health-baseline.md)
 
 ## 운영 원칙
 

@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [workflow, lint, health-check]
-links: [[[reports/docs-health-baseline]], [[registry/page-index]]]
+links:
+  - ../reports/docs-health-baseline.md
+  - ../registry/page-index.md
 ---
 
 # 문서 Lint 워크플로우

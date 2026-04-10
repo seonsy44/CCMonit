@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, modules]
-links: [[[architecture/system-overview]], [[decisions/ADR-001-monorepo-structure]]]
+links:
+  - system-overview.md
+  - ../decisions/ADR-001-monorepo-structure.md
 ---
 # CCMonit 모듈 책임 명세서
 

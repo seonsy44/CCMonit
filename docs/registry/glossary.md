@@ -6,7 +6,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [glossary]
-links: [[[knowledge/overview/project-map]], [[knowledge/concepts/canonical-event]]]
+links:
+  - ../knowledge/overview/project-map.md
+  - ../knowledge/concepts/canonical-event.md
 ---
 
 # CCMonit 용어집

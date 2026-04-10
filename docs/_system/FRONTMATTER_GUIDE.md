@@ -6,7 +6,9 @@ status: active
 owners: [docs-steward]
 updated: 2026-04-10
 tags: [frontmatter, metadata]
-links: [[[_system/DOCS_SCHEMA]], [[registry/page-index]]]
+links:
+  - DOCS_SCHEMA.md
+  - ../registry/page-index.md
 ---
 
 # 문서 Frontmatter 가이드
@@ -28,7 +30,9 @@ status: active
 owners: [architecture]
 updated: 2026-04-10
 tags: [architecture, events]
-links: [[index], [knowledge/concepts/canonical-event]]
+links:
+  - ../index.md
+  - ../knowledge/concepts/canonical-event.md
 ---
 ```
 

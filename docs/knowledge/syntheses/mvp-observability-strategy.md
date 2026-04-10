@@ -6,7 +6,9 @@ status: active
 owners: [architecture, operations]
 updated: 2026-04-10
 tags: [synthesis, mvp, observability]
-links: [[[product/roadmap]], [[operations/token-strategy-guide]]]
+links:
+  - ../../product/roadmap.md
+  - ../../operations/token-strategy-guide.md
 ---
 
 # MVP 관찰 전략

@@ -6,7 +6,9 @@ status: active
 owners: [product]
 updated: 2026-04-10
 tags: [open-questions]
-links: [[[product/roadmap]], [[decisions/ADR-002-docs-as-wiki]]]
+links:
+  - roadmap.md
+  - ../decisions/ADR-002-docs-as-wiki.md
 ---
 
 # CCMonit 오픈 질문

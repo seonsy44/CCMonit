@@ -6,7 +6,9 @@ status: active
 owners: [operations]
 updated: 2026-04-10
 tags: [operations, troubleshooting]
-links: [[[operations/docs-operations]], [[knowledge/concepts/stuck-detection]]]
+links:
+  - docs-operations.md
+  - ../knowledge/concepts/stuck-detection.md
 ---
 # CCMonit 문제 해결 가이드
 
