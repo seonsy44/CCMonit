@@ -1,0 +1,12 @@
+{
+  "name": "@ccmonit/application",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Application use cases, ports, mappers, and DTOs for ccmonit.",
+  "dependencies": {
+    "@ccmonit/domain": "workspace:*",
+    "@ccmonit/shared": "workspace:*",
+    "@ccmonit/config": "workspace:*"
+  }
+}

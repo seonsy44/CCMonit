@@ -1,0 +1,18 @@
+{
+  "name": "@ccmonit/cli",
+  "private": true,
+  "type": "module",
+  "main": "./src/main.ts",
+  "scripts": {
+    "dev": "tsx src/main.ts monitor",
+    "build": "echo build pending"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "@ccmonit/application": "workspace:*",
+    "@ccmonit/config": "workspace:*",
+    "@ccmonit/domain": "workspace:*",
+    "@ccmonit/infra": "workspace:*",
+    "@ccmonit/shared": "workspace:*"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@ccmonit/config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Configuration schema, types, and resolution logic for ccmonit.",
+  "dependencies": {
+    "@ccmonit/shared": "workspace:*"
+  }
+}

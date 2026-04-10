@@ -1,0 +1,8 @@
+CCMonit | Session sess_01 | elapsed 00:14:12
+
+[Summary]
+Agents: 2 | Tasks: 5 | Alerts: 1 | Tokens: 12,450
+
+[Tasks]
+- research-docs      running
+- parse-log-format   waiting

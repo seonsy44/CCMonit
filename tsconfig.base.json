@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ccmonit/domain/*": ["packages/domain/src/*"],
+      "@ccmonit/application/*": ["packages/application/src/*"],
+      "@ccmonit/infra/*": ["packages/infra/src/*"],
+      "@ccmonit/shared/*": ["packages/shared/src/*"],
+      "@ccmonit/config/*": ["packages/config/src/*"]
+    }
+  }
+}

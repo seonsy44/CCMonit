@@ -1,0 +1,3 @@
+{"timestamp":"2026-04-10T09:00:00Z","kind":"raw_line","message":"session started"}
+{"timestamp":"2026-04-10T09:00:01Z","kind":"raw_line","message":"agent planner spawned"}
+{"timestamp":"2026-04-10T09:00:03Z","kind":"raw_line","message":"task research running"}

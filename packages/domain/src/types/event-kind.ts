@@ -1,0 +1,15 @@
+export type EventKind =
+  | 'session.started'
+  | 'session.finished'
+  | 'agent.started'
+  | 'agent.updated'
+  | 'task.started'
+  | 'task.updated'
+  | 'skill.started'
+  | 'skill.finished'
+  | 'tool.started'
+  | 'tool.finished'
+  | 'file.changed'
+  | 'token.updated'
+  | 'alert.detected'
+  | 'adapter.health.updated';

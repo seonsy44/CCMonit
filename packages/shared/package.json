@@ -1,0 +1,7 @@
+{
+  "name": "@ccmonit/shared",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Shared constants, utility types, errors, and helper functions for ccmonit."
+}

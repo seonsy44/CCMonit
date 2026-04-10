@@ -1,0 +1,9 @@
+[
+  {
+    "eventId": "evt_001",
+    "eventKind": "session.started",
+    "sessionId": "sess_01",
+    "timestamp": "2026-04-10T09:00:00Z",
+    "accuracy": "exact"
+  }
+]
