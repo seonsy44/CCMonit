@@ -23,8 +23,7 @@ Claude Code 하네스 환경을 위한 터미널 모니터링 도구 스캐폴�
 2. `docs/_system/DOCS_SCHEMA.md`
 3. `docs/registry/page-index.md`
 4. `docs/operations/claude-code-session-workflow.md`
-5. `WORKFLOW.md`
-6. `.claude/README.md`
+5. `.claude/README.md`
 
 ## 폴더 개요
 
