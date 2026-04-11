@@ -1,24 +1,21 @@
 다음 세션 목표:
 
-- Skill 엔티티 구현 (SkillEntity, SkillId, SkillStatus)
+- ToolUsage 엔티티 구현 (ToolUsageEntity, ToolCallId)
 
 수정 허용 범위:
 
-- packages/domain/src/entities/skill.ts
-- 필요 시 packages/domain/src/types/ (skill-status.ts 신규)
+- packages/domain/src/entities/tool-usage.ts
+- 필요 시 packages/domain/src/types/ (tool-result-status.ts 등 신규)
 
 stop line:
 
-- SkillEntity + SkillStatus 타입 완성 및 tsc 통과
+- ToolUsageEntity 타입 완성 및 tsc 통과
 
 먼저 읽을 문서:
 
-- docs/index.md
+- docs/knowledge/entities/tool-usage.md
+- docs/architecture/event-flow.md §15 (Tool Call 이벤트)
 - .claude/scratch/worklog.md
-- docs/knowledge/entities/skill.md
-- docs/architecture/event-flow.md §14 (Skill 이벤트)
-- .claude/context/\*.md
-- 필요 시 .claude/skills/\_shared/\*.md
 
 추천 시작 순서:
 

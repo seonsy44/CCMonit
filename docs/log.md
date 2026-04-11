@@ -72,3 +72,9 @@ links:
 - `docs/architecture/event-flow.md`의 Canonical Event Envelope을 29필드 → 10필드로 축소. 나머지는 "V1 확장 필드" 섹션에 정리.
 - `replay-session.usecase.ts`에 V1 표시 추가.
 
+## [2026-04-12] implement | Skill 엔티티 구현
+- `packages/domain/src/types/skill-status.ts` 신규: `'detected' | 'running' | 'waiting' | 'completed' | 'failed' | 'cancelled'`
+- `packages/domain/src/entities/skill.ts`: 빈 인터페이스 → SkillId + SkillEntity (12개 필드)
+- event-flow §14 payload, knowledge/entities/skill.md 추적 포인트 기반 설계
+- tsc --noEmit strict 통과. 기존 파일이 Skill을 import하는 곳 없어 호환성 문제 없음.
+
