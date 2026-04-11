@@ -37,15 +37,7 @@ links:
 - `.claude/context/`와 `.claude/skills/_shared/` 역할 분리를 유지한 채, 스킬 전용 요약은 `_shared/`에 두고 공용 안정 요약만 `context/`에 남겼다.
 - `.claude/prompts/`는 kickoff / resume-session / docs-maintenance 의 진입용 템플릿만 남기고 구현 절차형 프롬프트를 제거했다.
 
-## [2026-04-11] implement | domain session entity batch
-- `packages/domain/src/value-objects/session-id.ts`: 빈 interface → `type SessionId = string` (EventEntity.sessionId와 호환)
-- `packages/domain/src/types/session-status.ts`: 신규 생성. 'detected' | 'active' | 'idle' | 'completed' | 'interrupted' | 'failed'
-- `packages/domain/src/entities/session.ts`: 빈 interface → `SessionEntity` (13개 필드. event-flow.md + 기능명세서 FR-01 기준)
-- 다음 배치 후보: Agent 엔티티, Duration/TimestampRange 값 객체, EventEntity.sessionId 타입 교체
-
-## [2026-04-11] implement | domain agent entity batch
-- `packages/domain/src/value-objects/duration.ts`: 빈 interface → `Duration` (seconds: number, accuracy: TokenAccuracy)
-- `packages/domain/src/value-objects/timestamp-range.ts`: 빈 interface → `TimestampRange` (startedAt: string, endedAt?: string)
-- `packages/domain/src/entities/agent.ts`: 빈 interface → `AgentId`, `AgentStatus`, `AgentEntity` (14개 필드. event-flow.md §12 + knowledge/entities/agent.md 기준)
-- `packages/domain/src/entities/event.ts`: `sessionId: string` → `sessionId: SessionId` 교체
-- 다음 배치 후보: Task/Skill 엔티티, 또는 projector 스텁
+## [2026-04-11] maintenance | workflow semantics and root entrypoints
+- `session-start`와 `resume-next`의 의미를 다시 분리했다. `session-start`는 시작 시 scratch/docs를 읽고, `resume-next`는 종료 시 다음 세션용 handoff를 남긴다.
+- workflow source of truth 는 계속 `docs/operations/claude-code-session-workflow.md`로 유지하되, 루트 `CLAUDE.md`를 새 진입 가이드로 추가했다.
+- 루트 `README.md`, `.claude/README.md`, `.claude/skills/*`의 순서와 설명을 새 semantics에 맞게 정렬했다.

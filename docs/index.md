@@ -1,14 +1,11 @@
 ---
 id: DOCS-INDEX
-title: CCMonit 문서 인덱스
+title: "CCMonit 문서 인덱스"
 type: index
 status: active
-owners:
-  - docs-steward
+owners: [docs-steward]
 updated: 2026-04-10
-tags:
-  - index
-  - navigation
+tags: [index, navigation]
 links:
   - README.md
   - log.md

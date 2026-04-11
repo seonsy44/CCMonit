@@ -30,7 +30,6 @@
 사람과 일반 Claude 세션이 공용으로 보는 **안정 요약본**을 둔다.
 
 원칙:
-
 - 프로젝트 전반에서 오래 유지되는 사실만 둔다.
 - 세션 메모나 스킬 전용 실행 규칙은 두지 않는다.
 - 상세 내용은 항상 `docs/`를 source of truth로 삼고, 여기서는 빠른 진입을 돕는 요약만 유지한다.
@@ -42,13 +41,11 @@
 Claude Code의 수동 스킬 정의를 둔다.
 
 원칙:
-
 - 한 스킬은 한 가지 행동만 담당한다.
 - 긴 구현보다 범위 고정, 분할, 검증, handoff 같은 운영 동작에 강하게 쓴다.
 - 스킬은 `docs/`와 `.claude/`를 읽되, source of truth를 새로 만들지 않는다.
 
 하위 디렉토리:
-
 - 각 스킬 디렉토리: `SKILL.md`
 - `_shared/`: 여러 스킬이 공통으로 읽는 실행 컨텍스트
 
@@ -59,26 +56,22 @@ Claude Code의 수동 스킬 정의를 둔다.
 스킬 전용 **실행 컨텍스트**를 둔다.
 
 이곳의 문서는 다음 질문에 답해야 한다.
-
 - 스킬이 작업 전에 무엇을 먼저 읽어야 하는가?
 - 지금 저장소에서 무엇이 가장 중요한 source of truth인가?
 - 어떤 실수나 누락을 피해야 하는가?
 
 넣어야 하는 것:
-
 - 스킬 관점의 제품 요약
 - 스킬 관점의 아키텍처 요약
 - 문서 시스템 읽기 순서
 - 스킬 관점의 핵심 용어
 
 넣지 말아야 하는 것:
-
 - 길고 서술적인 일반 소개
 - 세션 handoff 정보
 - 한 번 쓰고 버릴 임시 메모
 
 원칙:
-
 - 짧고 작업 지향적으로 쓴다.
 - 일반 설명은 `.claude/context/`에 두고, 여기에는 실행 포인트만 남긴다.
 - 이름은 `*-context.md`처럼 목적이 드러나게 짓는다.
@@ -111,7 +104,7 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 대표 용도:
 - `worklog.md`: 이번까지 한 일
-- `next-prompt.md`: 다음 세션 시작 문구
+- `next-prompt.md`: 다음 세션 시작점
 - `open-questions.md`: 아직 안 풀린 점
 - `notes.md`: 작업 중 잠정 메모
 
@@ -125,13 +118,12 @@ Claude Code의 수동 스킬 정의를 둔다.
 ## 3. 읽기 우선순위
 
 ### 일반 세션 시작 시
-1. `docs/index.md`
-2. `docs/_system/DOCS_SCHEMA.md`
-3. `docs/registry/page-index.md`
-4. `docs/operations/claude-code-session-workflow.md`
-5. `.claude/context/*.md`
+1. `README.md`
+2. `CLAUDE.md`
+3. `docs/operations/claude-code-session-workflow.md`
+4. `.claude/context/*.md`
+5. 필요 시 `.claude/skills/_shared/*.md`
 6. `.claude/scratch/*`
-7. 필요 시 `.claude/skills/_shared/*.md`
 
 ### 스킬 실행 전
 1. 관련 `docs/*`
@@ -139,7 +131,7 @@ Claude Code의 수동 스킬 정의를 둔다.
 3. `.claude/skills/_shared/*.md`
 4. `.claude/scratch/*`
 
-핵심 원칙은 다음과 같다.
+핵심 원칙:
 - 프로젝트의 사실과 기준은 `docs/`가 우선이다.
 - `.claude/context/`는 빠른 진입용이다.
 - `.claude/skills/_shared/`는 실행 가이드다.
@@ -176,10 +168,11 @@ Claude Code의 수동 스킬 정의를 둔다.
 ## 5. 추천 세션 루틴
 
 ### 세션 시작
-- `docs/index.md` 확인
+- `README.md` 확인
+- `CLAUDE.md` 확인
 - `docs/operations/claude-code-session-workflow.md` 확인
 - `.claude/context/` 확인
-- `.claude/scratch/next-prompt.md` 확인
+- `.claude/scratch/*` 확인
 - 필요 시 `.claude/skills/_shared/` 확인
 - 이번 세션 stop line 결정
 
@@ -193,6 +186,7 @@ Claude Code의 수동 스킬 정의를 둔다.
 - `scratch/next-prompt.md` 갱신
 - `scratch/open-questions.md` 정리
 - 필요 시 `context` 또는 `docs` 승격 반영
+- 큰 세션이면 `handoff-report` 사용 여부를 결정한다.
 
 ---
 
@@ -205,18 +199,14 @@ Claude Code의 수동 스킬 정의를 둔다.
 3. `docs`보다 `.claude`를 더 신뢰하게 만들기
 4. 같은 정보를 `context`, `skills/_shared`, `docs`에 무분별하게 중복 복제하기
 5. 스킬 전용 문서를 `context/`에 두어 이름만 비슷한 파일을 늘리기
-6. 세션 종료 시 handoff 기록을 생략하기
+6. `session-start` 전에 `resume-next`를 호출하는 식으로 시작/종료 의미를 섞기
 
 ---
 
-## 7. 이 프로젝트에서의 권장 기준
+## 7. 이 저장소에서의 고정 규칙
 
-이 저장소에서는 다음 기준을 유지한다.
-
-- `docs/` = 프로젝트 지식의 기준 위키
-- `.claude/context/` = 공용 안정 요약본
-- `.claude/skills/_shared/` = 스킬 공용 실행 컨텍스트
-- `.claude/prompts/` = 재사용 가능한 직접 입력 프롬프트
-- `.claude/scratch/` = 세션 handoff 공간
-
-이 기준이 흐려지면 Claude가 매 세션마다 다른 문서를 우선시하게 되고, 저비용 세션 운영 효율이 크게 떨어진다.
+- `session-start`는 시작 단계에서 현재 문맥을 읽고 범위를 고정한다.
+- `resume-next`는 종료 단계에서 다음 세션용 handoff를 남긴다.
+- `handoff-report`는 큰 세션에서만 선택적으로 쓴다.
+- workflow source of truth는 `docs/operations/claude-code-session-workflow.md`다.
+- 루트 `CLAUDE.md`는 Claude Code용 진입 가이드이고, 루트 `README.md`는 사람용 진입 가이드다.

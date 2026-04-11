@@ -11,28 +11,28 @@
 - `docs/`는 항상 source of truth 후보이므로, 구조 변경 시 같이 갱신할지 검토한다.
 
 먼저 읽을 문서:
-1. `docs/index.md`
-2. `docs/_system/DOCS_SCHEMA.md`
-3. `docs/registry/page-index.md`
-4. `docs/operations/claude-code-session-workflow.md`
-5. `.claude/context/*.md`
-6. `.claude/skills/_shared/*.md`
-7. `.claude/scratch/*`
+1. `CLAUDE.md`
+2. `docs/operations/claude-code-session-workflow.md`
+3. `.claude/context/*.md`
+4. `.claude/skills/_shared/*.md`
+5. `.claude/scratch/*`
 
 권장 순서:
-1. `/session-start 목표`
-2. `/resume-next`
-3. `/scope-map 영역`
-4. `/slice-work 작업`
+1. `/session-start [목표]`
+2. `/token-budget-plan [optional]`
+3. `/scope-map [영역]`
+4. `/slice-work [작업]`
 5. 구현 스킬 1개 또는 docs 스킬 1개
-6. `/manual-verify 배치명`
-7. `/update-context 배치명`
-8. `/handoff-report 범위`
+6. `/manual-verify [배치명]`
+7. `/update-context [optional]`
+8. `/resume-next`
+9. `/handoff-report [optional]`
 
 구조 원칙:
 - `.claude/context/`는 사람+일반 세션 공용 안정 요약을 둔다.
 - `.claude/skills/_shared/`는 여러 스킬이 공통으로 읽는 실행 컨텍스트를 둔다.
-- 세션 handoff 정보는 `.claude/scratch/`에만 둔다.
+- 세션 handoff 정보는 `.claude/scratch/`에 둔다.
+- `resume-next`는 시작 단계가 아니라 종료 단계에 둔다.
 
 문서 유지보수용 스킬:
 - `/docs-ingest`

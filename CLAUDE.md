@@ -1,11 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## 현재 상태
-
-구현 전 스캐폴드. 타입 스텁과 TODO만 있고 실제 동작 로직은 미구현.
-
 ## Commands
 
 ```bash
@@ -34,17 +28,10 @@ Infra   → Application Ports (구현)
 
 핵심 규칙: **Adapter는 읽고, Parser는 해석하고, Store는 저장하고, Projector는 계산하고, Alerting은 판단하고, TUI는 보여준다.** TUI에 도메인 로직 금지.
 
-## Docs
+## 규칙
 
-`docs/`는 계속 갱신되는 위키. 구현/결정 후 관련 문서와 `docs/log.md`(append-only)를 갱신한다.
-
-## 세션 워크플로우
-
-세션 시작 시 읽기 순서:
-1. `docs/index.md` → `docs/operations/claude-code-session-workflow.md`
-2. `.claude/context/*.md`
-3. `.claude/scratch/*`
-
-권장 스킬 순서: `/session-start` → `/resume-next` → `/scope-map` → `/slice-work` → `implement-*` → `/manual-verify` → `/update-context` → `/handoff-report`
-
-세션 종료 전 `.claude/scratch/`(worklog, next-prompt, open-questions) 반드시 갱신.
+- source of truth는 `docs/`. `.claude/`는 보조 레이어다.
+- 채팅 설명보다 문서와 파일 상태를 우선 신뢰한다.
+- 범위를 먼저 고정하고, 그 다음에 구현한다.
+- `.claude/` 내부에 source of truth를 새로 만들지 않는다.
+- 세션 종료 시 `.claude/scratch/`가 다음 세션을 이어받을 수 있는 상태로 둔다.
