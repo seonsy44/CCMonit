@@ -7,6 +7,9 @@
     "dev": "tsx src/main.ts monitor",
     "build": "echo build pending"
   },
+  "devDependencies": {
+    "@types/node": "^22.10.0"
+  },
   "dependencies": {
     "commander": "^12.1.0",
     "@ccmonit/application": "workspace:*",

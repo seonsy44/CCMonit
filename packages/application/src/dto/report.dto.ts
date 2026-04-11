@@ -1,3 +1,3 @@
-export interface Report.dto {
+export interface Report {
   // TODO: define DTO shape during implementation.
 }

@@ -1,3 +1,3 @@
-export interface SessionSummary.dto {
+export interface SessionSummary {
   // TODO: define DTO shape during implementation.
 }
