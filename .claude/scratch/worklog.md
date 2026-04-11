@@ -1,6 +1,24 @@
 # Worklog
 
 ## Latest Batch
+- name: Task 엔티티 (TaskEntity, TaskId, TaskStatus)
+- layer: domain
+- changed files:
+  - packages/domain/src/types/task-status.ts (신규 생성)
+  - packages/domain/src/entities/task.ts (empty interface → TaskId + TaskEntity)
+- done:
+  - TaskId: type alias (string)
+  - TaskStatus: 'queued' | 'running' | 'waiting' | 'blocked' | 'retrying' | 'completed' | 'failed' | 'cancelled'
+  - TaskEntity: 12개 필드 (event-flow.md §13, knowledge/entities/task.md 기준)
+  - tsc --noEmit strict 통과
+- remaining:
+  - Skill 엔티티
+  - ToolUsage, TokenUsage, Alert 엔티티
+  - TeamId VO (agentEntity.teamId는 string으로 임시 처리 중)
+- risks:
+  - 없음 (다른 파일이 TaskEntity를 import하는 곳 없음)
+
+## Previous Batch
 - name: agent entity + Duration/TimestampRange VO + EventEntity.sessionId 교체
 - layer: domain
 - changed files:
