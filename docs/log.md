@@ -36,3 +36,9 @@ links:
 - workflow source of truth 를 `docs/operations/claude-code-session-workflow.md`로 일원화하고, 루트 `WORKFLOW.md`와 `.claude/WORKFLOW.md`를 포인터 문서로 정리했다.
 - `.claude/context/`와 `.claude/skills/_shared/` 역할 분리를 유지한 채, 스킬 전용 요약은 `_shared/`에 두고 공용 안정 요약만 `context/`에 남겼다.
 - `.claude/prompts/`는 kickoff / resume-session / docs-maintenance 의 진입용 템플릿만 남기고 구현 절차형 프롬프트를 제거했다.
+
+## [2026-04-11] implement | domain session entity batch
+- `packages/domain/src/value-objects/session-id.ts`: 빈 interface → `type SessionId = string` (EventEntity.sessionId와 호환)
+- `packages/domain/src/types/session-status.ts`: 신규 생성. 'detected' | 'active' | 'idle' | 'completed' | 'interrupted' | 'failed'
+- `packages/domain/src/entities/session.ts`: 빈 interface → `SessionEntity` (13개 필드. event-flow.md + 기능명세서 FR-01 기준)
+- 다음 배치 후보: Agent 엔티티, Duration/TimestampRange 값 객체, EventEntity.sessionId 타입 교체
