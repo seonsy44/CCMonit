@@ -35,9 +35,6 @@ importers:
       '@ccmonit/application':
         specifier: workspace:*
         version: link:../../packages/application
-      '@ccmonit/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       '@ccmonit/domain':
         specifier: workspace:*
         version: link:../../packages/domain
@@ -53,18 +50,9 @@ importers:
 
   packages/application:
     dependencies:
-      '@ccmonit/config':
-        specifier: workspace:*
-        version: link:../config
       '@ccmonit/domain':
         specifier: workspace:*
         version: link:../domain
-      '@ccmonit/shared':
-        specifier: workspace:*
-        version: link:../shared
-
-  packages/config:
-    dependencies:
       '@ccmonit/shared':
         specifier: workspace:*
         version: link:../shared
@@ -80,9 +68,6 @@ importers:
       '@ccmonit/application':
         specifier: workspace:*
         version: link:../application
-      '@ccmonit/config':
-        specifier: workspace:*
-        version: link:../config
       '@ccmonit/domain':
         specifier: workspace:*
         version: link:../domain

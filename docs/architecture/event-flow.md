@@ -148,108 +148,54 @@ inferred parent 는 반드시 아래 메타를 함께 가진다.
 
 ## 5. Canonical Event Envelope
 
+### 5.1 MVP Envelope (현재 구현 대상)
+
 모든 canonical event 는 아래 공통 envelope 를 가진다.
 
 ```ts
 interface CanonicalEvent<TPayload = unknown> {
-  event_id: string;
-  event_version: number;
-  event_name: string;
-  category: EventCategory;
-  occurred_at: string;          // 실제 발생 시각
-  observed_at: string;          // adapter가 관측한 시각
-  session_id: string;
-
-  correlation_id?: string;
-  causation_id?: string;
-  trace_id?: string;
-
-  actor?: EventActorRef;
-  target?: EventTargetRef;
-  parent_ref?: EventEntityRef;
-  related_refs?: EventEntityRef[];
-
-  source: EventSourceMeta;
-  accuracy?: AccuracyStatus;
-  confidence_score?: number;
-
-  tags?: string[];
-  payload: TPayload;
-  raw_ref?: RawReference;
+  event_id: string;             // UUID — 이벤트 고유 ID
+  event_kind: EventKind;        // 예: 'task.started', 'tool.finished'
+  session_id: string;           // 소속 세션
+  occurred_at: string;          // ISO 8601 — 실제 발생 시각
+  entity_type: EntityType;      // 이벤트 대상 개체 종류
+  entity_id: string;            // 이벤트 대상 개체 ID
+  parent_id?: string;           // 직접 부모 개체 ID (계층 구조용)
+  accuracy?: AccuracyStatus;    // 신뢰도 (token 관련 이벤트에서 주로 사용)
+  confidence_score?: number;    // 0.0~1.0 (추론 기반 매핑 시)
+  payload: TPayload;            // 이벤트별 상세 데이터
 }
 ```
 
-### 5.1 필드 정의
+#### 필드 정의
 
-#### `event_id`
-- 이벤트의 전역 고유 ID
-- UUID v7 또는 timestamp sortable id 권장
-- replay 시 동일 이벤트의 중복 삽입 방지 키로 사용 가능
+- **`event_id`** — UUID v7 또는 timestamp sortable id. 중복 삽입 방지 키.
+- **`event_kind`** — `도메인.동사` 형식. EventKind 타입 참조.
+- **`session_id`** — 이벤트가 속한 세션 식별자.
+- **`occurred_at`** — raw log timestamp 우선 사용. 없으면 관측 시각 대체하되 accuracy 를 낮춘다.
+- **`entity_type`** — 이벤트 대상의 종류: `session | agent | task | skill | tool | file | alert | adapter`.
+- **`entity_id`** — 이벤트 대상의 고유 ID.
+- **`parent_id`** — 직접 부모 개체 ID. 예: skill 이벤트의 parent 는 task ID.
+- **`accuracy`** — `exact | derived | estimated | unavailable`. 주로 token 관련 이벤트에서 사용.
+- **`confidence_score`** — 0.0~1.0. 추론 규칙 기반 매핑 시 사용.
+- **`payload`** — 이벤트 종류별 상세 데이터.
 
-#### `event_version`
-- 해당 event payload schema 버전
-- 초기값은 `1`
-- 추후 payload 구조가 바뀔 경우 버전 증가
+### 5.2 V1 확장 필드 (향후 추가 예정)
 
-#### `event_name`
-- 예: `task.started`, `tool.finished`, `alert.raised`
-- `도메인.동사` 형식 권장
+아래 필드는 MVP 이후 필요에 따라 envelope 에 추가한다.
 
-#### `category`
-- 대분류 그룹
-- 예: `session`, `agent`, `task`, `tool`, `file`, `token`, `alert`, `adapter`
-
-#### `occurred_at`
-- 실제로 사건이 발생했다고 판단되는 시각
-- raw log timestamp 를 우선 사용
-- 없으면 `observed_at` 로 대체하되 accuracy 를 낮춘다
-
-#### `observed_at`
-- adapter가 이벤트를 읽은 시각
-- 반드시 존재해야 한다
-
-#### `correlation_id`
-- 같은 흐름에 속한 이벤트를 묶는 ID
-- 예: 하나의 tool call 시작/종료/토큰 업데이트
-
-#### `causation_id`
-- 직접 원인이 된 이벤트 ID
-- 예: `task.started` 가 `agent.spawned` 로부터 유발된 경우
-
-#### `trace_id`
-- 세션 내 긴 흐름을 묶는 추적용 ID
-- agent, task, skill, tool 전반을 관통하는 상위 trace 역할
-
-#### `actor`
-- 이벤트를 발생시킨 주체
-- 예: agent, adapter, system, user
-
-#### `target`
-- 이벤트의 대상
-- 예: 특정 task, specific file, alert, report
-
-#### `parent_ref`
-- 직접 상위 개체
-- 예: skill.started 이벤트의 parent 는 task
-
-#### `related_refs`
-- 관련 있지만 직접 부모-자식은 아닌 참조
-- 예: 파일 변경과 연관된 task, agent, tool call
-
-#### `source`
-- 어떤 adapter와 어떤 원문에서 생성되었는지에 대한 정보
-
-#### `accuracy`
-- payload 또는 핵심 관계의 신뢰도
-- `exact | derived | estimated | unavailable`
-
-#### `confidence_score`
-- 0.0 ~ 1.0
-- 추론 규칙 기반 매핑 시 사용
-
-#### `raw_ref`
-- 원본 로그/파일 이벤트와 연결하기 위한 참조
-- raw payload 전체를 매번 중복 저장하는 대신 위치 참조를 둘 수 있다
+| 필드 | 목적 | 추가 시점 |
+|------|------|-----------|
+| `event_version` | payload schema 버전 관리 | payload 구조 변경 시 |
+| `observed_at` | adapter 관측 시각 (occurred_at 과 분리) | 멀티 어댑터 지원 시 |
+| `correlation_id` | 같은 흐름의 이벤트 묶음 | 복잡한 tool call 추적 시 |
+| `causation_id` | 직접 원인 이벤트 ID | 인과관계 분석 시 |
+| `trace_id` | 세션 내 장기 흐름 추적 | 고급 디버깅 시 |
+| `actor` / `target` | 발생 주체와 대상 분리 | 멀티 에이전트 고급 분석 시 |
+| `related_refs` | 부모-자식이 아닌 관계 참조 | 파일-태스크 연관 분석 시 |
+| `source` | adapter/parser 메타데이터 | 어댑터 품질 검증 시 |
+| `tags` | 자유 태그 | 커스텀 필터링 시 |
+| `raw_ref` | 원본 로그 위치 참조 | replay/디버깅 고급 기능 시 |
 
 ---
 
@@ -270,79 +216,27 @@ type AccuracyStatus =
 - `estimated`: 휴리스틱/추정 모델 결과
 - `unavailable`: 값을 구할 수 없음
 
-### 6.2 EventCategory
+### 6.2 EntityType
 
 ```ts
-type EventCategory =
+type EntityType =
   | 'session'
-  | 'adapter'
-  | 'team'
   | 'agent'
   | 'task'
   | 'skill'
   | 'tool'
   | 'file'
-  | 'token'
   | 'alert'
-  | 'user'
-  | 'system'
-  | 'report'
-  | 'raw';
+  | 'adapter';
 ```
 
-### 6.3 EventEntityRef
+### 6.3 V1 보조 타입 (향후 추가 예정)
 
-```ts
-interface EventEntityRef {
-  entity_type:
-    | 'session'
-    | 'team'
-    | 'agent'
-    | 'task'
-    | 'skill_invocation'
-    | 'tool_call'
-    | 'file'
-    | 'alert'
-    | 'adapter'
-    | 'report';
-  entity_id: string;
-  label?: string;
-  relation_accuracy?: AccuracyStatus;
-  relation_confidence_score?: number;
-  relation_reason?: string;
-}
-```
+아래 타입들은 V1 확장 필드 도입 시 함께 정의한다.
 
-### 6.4 EventSourceMeta
-
-```ts
-interface EventSourceMeta {
-  adapter_kind:
-    | 'claude-log-tail'
-    | 'filesystem-watch'
-    | 'replay'
-    | 'runtime'
-    | 'manual'
-    | 'system';
-  adapter_instance_id: string;
-  parser_version: string;
-  host?: string;
-  pid?: number;
-  cwd?: string;
-  stream?: 'stdout' | 'stderr' | 'file' | 'system';
-  raw_type?: string;
-}
-```
-
-### 6.5 RawReference
-
-```ts
-interface RawReference {
-  raw_store: 'raw-events.jsonl' | 'source-file';
-  pointer: string;      // line number, byte range, offset 등
-  preview?: string;     // 짧은 샘플
-}
-```
+- **EventEntityRef** — entity_type, entity_id, label, relation_accuracy 등
+- **EventSourceMeta** — adapter_kind, parser_version, host, pid 등
+- **RawReference** — raw_store, pointer, preview 등
 
 ---
 

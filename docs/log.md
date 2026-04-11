@@ -63,3 +63,12 @@ links:
 - `module-responsibilities.md`, `architecture-summary.md`, `infra/package.json`의 관련 참조 모두 갱신.
 - ADR-004 추가: TUI(ink), SQLite(better-sqlite3), 파일 감시(fs.watch), 테스트(보류) 기술 결정 기록.
 
+## [2026-04-11] simplify | merge config package and slim event model
+- `packages/config`를 `packages/shared/src/config/`로 병합. 3파일뿐인 패키지를 별도 유지할 이유 없음.
+- 모든 소비 패키지(application, infra, cli)에서 `@ccmonit/config` 의존성 제거. tsconfig path 정리.
+- EventEntity를 MVP 수준으로 확장: `entityType`, `entityId`, `parentId` 추가. `timestamp` → `occurredAt` 명확화.
+- `EntityType` 타입 신규 생성.
+- EventStorePort의 타입을 `unknown` → `EventEntity`로 강화.
+- `docs/architecture/event-flow.md`의 Canonical Event Envelope을 29필드 → 10필드로 축소. 나머지는 "V1 확장 필드" 섹션에 정리.
+- `replay-session.usecase.ts`에 V1 표시 추가.
+

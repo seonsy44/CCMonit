@@ -171,7 +171,10 @@ CCMonit의 핵심 모듈은 다음과 같이 나눈다.
 
 ---
 
-## 5.2 Config 모듈
+## 5.2 Config 모듈 (Shared 패키지에 통합됨)
+
+> **참고**: Config 모듈은 `packages/shared/src/config/`에 통합되었다.
+> 설정 스키마, 해석, 기본값이 모두 shared 패키지에 위치한다.
 
 ### 책임
 
@@ -179,17 +182,6 @@ CCMonit의 핵심 모듈은 다음과 같이 나눈다.
 - 파일/환경 변수/CLI override 를 병합한다.
 - 기본값을 공급한다.
 - 잘못된 설정을 조기에 검증한다.
-
-### 주요 설정 예시
-
-- log source path
-- workspace root
-- SQLite 경로
-- JSONL 저장 여부
-- token estimation policy
-- alert threshold
-- masking policy
-- refresh interval
 
 ### 하지 말아야 할 일
 

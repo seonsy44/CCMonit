@@ -7,7 +7,6 @@
   "dependencies": {
     "@ccmonit/application": "workspace:*",
     "@ccmonit/domain": "workspace:*",
-    "@ccmonit/shared": "workspace:*",
-    "@ccmonit/config": "workspace:*"
+    "@ccmonit/shared": "workspace:*"
   }
 }

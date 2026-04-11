@@ -6,7 +6,6 @@
   "description": "Application use cases, ports, mappers, and DTOs for ccmonit.",
   "dependencies": {
     "@ccmonit/domain": "workspace:*",
-    "@ccmonit/shared": "workspace:*",
-    "@ccmonit/config": "workspace:*"
+    "@ccmonit/shared": "workspace:*"
   }
 }

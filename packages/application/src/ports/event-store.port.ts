@@ -1,5 +1,7 @@
+import type { EventEntity } from '@ccmonit/domain/entities/event.js';
+
 export interface EventStorePort {
-  append(event: unknown): Promise<void>;
-  appendMany(events: unknown[]): Promise<void>;
-  listBySession(sessionId: string): Promise<unknown[]>;
+  append(event: EventEntity): Promise<void>;
+  appendMany(events: EventEntity[]): Promise<void>;
+  listBySession(sessionId: string): Promise<EventEntity[]>;
 }

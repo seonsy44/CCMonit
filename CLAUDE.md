@@ -30,9 +30,8 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
   - 유스케이스: `ingest-event`, `build-session-summary`, `detect-alerts`, `generate-report`, `replay-session`, `start-monitoring`, `stop-monitoring`
   - 포트: `event-store`, `event-source`, `session-store`, `report-writer`, `clock`
   - DTO: `session-summary`, `token-breakdown`, `report`
-- `packages/infra` — 어댑터(claude-code 로그, filesystem), 저장소(NDJSON/SQLite/memory), 리포트 writer, 텔레메트리.
-- `packages/config` — 설정 스키마 및 해석.
-- `packages/shared` — 공통 유틸(`format-*`, `debounce`), 에러 타입, 상수, 유틸리티 타입.
+- `packages/infra` — 어댑터(claude-code 로그, filesystem), 저장소(NDJSON/SQLite/memory), 리포트 writer, metrics.
+- `packages/shared` — 공통 유틸(`format-*`, `debounce`), 에러 타입, 상수, 유틸리티 타입, 설정 스키마/해석.
 - `apps/cli` — 진입점, 커맨드(`monitor`/`report`/`replay`/`doctor`), TUI 패널/뷰, 프레젠터.
 
 핵심 규칙: **Adapter는 읽고, Parser는 해석하고, Store는 저장하고, Projector는 계산하고, Alerting은 판단하고, TUI는 보여준다.** TUI에 도메인 로직 금지.

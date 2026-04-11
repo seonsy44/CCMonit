@@ -10,7 +10,6 @@
   "dependencies": {
     "commander": "^12.1.0",
     "@ccmonit/application": "workspace:*",
-    "@ccmonit/config": "workspace:*",
     "@ccmonit/domain": "workspace:*",
     "@ccmonit/infra": "workspace:*",
     "@ccmonit/shared": "workspace:*"
