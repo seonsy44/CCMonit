@@ -42,3 +42,10 @@ links:
 - `packages/domain/src/types/session-status.ts`: 신규 생성. 'detected' | 'active' | 'idle' | 'completed' | 'interrupted' | 'failed'
 - `packages/domain/src/entities/session.ts`: 빈 interface → `SessionEntity` (13개 필드. event-flow.md + 기능명세서 FR-01 기준)
 - 다음 배치 후보: Agent 엔티티, Duration/TimestampRange 값 객체, EventEntity.sessionId 타입 교체
+
+## [2026-04-11] implement | domain agent entity batch
+- `packages/domain/src/value-objects/duration.ts`: 빈 interface → `Duration` (seconds: number, accuracy: TokenAccuracy)
+- `packages/domain/src/value-objects/timestamp-range.ts`: 빈 interface → `TimestampRange` (startedAt: string, endedAt?: string)
+- `packages/domain/src/entities/agent.ts`: 빈 interface → `AgentId`, `AgentStatus`, `AgentEntity` (14개 필드. event-flow.md §12 + knowledge/entities/agent.md 기준)
+- `packages/domain/src/entities/event.ts`: `sessionId: string` → `sessionId: SessionId` 교체
+- 다음 배치 후보: Task/Skill 엔티티, 또는 projector 스텁
