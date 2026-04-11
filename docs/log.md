@@ -41,3 +41,20 @@ links:
 - `session-start`와 `resume-next`의 의미를 다시 분리했다. `session-start`는 시작 시 scratch/docs를 읽고, `resume-next`는 종료 시 다음 세션용 handoff를 남긴다.
 - workflow source of truth 는 계속 `docs/operations/claude-code-session-workflow.md`로 유지하되, 루트 `CLAUDE.md`를 새 진입 가이드로 추가했다.
 - 루트 `README.md`, `.claude/README.md`, `.claude/skills/*`의 순서와 설명을 새 semantics에 맞게 정렬했다.
+
+## [2026-04-11] workflow simplification | five-skill model
+- Claude Code 운영 스킬을 `kick-off`, `session-start`, `work`, `docs-sync`, `close-session` 다섯 개로 단순화했다.
+- `kick-off`는 PM 역할의 후보 추천 스킬로 정의했다.
+- `work`가 기존의 세분화된 구현/검토 단계를 흡수하도록 정리했다.
+- `close-session`이 세션 종료 handoff를 담당하도록 정리했다.
+- `README.md`, `CLAUDE.md`, `.claude/*`, `docs/operations/claude-code-session-workflow.md`를 새 구조에 맞게 갱신했다.
+
+## [2026-04-11] optimize | .claude token reduction
+- `.claude/skills/_shared/` 4개 파일의 내용을 `.claude/context/` 4개 파일로 통합하고 `_shared/` 디렉토리를 삭제했다.
+- `context/product-summary.md`에 실행 규칙 4줄, `context/architecture-summary.md`에 패키지 구조 목록, `context/docs-system-summary.md`에 문서 작업 사고 순서, `context/glossary.md`에 세션 운영 용어 5개를 각각 추가했다.
+- 모든 스킬에서 `CLAUDE.md` 재읽기 항목 제거 (Claude Code가 세션 시작 시 자동 로드함).
+- `work`와 `docs-sync`에서 `context/*.md` 재읽기 항목 제거 (session-start에서 이미 로드된 컨텍스트).
+- `.claude/WORKFLOW.md` 삭제 (README.md에 동일 내용 포함, CLAUDE.md에 포인터 추가).
+- `.claude/README.md`에서 `_shared/` 관련 섹션과 참조 정리.
+- 변경 동기: 스킬 호출당 중복 읽기로 낭비되던 토큰 절감, 컨텍스트 레이어를 context/ 단일 허브로 단순화.
+

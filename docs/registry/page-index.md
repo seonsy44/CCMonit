@@ -4,7 +4,7 @@ title: "문서 페이지 인덱스"
 type: registry
 status: active
 owners: [docs-steward]
-updated: 2026-04-10
+updated: 2026-04-11
 tags: [registry, page-index]
 links:
   - ../index.md

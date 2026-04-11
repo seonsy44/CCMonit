@@ -37,6 +37,7 @@ links:
 - 필요 없는 중복 문서 통합
 - 릴리스 직전 문서와 구현 불일치 점검
 - `.claude/context/*`와 docs 기준 문서가 낡았는지 비교
+- 간소화된 스킬 구조(`kick-off`, `session-start`, `work`, `docs-sync`, `close-session`)와 문서 설명이 계속 맞는지 점검
 
 ## 권장 역할
 - product: 기능 / 화면 / 범위 변경 점검

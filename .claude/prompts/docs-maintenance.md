@@ -12,6 +12,7 @@
 - `docs/_system/QUERY_WORKFLOW.md`
 - `docs/_system/LINT_WORKFLOW.md`
 - `docs/_system/MAINTENANCE_POLICY.md`
+- `docs/operations/claude-code-session-workflow.md`
 - 필요 시 `docs/knowledge/`, `docs/reports/`, `docs/sources/`
 
 ## 이번 세션에서 해야 할 일
@@ -25,7 +26,7 @@
 - raw source를 직접 수정하지 않는다.
 - wiki 문서와 registry 문서를 분리해서 다룬다.
 - 내용 추가보다 구조 정합성을 우선한다.
-- 세션이 길어지면 lint / ingest / rewrite를 따로 분리한다.
+- 문서 유지보수는 현재 스킬 구조에서 `docs-sync`로 정리할 수 있는 범위로 우선 본다.
 
 ## 원하는 출력
 1. docs 건강 상태 요약
@@ -33,6 +34,3 @@
 3. 수정 대상 문서 목록
 4. 갱신해야 할 index / registry / log 항목
 5. 종료 시 남길 log entry 초안
-
-## 추가 지시
-문서 변경 범위가 크면 한 번에 다 하지 말고, 작은 정비 배치로 나눠서 제안해줘.

@@ -47,3 +47,4 @@ links:
 - 새로운 사실은 기존 문서를 덮어쓰는 대신, **출처를 기록하고 관련 페이지를 갱신**한다.
 - 답변 가치가 있는 분석은 채팅에서 끝내지 말고 `reports/queries/` 또는 `knowledge/syntheses/`에 남긴다.
 - `log.md`는 append-only 로 운영한다.
+- Claude Code 운영 흐름은 `operations/claude-code-session-workflow.md`를 source of truth로 본다.

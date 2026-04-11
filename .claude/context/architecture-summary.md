@@ -1,5 +1,13 @@
 # Architecture Summary
 
+패키지 구조:
+- `apps/cli`: CLI 엔트리와 TUI 프레젠테이션 계층
+- `packages/domain`: 엔티티, 값 객체, 도메인 서비스
+- `packages/application`: 유스케이스, DTO, 포트
+- `packages/infra`: Claude adapter, storage, telemetry, reports
+- `packages/shared`: 공용 타입 / 에러 / 유틸
+- `packages/config`: 설정 스키마와 해석
+
 핵심 흐름:
 Raw input -> Adapter -> Parser / Extractor -> Canonical Event -> Event Store -> Projector / Usecase -> Presenter -> CLI / TUI / Reports
 
