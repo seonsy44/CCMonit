@@ -20,6 +20,8 @@ disable-model-invocation: true
 - `.claude/scratch/worklog.md`
 - `.claude/scratch/open-questions.md`
 
+> 참고: kick-off 직후 실행 시 `.claude/context/*.md`는 이미 로드됨. 새 세션에서 session-start를 직접 시작할 경우에만 context/\*.md를 읽는다.
+
 ## 해야 할 일
 
 1. 현재 상태를 짧게 요약한다.

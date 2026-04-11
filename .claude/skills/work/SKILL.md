@@ -15,11 +15,11 @@ disable-model-invocation: true
 
 ## 먼저 읽을 것
 
-- 관련 `docs/*`
+- 작업 대상 관련 docs 파일 (`docs/architecture/`, `docs/knowledge/entities/`, `docs/operations/` 중 해당 파일)
+  — 어떤 파일이 관련 있는지 모를 때는 `docs/index.md`를 먼저 확인한다
 - 관련 코드 파일
-- `.claude/scratch/*`
 
-> 참고: `.claude/context/*.md`는 session-start에서 이미 로드됨. 새 세션에서 work를 직접 시작할 경우에만 context/*.md를 읽는다.
+> 참고: `.claude/context/*.md`는 session-start에서 이미 로드됨. 새 세션에서 work를 직접 시작할 경우에만 context/\*.md를 읽는다.
 
 ## 해야 할 일
 

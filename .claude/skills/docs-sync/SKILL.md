@@ -15,12 +15,12 @@ disable-model-invocation: true
 ## 먼저 읽을 것
 - `docs/operations/claude-code-session-workflow.md`
 - `docs/operations/docs-operations.md`
-- 관련 기준 문서
+- 이번 변경과 관련된 기준 문서 (`docs/product/`, `docs/architecture/`, `docs/operations/`, `docs/decisions/` 중 해당 파일)
 - `docs/index.md`
 - `docs/registry/page-index.md`
 - `docs/log.md`
 
-> 참고: `.claude/context/*.md`와 `.claude/scratch/*`는 session-start/work에서 이미 로드됨. 독립 실행 시에만 context/*.md를 읽는다.
+> 참고: kick-off 직후 같은 세션이라면 `docs/operations/claude-code-session-workflow.md`도 이미 로드됨. `.claude/context/*.md`와 `.claude/scratch/*`는 session-start/work에서 이미 로드됨. 독립 실행 시에만 해당 파일들을 읽는다.
 
 ## 해야 할 일
 1. 이번 세션에서 장기 반영이 필요한 변경을 식별한다.
