@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Infrastructure adapters, storage, telemetry, and utilities for ccmonit.",
+  "description": "Infrastructure adapters, storage, metrics, and utilities for ccmonit.",
   "dependencies": {
     "@ccmonit/application": "workspace:*",
     "@ccmonit/domain": "workspace:*",

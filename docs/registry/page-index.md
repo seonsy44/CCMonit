@@ -62,6 +62,7 @@ links:
 - `decisions/ADR-001-monorepo-structure.md`
 - `decisions/ADR-002-docs-as-wiki.md`
 - `decisions/ADR-003-frontmatter-index-log.md`
+- `decisions/ADR-004-tech-stack-decisions.md`
 
 ## knowledge
 - `knowledge/overview/project-map.md`

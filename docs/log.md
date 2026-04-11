@@ -58,3 +58,8 @@ links:
 - `.claude/README.md`에서 `_shared/` 관련 섹션과 참조 정리.
 - 변경 동기: 스킬 호출당 중복 읽기로 낭비되던 토큰 절감, 컨텍스트 레이어를 context/ 단일 허브로 단순화.
 
+## [2026-04-11] refactor | telemetry → metrics rename and tech stack ADR
+- `packages/infra/src/telemetry/` → `packages/infra/src/metrics/`로 이름 변경. "telemetry"가 원격 전송을 암시하므로 로컬 전용임을 명확히 함.
+- `module-responsibilities.md`, `architecture-summary.md`, `infra/package.json`의 관련 참조 모두 갱신.
+- ADR-004 추가: TUI(ink), SQLite(better-sqlite3), 파일 감시(fs.watch), 테스트(보류) 기술 결정 기록.
+
