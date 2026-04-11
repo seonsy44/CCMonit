@@ -1,4 +1,4 @@
-export class TokenBreakdown.view {
+export class TokenBreakdownView {
   render(): void {
     throw new Error('Not implemented');
   }

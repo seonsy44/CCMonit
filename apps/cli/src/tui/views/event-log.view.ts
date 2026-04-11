@@ -1,4 +1,4 @@
-export class EventLog.view {
+export class EventLogView {
   render(): void {
     throw new Error('Not implemented');
   }

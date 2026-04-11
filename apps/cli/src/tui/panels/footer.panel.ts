@@ -1,4 +1,4 @@
-export class Footer.panel {
+export class FooterPanel {
   render(): void {
     throw new Error('Not implemented');
   }

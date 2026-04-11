@@ -1,4 +1,4 @@
-export class Header.panel {
+export class HeaderPanel {
   render(): void {
     throw new Error('Not implemented');
   }

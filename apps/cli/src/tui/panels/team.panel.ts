@@ -1,4 +1,4 @@
-export class Team.panel {
+export class TeamPanel {
   render(): void {
     throw new Error('Not implemented');
   }

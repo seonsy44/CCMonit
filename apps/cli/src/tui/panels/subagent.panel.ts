@@ -1,4 +1,4 @@
-export class Subagent.panel {
+export class SubagentPanel {
   render(): void {
     throw new Error('Not implemented');
   }

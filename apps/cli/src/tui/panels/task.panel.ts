@@ -1,4 +1,4 @@
-export class Task.panel {
+export class TaskPanel {
   render(): void {
     throw new Error('Not implemented');
   }
