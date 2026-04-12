@@ -84,6 +84,12 @@ links:
 - tsup 빌드 파이프라인: `pnpm build` → `apps/cli/dist/main.js` (shebang 포함), `bin.ccmonit` 등록
 - `npm install -g @ccmonit/cli` → `ccmonit monitor` 실행 가능한 구조 완성
 
+## [2026-04-12] refactor | scratch 최상위 handoff 파일 제거
+- `.claude/scratch/`에서 최상위 `worklog.md`, `next-prompt.md`, `open-questions.md` 제거.
+- 개발건별 handoff는 `devs/{slug}/`에만 존재하도록 단일화.
+- `dev-sprint` 직행(Flow C) 시 `devs/_adhoc/` 사용 규칙 추가.
+- 관련 스킬(dev-kickoff, dev-close, dev-sprint)·프롬프트(kickoff, resume-session)·README·workflow 문서 갱신.
+
 ## [2026-04-12] maintenance | .claude scratch 정리 및 context 동기화
 - cli-bootstrap 개발건 종료 처리: open-questions(npm publish) → 최상위 scratch/open-questions.md 이관. devs/cli-bootstrap/ 폴더 보존.
 - scratch/next-prompt.md 갱신: dev-list 완성 및 domain-services 방향 반영.

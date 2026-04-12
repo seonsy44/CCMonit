@@ -44,9 +44,6 @@ disable-model-invocation: true
 - `.claude/scratch/notes.md`
 
 상태 파악:
-- `.claude/scratch/worklog.md`
-- `.claude/scratch/next-prompt.md`
-- `.claude/scratch/open-questions.md`
 - `.claude/scratch/dev-list.md` (있으면 — 중복 방지를 위해)
 - `docs/index.md`, `docs/log.md`
 

@@ -3,11 +3,10 @@
 이전 세션의 상태를 이어받아 **작은 스프린트 1개만** 진행할 수 있게 정리해줘.
 
 ## 먼저 읽을 것
-- `.claude/scratch/next-prompt.md`
-- `.claude/scratch/worklog.md`
-- `.claude/scratch/open-questions.md`
+- `.claude/scratch/dev-list.md` (개발건 목록 확인)
 - `.claude/scratch/notes.md`
-- `.claude/scratch/dev-list.md` (있으면)
+- `.claude/scratch/devs/` 하위 디렉토리 목록 확인
+- 가장 최근 활성 dev의 `devs/{slug}/next-prompt.md`, `worklog.md`, `open-questions.md`
 - `CLAUDE.md`
 - `docs/operations/claude-code-session-workflow.md`
 - `.claude/context/product-summary.md`

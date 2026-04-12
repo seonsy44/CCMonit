@@ -82,11 +82,9 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 대표 용도:
 - `dev-list.md`: 개발건 목록 (dev-kickoff가 추가, dev-close가 삭제)
-- `worklog.md`: 이번까지 한 일 (기본 참조용)
-- `next-prompt.md`: 다음 세션 시작점 (기본 참조용)
-- `open-questions.md`: 아직 안 풀린 점 (기본 참조용)
 - `notes.md`: 작업 중 잠정 메모 (개발건 무관 공통)
 - `devs/{slug}/`: 개발건별 scratch (worklog, next-prompt, open-questions)
+- `devs/_adhoc/`: dev-open 없이 dev-sprint 직행 시 사용하는 임시 scratch (dev-close가 처리 후 내용을 비운다)
 
 원칙:
 - 휘발성 정보는 여기 둔다.

@@ -11,9 +11,7 @@
 - `.claude/context/glossary.md`
 - `.claude/scratch/notes.md`
 - `.claude/scratch/dev-list.md` (있으면)
-- `.claude/scratch/worklog.md`
-- `.claude/scratch/next-prompt.md`
-- `.claude/scratch/open-questions.md`
+- `.claude/scratch/devs/` 하위 디렉토리 목록 + 각 진행 중 dev의 `next-prompt.md`
 - 필요 시 `docs/index.md`, `docs/log.md`, `docs/registry/page-index.md`
 
 ## 이번 세션 목표

@@ -15,6 +15,7 @@ disable-model-invocation: true
 | 흐름 | scratch 경로 |
 |------|-------------|
 | named 개발건 | `.claude/scratch/devs/{slug}/` |
+| dev-open 없이 직행 | `.claude/scratch/devs/_adhoc/` |
 
 **notes.md는 항상 `.claude/scratch/notes.md`만 참조한다.**
 
@@ -62,6 +63,12 @@ disable-model-invocation: true
 1. 이번 세션에서 완료한 개발건의 slug를 dev-list에서 찾는다.
 2. 해당 행을 삭제한다.
 3. 목록이 비면 "프로젝트 상태 요약"만 남기고 table은 비워둔다.
+
+### 4단계: _adhoc 정리 (해당 시)
+
+scratch 경로가 `devs/_adhoc/`인 경우:
+1. handoff 내용을 출력에 포함한 뒤, `_adhoc/` 내 파일 내용을 비운다.
+2. 다음 세션이 _adhoc을 깨끗한 상태에서 시작할 수 있게 한다.
 
 ## 출력 형식
 

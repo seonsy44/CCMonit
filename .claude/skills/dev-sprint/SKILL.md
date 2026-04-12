@@ -15,7 +15,9 @@ disable-model-invocation: true
 
 ## scratch 경로 인지
 
-`dev-open`에서 명시한 scratch 경로를 그대로 사용한다. 별도로 scratch를 읽거나 쓰지 않는다. 범위 초과 또는 열린 질문이 생기면 `dev-close`가 올바른 경로에 반영한다.
+`dev-open`에서 명시한 scratch 경로를 그대로 사용한다.
+`dev-open` 없이 직행한 경우 `.claude/scratch/devs/_adhoc/`을 사용한다.
+별도로 scratch를 읽거나 쓰지 않는다. 범위 초과 또는 열린 질문이 생기면 `dev-close`가 올바른 경로에 반영한다.
 
 ## 먼저 읽을 것
 
