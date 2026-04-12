@@ -13,11 +13,13 @@ disable-model-invocation: true
 - `dev-open` = "이 개발건에서 어떤 스프린트를 할까" (스프린트 계획 고정)
 
 **언제 쓰나:**
+
 - 무엇을 할지 감이 안 잡힐 때
 - 여러 방향이 있어서 비교하고 싶을 때
 - 특정 주제에 대해 가능한 개발건을 정리하고 싶을 때
 
 **언제 안 쓰나:**
+
 - 이미 dev-list에 개발건이 있으면 바로 `dev-open {slug}`으로 간다
 - 개발건 단위 관리 없이 바로 실행하려면 `dev-sprint`으로 직행한다
 
@@ -28,26 +30,31 @@ disable-model-invocation: true
   - `true` — `.claude/scratch/user-req.md`의 요구사항을 반영하여 개발건 도출
 
 입력 예시:
-  - (없음) — 현재 프로젝트 상태 기반 전체 탐색
-  - `true` — user-req.md에 미리 적어둔 요구사항 기반 탐색
+
+- (없음) — 현재 프로젝트 상태 기반 전체 탐색
+- `true` — user-req.md에 미리 적어둔 요구사항 기반 탐색
 
 ## 먼저 읽을 것
 
 공통:
-- `docs/operations/claude-code-session-workflow.md` *(선택 — 범위 판단이 불명확할 때만. §1-1과 §1-2가 핵심)*
+
+- `docs/operations/claude-code-session-workflow.md` _(선택 — 범위 판단이 불명확할 때만. §1-1과 §1-2가 핵심)_
 - `.claude/context/product-summary.md`
 - `.claude/context/architecture-summary.md`
 - `.claude/context/model-effort-guide.md`
 - `.claude/scratch/notes.md`
 
 상태 파악:
+
 - `.claude/scratch/dev-list.md` (있으면 — 중복 방지를 위해)
 - `docs/index.md`, `docs/log.md` (dev-list에 최신 상태 요약이 있으면 생략 가능)
 
 일시 중단된 개발건 확인:
+
 - `.claude/scratch/pause-*.md` 파일이 있으면 일시 중단된 개발건으로 포함 (`/dev-reopen`으로 재개 가능)
 
 `true` 파라미터가 있으면:
+
 - `.claude/scratch/user-req.md`를 읽는다
 - 요구사항과 관련된 docs, 코드를 추가로 읽는다
 
@@ -74,7 +81,7 @@ disable-model-invocation: true
 1. 프로젝트 현재 상태를 짧게 진단한다.
 2. 가능한 개발건 후보를 2~5개 도출한다.
    - 각 개발건은 `dev-open`에 slug 파라미터로 줄 수 있는 단위다.
-   - 각 개발건 안에는 예상 스프린트 2~3개를 포함한다.
+   - 각 개발건 안에는 예상 스프린트 1~N개를 포함한다.
 3. 각 개발건에 대해 판단한다:
    - 긴급도 (urgent / normal / low)
    - 불확실성 (높음 / 보통 / 낮음)
@@ -92,6 +99,7 @@ disable-model-invocation: true
 ### 3단계: user-req.md 초기화 (해당 시)
 
 `true` 파라미터로 실행했고 개발건 도출이 완료되면:
+
 1. `.claude/scratch/user-req.md`를 양식 상태로 초기화한다 (구분선 아래 내용 삭제).
 2. 동일 요구사항이 다음 실행에서 중복 반영되지 않게 한다.
 
@@ -101,9 +109,9 @@ disable-model-invocation: true
 
 **새로 추가된 개발건 후보:**
 
-| # | 개발건명 | slug | 예상 스프린트 | 긴급도 | 불확실성 | 선행 조건 | 비고 |
-|---|----------|------|---------------|--------|----------|-----------|------|
-| 1 | ... | ... | 스프린트1, 스프린트2 | ... | ... | ... | ... |
+| #   | 개발건명 | slug | 예상 스프린트        | 긴급도 | 불확실성 | 선행 조건 | 비고 |
+| --- | -------- | ---- | -------------------- | ------ | -------- | --------- | ---- |
+| 1   | ...      | ...  | 스프린트1, 스프린트2 | ...    | ...      | ...       | ...  |
 
 **추천**: 1순위 개발건과 짧은 이유
 

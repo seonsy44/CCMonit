@@ -18,7 +18,8 @@ disable-model-invocation: true
 ## 먼저 읽을 것
 
 공통:
-- `docs/operations/claude-code-session-workflow.md` *(선택 — 범위 판단이 불명확할 때만. §1-1 범위 판단 기준 표가 핵심)*
+
+- `docs/operations/claude-code-session-workflow.md` _(선택 — 범위 판단이 불명확할 때만. §1-1 범위 판단 기준 표가 핵심)_
 - `.claude/context/product-summary.md`
 - `.claude/context/architecture-summary.md`
 - `.claude/context/model-effort-guide.md`
@@ -39,7 +40,7 @@ disable-model-invocation: true
 
 dev-list의 예상 스프린트를 기반으로 이번 세션 계획을 확정한다:
 
-1. 이번 세션에서 처리할 스프린트 목록을 확정한다 (보통 2~3개, 각각 독립 커밋 단위).
+1. 이번 세션에서 처리할 스프린트 목록을 확정한다 (보통 1~N개, 각각 독립 커밋 단위).
    - dev-list의 예상 스프린트를 현재 프로젝트 상태에 맞게 조정해도 된다.
 2. 세션 stop line을 정한다.
 3. 각 스프린트의 실행 순서와 허용 범위를 제안한다.
