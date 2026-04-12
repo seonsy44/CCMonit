@@ -1,5 +1,3 @@
-/**
- * Build script placeholder.
- * TODO: add package build orchestration when implementation starts.
- */
-console.log('CCMonit build script placeholder');
+import { execSync } from 'node:child_process';
+
+execSync('pnpm --filter @ccmonit/cli build', { stdio: 'inherit' });

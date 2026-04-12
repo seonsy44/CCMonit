@@ -1,5 +1,3 @@
-/**
- * Development entry script placeholder.
- * TODO: wire CLI app bootstrap for local development.
- */
-console.log('CCMonit dev script placeholder');
+import { execSync } from 'node:child_process';
+
+execSync('tsx apps/cli/src/main.ts monitor', { stdio: 'inherit' });
