@@ -1,6 +1,6 @@
-# flow-start prompt
+# dev-kickoff prompt
 
-이번 세션을 시작하기 위한 진입 템플릿이다. `/flow-start` 스킬을 실행한다.
+이번 세션을 시작하기 위한 진입 템플릿이다. `/dev-kickoff` 스킬을 실행한다.
 
 ## 먼저 읽을 것
 - `CLAUDE.md`
@@ -9,23 +9,26 @@
 - `.claude/context/architecture-summary.md`
 - `.claude/context/docs-system-summary.md`
 - `.claude/context/glossary.md`
-- `.claude/scratch/next-prompt.md`
+- `.claude/scratch/notes.md`
+- `.claude/scratch/dev-list.md` (있으면)
 - `.claude/scratch/worklog.md`
+- `.claude/scratch/next-prompt.md`
 - `.claude/scratch/open-questions.md`
 - 필요 시 `docs/index.md`, `docs/log.md`, `docs/registry/page-index.md`
 
 ## 이번 세션 목표
-- 지금 바로 할 수 있는 작업 후보 1~3개를 추천한다.
-- 각 후보의 범위 크기(넓은/보통/좁은)와 이유를 짧게 적는다.
-- 사용자가 선택하면 이번 세션 작업 목록, stop line, flow-work 순서를 확정한다.
+- 현재 프로젝트 상태에서 가능한 개발건 후보 2~5개를 도출한다.
+- 각 후보의 예상 스프린트(2~3개), 긴급도, 불확실성을 정리한다.
+- 결과를 `.claude/scratch/dev-list.md`에 table 형식으로 추가한다.
+- 1순위 추천 개발건과 다음 단계 (`/dev-open {slug}`)를 안내한다.
 
 ## 작업 원칙
 - docs를 source of truth로 본다.
-- 각 작업은 독립된 커밋 단위로 처리한다.
-- 완료 후 `.claude/scratch/`를 다음 세션이 읽을 수 있는 상태로 남긴다.
+- 개발건은 `dev-open`에 slug 파라미터로 줄 수 있는 단위로 정의한다.
+- 완료 후 dev-list는 "아직 시작 안 한 개발건" 목록으로 유지된다.
 
 ## 원하는 출력
-1. 작업 후보 1~3개 (범위 크기 포함)
-2. 이번 세션 작업 목록 (선택 후 확정)
-3. 세션 stop line
-4. `/flow-work` 실행 순서
+1. 프로젝트 상태 요약 (1~3문장)
+2. 개발건 후보 table (slug, 예상 스프린트, 긴급도, 불확실성, 선행 조건)
+3. 1순위 추천 + 이유
+4. 다음 단계: `/dev-open {slug}`

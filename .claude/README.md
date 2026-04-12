@@ -16,7 +16,7 @@
    작업을 여러 번 끊어서 할 때도 다음 세션이 자연스럽게 이어받게 한다.
 
 3. **작업 방식 단순화**  
-   지나치게 세분화된 단계 대신, 시작 / 작업 / 문서 반영 / 마감의 간단한 흐름으로 운영한다.
+   지나치게 세분화된 단계 대신, 개발건 도출 / 시작 / 스프린트 실행 / 마감의 간단한 흐름으로 운영한다.
 
 4. **문서 시스템과 코드 작업 연결**  
    `docs/`가 단순 산출물 보관소가 아니라 유지보수 대상 위키라는 점을 Claude가 계속 인식하게 한다.
@@ -46,11 +46,11 @@ Claude Code의 수동 스킬 정의를 둔다.
 - 스킬은 `docs/`와 `.claude/`를 읽되, source of truth를 새로 만들지 않는다.
 
 현재 사용 스킬:
-- `kick-off`
-- `session-start`
-- `work`
-- `docs-sync`
-- `close-session`
+- `dev-kickoff` (optional) — 개발건 후보 도출 + dev-list 추가
+- `dev-open` — 개발건 시작 + 스프린트 계획 고정 (dev-list 필수)
+- `dev-sprint` — 스프린트 1개 실행 + 커밋 메시지 추천
+- `dev-close` — dev-list 정리 + handoff
+- `dev-check` (optional) — dev-sprint 사이 체크포인트
 
 각 스킬 디렉토리에 `SKILL.md`가 있다. 공용 실행 컨텍스트는 `.claude/context/`로 통합되어 있다.
 
@@ -67,10 +67,10 @@ Claude Code의 수동 스킬 정의를 둔다.
 원칙:
 - 작업 절차 자체는 두지 않고, 사람이 바로 붙여 넣어 쓸 수 있는 시작 문구만 둔다.
 - 구현 흐름, 검증 규칙, 세션 운영 로직은 `skills/`와 `docs/operations/claude-code-session-workflow.md`에 두고 여기에는 중복 저장하지 않는다.
-- 새 프롬프트를 추가할 때는 “이 파일이 호출 템플릿인가, 절차 문서인가”를 먼저 구분한다.
+- 새 프롬프트를 추가할 때는 "이 파일이 호출 템플릿인가, 절차 문서인가"를 먼저 구분한다.
 
 하위 파일:
-- `kickoff.md`: 프로젝트 첫 진입 또는 새 작업 시작용
+- `kickoff.md`: 개발건 도출 또는 새 작업 시작용
 - `resume-session.md`: 중단된 세션 재개용
 - `docs-maintenance.md`: 문서 점검·정리·인덱스 갱신 요청용
 
@@ -81,10 +81,12 @@ Claude Code의 수동 스킬 정의를 둔다.
 세션 간 handoff를 위한 **임시 작업 메모 공간**이다.
 
 대표 용도:
-- `worklog.md`: 이번까지 한 일
-- `next-prompt.md`: 다음 세션 시작점
-- `open-questions.md`: 아직 안 풀린 점
-- `notes.md`: 작업 중 잠정 메모
+- `dev-list.md`: 개발건 목록 (dev-kickoff가 추가, dev-close가 삭제)
+- `worklog.md`: 이번까지 한 일 (기본 참조용)
+- `next-prompt.md`: 다음 세션 시작점 (기본 참조용)
+- `open-questions.md`: 아직 안 풀린 점 (기본 참조용)
+- `notes.md`: 작업 중 잠정 메모 (개발건 무관 공통)
+- `devs/{slug}/`: 개발건별 scratch (worklog, next-prompt, open-questions)
 
 원칙:
 - 휘발성 정보는 여기 둔다.
@@ -104,7 +106,7 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 ### 스킬 실행 전
 1. 관련 `docs/*`
-2. `.claude/context/*.md` (session-start 이후라면 재읽기 불필요)
+2. `.claude/context/*.md` (`dev-open` 이후라면 재읽기 불필요)
 3. `.claude/scratch/*`
 
 핵심 원칙:
@@ -136,23 +138,26 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 ## 5. 추천 세션 루틴
 
-### 새 작업이 불분명할 때
-- `/kick-off`
-- `/session-start [선택한 목표]`
-- `/work [이번 배치]`
-- 필요 시 `/docs-sync`
-- `/close-session`
+### 개발건이 불분명할 때
+- `/dev-kickoff [주제?]`
+- 선택 후 `/dev-open {slug}`
+- `/dev-sprint [스프린트]` × N
+- `/dev-close`
 
-### 작업이 이미 분명할 때
-- `/session-start [목표]`
-- `/work [이번 배치]`
-- 필요 시 `/docs-sync`
-- `/close-session`
+### 개발건이 이미 dev-list에 있을 때
+- `/dev-open {slug}`
+- `/dev-sprint [스프린트]` × N
+- `/dev-close`
+
+### 스프린트가 명확한 날 (빠른 실행)
+- `/dev-sprint [스프린트]`
+- `/dev-close`
 
 ### 세션 종료 시
-- `scratch/worklog.md` 갱신
-- `scratch/next-prompt.md` 갱신
-- `scratch/open-questions.md` 정리
+- `scratch/devs/{slug}/worklog.md` 갱신
+- `scratch/devs/{slug}/next-prompt.md` 갱신
+- `scratch/devs/{slug}/open-questions.md` 정리
+- `scratch/dev-list.md`에서 완료된 개발건 제거 (dev-close가 처리)
 - 필요 시 `context` 또는 `docs` 승격 반영
 
 ---
@@ -172,10 +177,10 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 ## 7. 이 저장소에서의 고정 규칙
 
-- `kick-off`는 작업 후보를 제안하는 PM 역할이다.
-- `session-start`는 시작 단계에서 현재 문맥을 읽고 목표와 stop line을 정리한다.
-- `work`는 이번 배치의 실제 작업을 수행하는 메인 스킬이다.
-- `docs-sync`는 문서 반영이 필요할 때만 쓴다.
-- `close-session`은 종료 단계에서 다음 세션용 handoff를 남긴다.
+- `dev-kickoff`는 개발건 후보를 제안하는 탐색 역할이다 (optional).
+- `dev-open`은 시작 단계에서 dev-list를 읽고 스프린트 목록과 stop line을 고정한다.
+- `dev-sprint`는 이번 스프린트의 실제 작업을 수행하는 메인 스킬이다.
+- `dev-close`는 종료 단계에서 docs-sync(필요 시), dev-list 정리, 다음 세션용 handoff를 처리한다.
+- `dev-check`는 스프린트 3개 이상이거나 예상 밖 상황일 때만 쓴다 (optional).
 - workflow source of truth는 `docs/operations/claude-code-session-workflow.md`다.
 - 루트 `CLAUDE.md`는 Claude Code용 진입 가이드이고, 루트 `README.md`는 사람용 진입 가이드다.
