@@ -24,4 +24,4 @@
 
 | slug | 상태 | 비고 |
 |------|------|------|
-| cli-bootstrap | 완료 | next-prompt에 완료 기록 |
+| claude-scratch-cleanup | 진행 중 | 스프린트 1 진행 중 |
