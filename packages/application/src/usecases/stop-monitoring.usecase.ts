@@ -1,6 +1,9 @@
+import type { EventSourcePort } from '../ports/event-source.port.js';
+
 export class StopMonitoringUsecase {
-  async execute(input?: unknown): Promise<unknown> {
-    void input;
-    throw new Error('Not implemented');
+  constructor(private readonly eventSource: EventSourcePort) {}
+
+  async execute(): Promise<void> {
+    await this.eventSource.stop();
   }
 }
