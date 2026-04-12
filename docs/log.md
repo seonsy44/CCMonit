@@ -84,6 +84,11 @@ links:
 - tsup 빌드 파이프라인: `pnpm build` → `apps/cli/dist/main.js` (shebang 포함), `bin.ccmonit` 등록
 - `npm install -g @ccmonit/cli` → `ccmonit monitor` 실행 가능한 구조 완성
 
+## [2026-04-12] maintenance | .claude scratch 정리 및 context 동기화
+- cli-bootstrap 개발건 종료 처리: open-questions(npm publish) → 최상위 scratch/open-questions.md 이관. devs/cli-bootstrap/ 폴더 보존.
+- scratch/next-prompt.md 갱신: dev-list 완성 및 domain-services 방향 반영.
+- context/model-effort-guide.md: packages/config 별도 항목 제거 (2026-04-11 shared 병합 반영). TL;DR 표 및 상세 섹션 양쪽 수정.
+
 ## [2026-04-12] implement | 도메인 엔티티 완성 (ToolUsage, TokenUsage, Alert)
 - ToolUsageEntity: ToolCallId + ToolCallStatus(6종) + ToolUsageEntity(11필드). event-flow §15, §20.5 기반.
 - TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).
