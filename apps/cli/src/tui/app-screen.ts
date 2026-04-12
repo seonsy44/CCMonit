@@ -2,12 +2,14 @@ import { render, type Instance } from 'ink';
 import { createElement } from 'react';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
+import type { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
 import type { SessionPresenter } from '../presenters/session.presenter.js';
 import { App } from './components/app.js';
 
 export interface AppScreenDependencies {
   readonly sessionStore: SessionStorePort;
   readonly buildSummary: BuildSessionSummaryUsecase;
+  readonly detectAlerts: DetectAlertsUsecase;
   readonly presenter: SessionPresenter;
   readonly refreshIntervalMs: number;
 }
@@ -29,6 +31,7 @@ export class AppScreen {
       createElement(App, {
         sessionStore: this.deps.sessionStore,
         buildSummary: this.deps.buildSummary,
+        detectAlerts: this.deps.detectAlerts,
         presenter: this.deps.presenter,
         refreshIntervalMs: this.deps.refreshIntervalMs,
       }),

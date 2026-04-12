@@ -12,6 +12,7 @@ export function registerMonitorCommand(program: Command, app: CliApp): void {
       const screen = new AppScreen({
         sessionStore: app.sessionStore,
         buildSummary: app.buildSummary,
+        detectAlerts: app.detectAlerts,
         presenter: app.presenter,
         refreshIntervalMs: app.config.monitor?.refreshIntervalMs ?? 1000,
       });

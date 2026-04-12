@@ -2,30 +2,37 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Box, Text, useApp, useInput } from 'ink';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
+import type { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
 import type { SessionPresenter, SessionViewModel } from '../../presenters/session.presenter.js';
 import { TokenPresenter, type TokenBreakdownViewModel } from '../../presenters/token.presenter.js';
+import { AlertPresenter, type AlertViewModel } from '../../presenters/alert.presenter.js';
 import { defaultTheme } from '../theme/default-theme.js';
 import { SummaryPanel } from '../panels/summary.panel.js';
 import { TokenBreakdownView } from '../views/token-breakdown.view.js';
+import { AlertsPanel } from '../panels/alerts.panel.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
   readonly buildSummary: BuildSessionSummaryUsecase;
+  readonly detectAlerts: DetectAlertsUsecase;
   readonly presenter: SessionPresenter;
   readonly refreshIntervalMs: number;
 }
 
 const tokenPresenter = new TokenPresenter();
+const alertPresenter = new AlertPresenter();
 
 export function App({
   sessionStore,
   buildSummary,
+  detectAlerts,
   presenter,
   refreshIntervalMs,
 }: AppProps): React.ReactElement {
   const { exit } = useApp();
   const [sessions, setSessions] = useState<SessionViewModel[]>([]);
   const [tokenBreakdown, setTokenBreakdown] = useState<TokenBreakdownViewModel | null>(null);
+  const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
 
   useInput((input) => {
@@ -37,6 +44,7 @@ export function App({
       const recent = await sessionStore.listRecent(20);
       const viewModels: SessionViewModel[] = [];
       let primaryToken: TokenBreakdownViewModel | null = null;
+      const allAlerts: AlertViewModel[] = [];
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -48,15 +56,23 @@ export function App({
             primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
           }
         }
+
+        const result = await detectAlerts.execute({
+          sessionId: session.sessionId,
+        });
+        for (const alert of result.alerts) {
+          allAlerts.push(alertPresenter.toViewModel(alert));
+        }
       }
 
       setSessions(viewModels);
       setTokenBreakdown(primaryToken);
+      setAlerts(allAlerts);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
       // 폴링 실패는 무시 — 다음 틱에서 재시도
     }
-  }, [sessionStore, buildSummary, presenter]);
+  }, [sessionStore, buildSummary, detectAlerts, presenter]);
 
   useEffect(() => {
     void refresh();
@@ -87,6 +103,11 @@ export function App({
             <TokenBreakdownView breakdown={tokenBreakdown} />
           </Box>
         )}
+      </Box>
+
+      {/* Alerts */}
+      <Box marginTop={1}>
+        <AlertsPanel alerts={alerts} />
       </Box>
 
       {/* Footer */}
