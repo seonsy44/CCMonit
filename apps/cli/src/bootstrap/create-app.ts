@@ -13,11 +13,7 @@ export async function createApp(): Promise<CliApp> {
   return {
     name: 'ccmonit',
     config,
-    async start() {
-      throw new Error('Not implemented');
-    },
-    async stop() {
-      throw new Error('Not implemented');
-    },
+    async start() {},
+    async stop() {},
   };
 }
