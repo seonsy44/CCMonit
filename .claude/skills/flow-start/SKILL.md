@@ -43,6 +43,7 @@ disable-model-invocation: true
 - `.claude/context/architecture-summary.md`
 - `.claude/context/docs-system-summary.md`
 - `.claude/context/glossary.md`
+- `.claude/context/model-effort-guide.md`
 - `.claude/scratch/notes.md`
 
 결정된 scratch 경로에서:
@@ -63,7 +64,8 @@ disable-model-invocation: true
 2. 지금 바로 시작 가능한 작업 후보를 1~3개 추천도순으로 제안한다.
 3. 각 후보에 대해 **불확실성**과 **패턴 반복도**를 판단하고, 범위 크기를 함께 적는다.
    (기준: `docs/operations/claude-code-session-workflow.md` §1-1)
-4. 동일 패턴의 작업이 여러 개면 묶음 후보로 제안할 수 있다.
+4. 각 후보의 주 변경 대상 패키지를 기준으로 `.claude/context/model-effort-guide.md`의 패키지별 표와 다운그레이드 기준을 참조해 **권장 model + effort**를 결정한다.
+5. 동일 패턴의 작업이 여러 개면 묶음 후보로 제안할 수 있다.
 
 ### 2단계: 세션 계획 고정
 
@@ -79,12 +81,12 @@ disable-model-invocation: true
 
 **추천 단계:**
 - 현재 흐름: `기본 개발` 또는 `{파라미터}` (scratch 경로 명시)
-- 후보 1 `[넓은/보통/좁은 범위]` — 짧은 이유
-- 후보 2 `[넓은/보통/좁은 범위]` — 짧은 이유
-- 후보 3 `[넓은/보통/좁은 범위]` — (필요 시)
+- 후보 1 `[넓은/보통/좁은 범위]` `{model} + {effort}` — 짧은 이유
+- 후보 2 `[넓은/보통/좁은 범위]` `{model} + {effort}` — 짧은 이유
+- 후보 3 `[넓은/보통/좁은 범위]` `{model} + {effort}` — (필요 시)
 
 **계획 고정 단계 (작업 선택 후):**
-- 이번 세션 작업 목록 (1. 작업A, 2. 작업B, ...)
+- 이번 세션 작업 목록 (1. 작업A `{model} + {effort}`, 2. 작업B `{model} + {effort}`, ...)
 - 세션 stop line
 - 각 작업별 허용 범위
 - 현재 scratch 경로: `.claude/scratch/` 또는 `.claude/scratch/flows/{slug}/`
