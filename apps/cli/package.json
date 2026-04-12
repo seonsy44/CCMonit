@@ -8,13 +8,16 @@
     "build": "echo build pending"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0"
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.14"
   },
   "dependencies": {
-    "commander": "^12.1.0",
     "@ccmonit/application": "workspace:*",
     "@ccmonit/domain": "workspace:*",
     "@ccmonit/infra": "workspace:*",
-    "@ccmonit/shared": "workspace:*"
+    "@ccmonit/shared": "workspace:*",
+    "commander": "^12.1.0",
+    "ink": "^7.0.0",
+    "react": "^19.2.5"
   }
 }

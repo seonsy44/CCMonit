@@ -1,17 +1,29 @@
+import { render, type Instance } from 'ink';
+import { createElement } from 'react';
+import { App } from './components/app.js';
+
 export interface AppScreenDependencies {
   readonly presenters?: unknown;
   readonly theme?: unknown;
 }
 
 export class AppScreen {
-  constructor(private readonly deps: AppScreenDependencies) {}
+  private instance: Instance | null = null;
+
+  constructor(private readonly deps: AppScreenDependencies) {
+    void this.deps;
+  }
 
   mount(): void {
-    void this.deps;
-    throw new Error('Not implemented');
+    this.instance = render(createElement(App));
   }
 
   unmount(): void {
-    throw new Error('Not implemented');
+    this.instance?.unmount();
+    this.instance = null;
+  }
+
+  async waitUntilExit(): Promise<void> {
+    await this.instance?.waitUntilExit();
   }
 }
