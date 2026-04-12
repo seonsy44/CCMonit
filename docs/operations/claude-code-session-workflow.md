@@ -66,6 +66,7 @@ links:
 - 해당 경로가 없으면 신규 개발건으로 취급하고 빈 상태에서 시작한다.
 - `notes.md`는 항상 `.claude/scratch/notes.md` 하나만 사용한다 (개발건 무관 공통).
 - `dev-close`는 반드시 `dev-open`이 사용한 scratch 경로에만 기록한다. 혼용 금지.
+- `dev-close`는 완결된 named dev의 `devs/{slug}/` 폴더를 삭제한다. 후속 스프린트가 있는 dev만 보존한다.
 
 **dev-list.md:**
 - 위치: `.claude/scratch/dev-list.md` (개발건 무관 공통, `notes.md`와 같은 레벨)
@@ -339,7 +340,7 @@ slug는 `dev-kickoff`가 영문 kebab-case로 자동 결정한다.
 
 - 이번 세션 스프린트를 모두 끝냈는가?
 - 범위가 새지 않았는가?
-- scratch를 다음 세션이 읽을 수 있는 상태로 남겼는가?
+- 완결된 dev의 scratch가 정리됐는가? 후속 스프린트가 있는 dev만 남아있는가?
 - docs 또는 context로 승격해야 할 판단이 있었는가?
 - 다음 세션 첫 스프린트가 한 줄로 적혀 있는가?
 - 완료된 개발건이 dev-list에서 제거됐는가?
