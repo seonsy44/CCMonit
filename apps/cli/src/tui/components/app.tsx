@@ -3,8 +3,10 @@ import { Box, Text, useApp, useInput } from 'ink';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
 import type { SessionPresenter, SessionViewModel } from '../../presenters/session.presenter.js';
+import { TokenPresenter, type TokenBreakdownViewModel } from '../../presenters/token.presenter.js';
 import { defaultTheme } from '../theme/default-theme.js';
 import { SummaryPanel } from '../panels/summary.panel.js';
+import { TokenBreakdownView } from '../views/token-breakdown.view.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -12,6 +14,8 @@ export interface AppProps {
   readonly presenter: SessionPresenter;
   readonly refreshIntervalMs: number;
 }
+
+const tokenPresenter = new TokenPresenter();
 
 export function App({
   sessionStore,
@@ -21,6 +25,7 @@ export function App({
 }: AppProps): React.ReactElement {
   const { exit } = useApp();
   const [sessions, setSessions] = useState<SessionViewModel[]>([]);
+  const [tokenBreakdown, setTokenBreakdown] = useState<TokenBreakdownViewModel | null>(null);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
 
   useInput((input) => {
@@ -31,6 +36,7 @@ export function App({
     try {
       const recent = await sessionStore.listRecent(20);
       const viewModels: SessionViewModel[] = [];
+      let primaryToken: TokenBreakdownViewModel | null = null;
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -38,10 +44,14 @@ export function App({
         });
         if (summary) {
           viewModels.push(presenter.toViewModel(summary));
+          if (!primaryToken) {
+            primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
+          }
         }
       }
 
       setSessions(viewModels);
+      setTokenBreakdown(primaryToken);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
       // 폴링 실패는 무시 — 다음 틱에서 재시도
@@ -67,9 +77,16 @@ export function App({
         <Text color={defaultTheme.muted}>{lastRefresh}</Text>
       </Box>
 
-      {/* Summary Panel */}
-      <Box marginTop={1}>
-        <SummaryPanel sessions={sessions} />
+      {/* Panels */}
+      <Box marginTop={1} gap={4}>
+        <Box flexGrow={1}>
+          <SummaryPanel sessions={sessions} />
+        </Box>
+        {tokenBreakdown && (
+          <Box>
+            <TokenBreakdownView breakdown={tokenBreakdown} />
+          </Box>
+        )}
       </Box>
 
       {/* Footer */}
