@@ -15,10 +15,6 @@ disable-model-invocation: true
 
 2개 이하 스프린트이면 불필요하다.
 
-## 현재 개발건 인지
-
-`dev-open`에서 명시한 개발건과 scratch 경로를 그대로 따른다. `dev-check`는 scratch를 직접 읽거나 쓰지 않는다.
-
 ## 해야 할 일
 
 1. `dev-open`에서 확정한 스프린트 목록과 현재 완료 상태를 대조한다.
@@ -30,7 +26,7 @@ disable-model-invocation: true
 
 ## 출력 형식
 
-- 현재 개발건 및 scratch 경로 (`dev-open`에서 명시된 것)
+- 현재 개발건
 - 완료된 스프린트
 - 남은 스프린트 목록 (변경 시 조정 내용 포함)
 - 계속 진행 여부 / 다음 `dev-sprint` 대상

@@ -17,6 +17,3 @@
 | 3 | 인프라 어댑터 구현 | infra-adapters | (1) Claude Code 로그 파서, (2) NDJSON 이벤트 스토어, (3) 파일 감시 어댑터 | normal | 높음 | application-layer 포트 확정 | 실제 데이터 흐름의 핵심 |
 | 4 | TUI 패널 데이터 연결 | tui-panels | (1) session summary 패널, (2) token 패널, (3) alert 패널 | low | 보통 | application-layer + infra-adapters | UI 선행 조건 있음 |
 
-## 진행 중인 개발건
-
-없음.

@@ -50,6 +50,5 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
 
 빠른 참조: `/dev-kickoff [true?]` → 선택 → `/dev-open {slug}` → `/dev-sprint [스프린트]` × N → `/dev-close`  
 체크포인트 필요 시: dev-sprint 사이에 `/dev-check` 추가 (optional)  
-개발건이 명확할 때: `/dev-sprint [스프린트]` → `/dev-close` (dev-open 생략 가능)
-
-개발건마다 scratch 네임스페이스가 분리된다: `.claude/scratch/devs/{slug}/` (§1-2).
+개발건이 명확할 때: `/dev-sprint [스프린트]` → `/dev-close` (dev-open 생략 가능)  
+개발건 전환: `/dev-pause` → 다른 dev → `/dev-reopen {slug}` → 이어서 진행

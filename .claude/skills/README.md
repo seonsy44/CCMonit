@@ -19,16 +19,17 @@
 1. `/dev-open {slug}` — dev-list의 개발건 시작 + 스프린트 계획 고정. **dev-list에 있는 slug만 가능.**
 2. `/dev-sprint [스프린트]` — 스프린트 1개 실행 + 커밋 메시지 추천 (N번 반복)
 3. `/dev-close` — dev-list에서 완료된 개발건 제거 + handoff 정리
-4. `/dev-check` — (optional) dev-sprint 사이 체크포인트, 스프린트 3개 이상일 때
+4. `/dev-pause` — (optional) 개발건 전환 시 `pause-{slug}.md`에 이어받기 컨텍스트 기록
+5. `/dev-reopen {slug}` — (optional) pause된 개발건 재개 (pause 파일 기반 최소 읽기)
+6. `/dev-check` — (optional) dev-sprint 사이 체크포인트, 스프린트 3개 이상일 때
 
 표준 워크플로우: `dev-kickoff` → 선택 → `dev-open {slug}` → `dev-sprint` × N → `dev-close`
 빠른 워크플로우: `dev-sprint [스프린트]` → `dev-close`
-
-scratch 경로: named 개발건 → `.claude/scratch/devs/{slug}/`
+중단/재개 워크플로우: `dev-open` → `dev-sprint` × N → `dev-pause` → ... → `dev-reopen` → `dev-sprint` × N → `dev-close`
 
 구조 원칙:
 - `.claude/context/`는 사람+일반 세션 공용 안정 요약 및 실행 컨텍스트를 둔다.
 - 세션 handoff 정보는 `.claude/scratch/`에 둔다.
 - 큰 작업도 가능한 한 위 다섯 스킬 안에서 해결하고, 필요 이상으로 새 스킬을 늘리지 않는다.
-- `dev-kickoff`와 `dev-check`는 optional이며, 핵심 루프는 `dev-open` → `dev-sprint` × N → `dev-close` 세 개다.
-- `dev-open`은 dev-list에 있는 개발건만 시작할 수 있다. `dev-kickoff`로 먼저 도출해야 한다.
+- `dev-kickoff`, `dev-check`, `dev-pause`, `dev-reopen`은 optional이며, 핵심 루프는 `dev-open` → `dev-sprint` × N → `dev-close` 세 개다.
+- `dev-open`은 신규 개발건 전용 (dev-list 필수). pause된 개발건 재개는 `dev-reopen`.

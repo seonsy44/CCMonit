@@ -95,6 +95,12 @@ links:
 - scratch/next-prompt.md 갱신: dev-list 완성 및 domain-services 방향 반영.
 - context/model-effort-guide.md: packages/config 별도 항목 제거 (2026-04-11 shared 병합 반영). TL;DR 표 및 상세 섹션 양쪽 수정.
 
+## [2026-04-12] simplify | devs/{slug}/ scratch 구조 폐기 + dev-pause/dev-reopen 추가
+- devs/{slug}/ 3파일 구조(worklog, next-prompt, open-questions)와 devs/_adhoc/ 제거.
+- dev-pause 스킬 추가: 개발건 전환 시 pause-{slug}.md에 이어받기 컨텍스트 기록.
+- dev-reopen 스킬 추가: pause 파일을 읽고 최소 컨텍스트로 스프린트 계획 수립.
+- dev-open은 신규 개발건 전용. pause된 dev의 재개는 dev-reopen이 전담.
+
 ## [2026-04-12] maintenance | workflow.md 경량화 및 .claude 토큰 최적화
 - `docs/operations/claude-code-session-workflow.md`: §4(워크플로우 다이어그램), §5(스킬별 읽기 대상), §7(FAQ) 제거. 346줄 → 130줄. 다이어그램은 CLAUDE.md 참조로, 스킬 상세는 각 SKILL.md 포인터로 대체.
 - `.claude/skills/`: dev-kickoff/dev-open의 workflow.md 읽기를 선택적으로 전환. dev-open에 "dev-kickoff 직후 context 재읽기 불필요" 가이드 추가(dev-sprint 패턴 적용). dev-sprint의 index.md 탐색 조건 명확화.

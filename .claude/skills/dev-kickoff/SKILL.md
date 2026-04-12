@@ -44,9 +44,8 @@ disable-model-invocation: true
 - `.claude/scratch/dev-list.md` (있으면 — 중복 방지를 위해)
 - `docs/index.md`, `docs/log.md` (dev-list에 최신 상태 요약이 있으면 생략 가능)
 
-진행 중인 개발건 확인:
-- `.claude/scratch/devs/` 하위 디렉토리 목록 확인
-- 각 개발건의 `next-prompt.md`를 훑어보기
+일시 중단된 개발건 확인:
+- `.claude/scratch/pause-*.md` 파일이 있으면 일시 중단된 개발건으로 포함 (`/dev-reopen`으로 재개 가능)
 
 `true` 파라미터가 있으면:
 - `.claude/scratch/user-req.md`를 읽는다
@@ -80,7 +79,7 @@ disable-model-invocation: true
    - 긴급도 (urgent / normal / low)
    - 불확실성 (높음 / 보통 / 낮음)
    - 선행 조건 (없음 / 있으면 명시)
-4. `.claude/scratch/devs/`에 진행 중인 개발건이 있으면 "이어가기" 후보로 포함한다.
+4. `.claude/scratch/pause-*.md` 파일이 있으면 일시 중단된 개발건을 "이어가기" 후보로 포함한다 (`/dev-reopen`으로 재개).
 
 ### 2단계: dev-list.md에 추가
 

@@ -8,24 +8,7 @@ disable-model-invocation: true
 
 이 스킬은 개발건 종료 단계에서 **docs 반영(docs-sync)**, **handoff 정리**, **dev-list 정리**를 한 번에 처리한다.
 
-## scratch 경로 확인 (중요)
-
-이번 세션에서 사용한 scratch 경로를 먼저 확인한다. `dev-open` 출력에서 명시됐어야 한다:
-
-| 흐름               | scratch 경로                   |
-| ------------------ | ------------------------------ |
-| named 개발건       | `.claude/scratch/devs/{slug}/` |
-| dev-open 없이 직행 | `.claude/scratch/devs/_adhoc/` |
-
-**notes.md는 항상 `.claude/scratch/notes.md`만 참조한다.**
-
 ## 먼저 읽을 것
-
-결정된 scratch 경로에서:
-
-- `{scratch경로}/worklog.md`
-- `{scratch경로}/next-prompt.md`
-- `{scratch경로}/open-questions.md`
 
 공통:
 
@@ -58,8 +41,6 @@ disable-model-invocation: true
 2. 아직 안 끝난 것을 정리한다.
 3. 다음 세션 첫 스프린트를 1줄로 적는다.
 4. 열린 질문을 정리한다.
-5. **결정된 scratch 경로**의 `worklog.md`, `next-prompt.md`, `open-questions.md`에 반영할 내용을 제안한다.
-   - `worklog.md`는 **최신 3~5개 스프린트를 유지**한다. 오래된 항목은 1줄 요약으로 축약한다.
 
 ### 3단계: dev-list 정리
 
@@ -68,25 +49,11 @@ disable-model-invocation: true
 1. 이번 세션에서 완료한 개발건의 slug를 dev-list에서 찾는다.
 2. 해당 행을 삭제한다.
 3. 목록이 비면 "프로젝트 상태 요약"만 남기고 table은 비워둔다.
-
-### 4단계: scratch 정리
-
-**\_adhoc인 경우:**
-
-1. handoff 내용을 출력에 포함한 뒤, `_adhoc/` 내 파일 내용을 비운다.
-
-**named dev인 경우:**
-
-1. 2단계에서 작성한 next-prompt.md를 확인한다.
-2. 같은 개발건의 구체적 후속 스프린트가 적혀 있으면 → 폴더를 보존한다.
-3. 개발건이 완결됐으면 → `devs/{slug}/` 폴더 전체를 삭제한다.
-   - 완결 신호: "완료됨" 선언, 다른 dev 추천만 있음, 후속 스프린트 없음.
-4. 판단이 애매하면 보존한다.
-5. 결과를 출력에 명시한다.
+4. `pause-{slug}.md`가 있으면 함께 삭제한다.
 
 ## 출력 형식
 
-**현재 개발건 및 scratch 경로 명시** (예: `domain-services -> .claude/scratch/devs/domain-services/`)
+**현재 개발건 명시**
 
 **docs-sync (해당 시):**
 
@@ -99,16 +66,11 @@ disable-model-invocation: true
 - 미완료 항목
 - 다음 세션 첫 스프린트
 - 열린 질문
-- scratch 반영 초안 (경로 명시 포함)
 
 **dev-list 정리 (해당 시):**
 
 - dev-list에서 제거한 개발건: `{slug}`
 
-**scratch 정리:**
-
-- `devs/{slug}/` 삭제됨 / 보존 (사유)
-
 **commit message**
 
-- 현 스킬로 인한 변경사항에 대한 한줄의 영어 커밋 메시지
+- dev-close로 인한 변경사항에 대한 한줄의 영어 커밋 메시지

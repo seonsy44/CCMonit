@@ -47,9 +47,11 @@ Claude Code의 수동 스킬 정의를 둔다.
 
 현재 사용 스킬:
 - `dev-kickoff` (optional) — 개발건 후보 도출 + dev-list 추가
-- `dev-open` — 개발건 시작 + 스프린트 계획 고정 (dev-list 필수)
+- `dev-open` — 신규 개발건 시작 + 스프린트 계획 고정 (dev-list 필수)
 - `dev-sprint` — 스프린트 1개 실행 + 커밋 메시지 추천
 - `dev-close` — dev-list 정리 + handoff
+- `dev-pause` (optional) — 개발건 전환 시 `pause-{slug}.md`에 이어받기 컨텍스트 기록
+- `dev-reopen` (optional) — pause된 개발건 재개 (최소 읽기)
 - `dev-check` (optional) — dev-sprint 사이 체크포인트
 
 각 스킬 디렉토리에 `SKILL.md`가 있다. 공용 실행 컨텍스트는 `.claude/context/`로 통합되어 있다.
@@ -81,8 +83,8 @@ Claude Code의 수동 스킬 정의를 둔다.
 대표 용도:
 - `dev-list.md`: 개발건 목록 (dev-kickoff가 추가, dev-close가 삭제)
 - `notes.md`: 작업 중 잠정 메모 (개발건 무관 공통)
-- `devs/{slug}/`: 개발건별 scratch (worklog, next-prompt, open-questions)
-- `devs/_adhoc/`: dev-open 없이 dev-sprint 직행 시 사용하는 임시 scratch (dev-close가 처리 후 내용을 비운다)
+- `user-req.md`: 요구사항 입력 (dev-kickoff true 시 사용)
+- `pause-{slug}.md`: 일시 중단된 개발건의 이어받기 컨텍스트 (dev-pause가 생성, dev-reopen이 삭제)
 
 원칙:
 - 휘발성 정보는 여기 둔다.
@@ -149,11 +151,13 @@ Claude Code의 수동 스킬 정의를 둔다.
 - `/dev-sprint [스프린트]`
 - `/dev-close`
 
+### 개발건 전환이 필요할 때
+- `/dev-pause` → `pause-{slug}.md` 생성 후 다른 dev로 전환
+- `/dev-reopen {slug}` → pause 파일 기반으로 재개
+
 ### 세션 종료 시
-- `scratch/devs/{slug}/worklog.md` 갱신
-- `scratch/devs/{slug}/next-prompt.md` 갱신
-- `scratch/devs/{slug}/open-questions.md` 정리
 - `scratch/dev-list.md`에서 완료된 개발건 제거 (dev-close가 처리)
+- 미완료 개발건은 `dev-pause`로 이어받기 컨텍스트 기록
 - 필요 시 `context` 또는 `docs` 승격 반영
 
 ---
@@ -176,7 +180,9 @@ Claude Code의 수동 스킬 정의를 둔다.
 - `dev-kickoff`는 개발건 후보를 제안하는 탐색 역할이다 (optional).
 - `dev-open`은 시작 단계에서 dev-list를 읽고 스프린트 목록과 stop line을 고정한다.
 - `dev-sprint`는 이번 스프린트의 실제 작업을 수행하는 메인 스킬이다.
-- `dev-close`는 종료 단계에서 docs-sync(필요 시), dev-list 정리, 다음 세션용 handoff를 처리한다.
+- `dev-close`는 종료 단계에서 docs-sync(필요 시), dev-list 정리, handoff를 처리한다.
+- `dev-pause`는 개발건 전환 시 이어받기 컨텍스트를 `pause-{slug}.md`에 기록한다 (optional).
+- `dev-reopen`은 pause된 개발건을 최소 읽기로 재개한다 (optional).
 - `dev-check`는 스프린트 3개 이상이거나 예상 밖 상황일 때만 쓴다 (optional).
 - workflow source of truth는 `docs/operations/claude-code-session-workflow.md`다.
 - 루트 `CLAUDE.md`는 Claude Code용 진입 가이드이고, 루트 `README.md`는 사람용 진입 가이드다.
