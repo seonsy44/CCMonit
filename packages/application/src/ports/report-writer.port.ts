@@ -1,3 +1,5 @@
+import type { ReportDto } from '../dto/report.dto.js';
+
 export interface ReportWriterPort {
-  write(report: unknown): Promise<void>;
+  write(report: ReportDto): Promise<void>;
 }
