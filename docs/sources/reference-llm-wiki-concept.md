@@ -1,6 +1,6 @@
 ---
 id: SRC-REF-LLM-WIKI
-title: "LLM Wiki 컨셉 원문 참조 메모"
+title: 'LLM Wiki 컨셉 원문 참조 메모'
 type: source
 status: active
 owners: [docs-steward]

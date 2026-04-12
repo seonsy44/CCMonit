@@ -1,6 +1,6 @@
 ---
 id: DOCS-ROOT-README
-title: "CCMonit 문서 시스템 안내"
+title: 'CCMonit 문서 시스템 안내'
 type: guide
 status: active
 owners: [docs-steward]
@@ -29,6 +29,7 @@ links:
    - `index.md`와 `registry/page-index.md`를 먼저 읽으면 전체 구조를 파악할 수 있게 한다.
 
 ## 문서 계층
+
 - **운영/산출물 문서**: `product/`, `architecture/`, `operations/`, `decisions/`
 - **누적 지식 문서**: `knowledge/`
 - **문서 시스템 자체**: `_system/`, `registry/`, `index.md`, `log.md`
@@ -36,13 +37,15 @@ links:
 - **출처 관리**: `sources/`
 
 ## 가장 먼저 읽을 문서
+
 1. [index](index.md)
-2. [_system/DOCS_SCHEMA](_system/DOCS_SCHEMA.md)
+2. [\_system/DOCS_SCHEMA](_system/DOCS_SCHEMA.md)
 3. [registry/page-index](registry/page-index.md)
 4. [operations/claude-code-session-workflow](operations/claude-code-session-workflow.md)
 5. [reports/docs-health-baseline](reports/docs-health-baseline.md)
 
 ## 운영 원칙
+
 - 문서는 **최대한 링크 가능하고 재사용 가능하게** 쪼갠다.
 - 새로운 사실은 기존 문서를 덮어쓰는 대신, **출처를 기록하고 관련 페이지를 갱신**한다.
 - 답변 가치가 있는 분석은 채팅에서 끝내지 말고 `reports/queries/` 또는 `knowledge/syntheses/`에 남긴다.

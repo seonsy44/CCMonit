@@ -1,6 +1,6 @@
 ---
 id: ADR-TEMPLATE
-title: "ADR Template"
+title: 'ADR Template'
 type: template
 status: active
 owners: [architecture]

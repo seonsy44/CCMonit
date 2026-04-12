@@ -1,6 +1,6 @@
 ---
 id: DOCS-FRONTMATTER-GUIDE
-title: "문서 Frontmatter 가이드"
+title: '문서 Frontmatter 가이드'
 type: guide
 status: active
 owners: [docs-steward]
@@ -24,7 +24,7 @@ links:
 ```yaml
 ---
 id: DOCS-EXAMPLE
-title: "문서 제목"
+title: '문서 제목'
 type: spec
 status: active
 owners: [architecture]

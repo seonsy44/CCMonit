@@ -58,8 +58,7 @@ export class MetricsCalculator {
 
     const firstAt = events[0].occurredAt;
     const lastAt = events[events.length - 1].occurredAt;
-    const spanMs =
-      new Date(lastAt).getTime() - new Date(firstAt).getTime();
+    const spanMs = new Date(lastAt).getTime() - new Date(firstAt).getTime();
     const spanMinutes = Math.max(spanMs / 60_000, 1);
 
     return {

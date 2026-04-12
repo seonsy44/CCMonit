@@ -7,10 +7,5 @@ export default defineConfig({
   outDir: 'dist',
   clean: true,
   banner: { js: '#!/usr/bin/env node' },
-  noExternal: [
-    '@ccmonit/application',
-    '@ccmonit/domain',
-    '@ccmonit/infra',
-    '@ccmonit/shared',
-  ],
+  noExternal: ['@ccmonit/application', '@ccmonit/domain', '@ccmonit/infra', '@ccmonit/shared'],
 });

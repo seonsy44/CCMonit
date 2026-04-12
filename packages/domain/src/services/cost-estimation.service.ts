@@ -84,18 +84,13 @@ export class CostEstimationService {
     const pricing = MODEL_PRICING.get(tier);
     if (!pricing) return null;
 
-    const inputCostUsd =
-      ((input.inputTokens ?? 0) / MTOK) * pricing.inputPerMTok;
-    const outputCostUsd =
-      ((input.outputTokens ?? 0) / MTOK) * pricing.outputPerMTok;
-    const cacheReadCostUsd =
-      ((input.cacheReadTokens ?? 0) / MTOK) * pricing.cacheReadPerMTok;
-    const cacheWriteCostUsd =
-      ((input.cacheWriteTokens ?? 0) / MTOK) * pricing.cacheWritePerMTok;
+    const inputCostUsd = ((input.inputTokens ?? 0) / MTOK) * pricing.inputPerMTok;
+    const outputCostUsd = ((input.outputTokens ?? 0) / MTOK) * pricing.outputPerMTok;
+    const cacheReadCostUsd = ((input.cacheReadTokens ?? 0) / MTOK) * pricing.cacheReadPerMTok;
+    const cacheWriteCostUsd = ((input.cacheWriteTokens ?? 0) / MTOK) * pricing.cacheWritePerMTok;
 
     return {
-      totalCostUsd:
-        inputCostUsd + outputCostUsd + cacheReadCostUsd + cacheWriteCostUsd,
+      totalCostUsd: inputCostUsd + outputCostUsd + cacheReadCostUsd + cacheWriteCostUsd,
       breakdown: {
         inputCostUsd,
         outputCostUsd,

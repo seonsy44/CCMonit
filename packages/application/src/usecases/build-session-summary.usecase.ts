@@ -4,7 +4,10 @@ import type { TokenUsageEntity } from '@ccmonit/domain/entities/token-usage.js';
 import type { EventEntity } from '@ccmonit/domain/entities/event.js';
 import type { TokenAggregationService } from '@ccmonit/domain/services/token-aggregation.service.js';
 import type { CostEstimationService } from '@ccmonit/domain/services/cost-estimation.service.js';
-import type { SessionHealthService, SessionHealthInput } from '@ccmonit/domain/services/session-health.service.js';
+import type {
+  SessionHealthService,
+  SessionHealthInput,
+} from '@ccmonit/domain/services/session-health.service.js';
 import type { EventStorePort } from '../ports/event-store.port.js';
 import type { SessionStorePort } from '../ports/session-store.port.js';
 import type { ClockPort } from '../ports/clock.port.js';
@@ -91,14 +94,17 @@ export class BuildSessionSummaryUsecase {
   }
 
   private buildHealthInput(
-    session: { status: string; totalElapsedSec: number; totalIdleSec: number; lastEventAt?: string },
+    session: {
+      status: string;
+      totalElapsedSec: number;
+      totalIdleSec: number;
+      lastEventAt?: string;
+    },
     events: readonly EventEntity[],
     alertCount: number,
   ): SessionHealthInput {
     const now = this.clock.now();
-    const lastEventAt = session.lastEventAt
-      ? new Date(session.lastEventAt)
-      : null;
+    const lastEventAt = session.lastEventAt ? new Date(session.lastEventAt) : null;
     const lastEventAgeSec = lastEventAt
       ? (now.getTime() - lastEventAt.getTime()) / 1000
       : undefined;

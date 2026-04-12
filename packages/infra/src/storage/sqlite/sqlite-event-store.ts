@@ -64,18 +64,20 @@ export class SqliteEventStore implements EventStorePort {
   }
 
   async append(event: EventEntity): Promise<void> {
-    this.db.prepare(INSERT).run(
-      event.eventId,
-      event.eventKind,
-      event.sessionId,
-      event.occurredAt,
-      event.entityType,
-      event.entityId,
-      event.parentId ?? null,
-      event.accuracy ?? null,
-      event.confidenceScore ?? null,
-      JSON.stringify(event.payload),
-    );
+    this.db
+      .prepare(INSERT)
+      .run(
+        event.eventId,
+        event.eventKind,
+        event.sessionId,
+        event.occurredAt,
+        event.entityType,
+        event.entityId,
+        event.parentId ?? null,
+        event.accuracy ?? null,
+        event.confidenceScore ?? null,
+        JSON.stringify(event.payload),
+      );
   }
 
   async appendMany(events: EventEntity[]): Promise<void> {
@@ -97,9 +99,7 @@ export class SqliteEventStore implements EventStorePort {
   }
 
   async listBySession(sessionId: string): Promise<EventEntity[]> {
-    const rows = this.db
-      .prepare<EventRow>(SELECT_BY_SESSION)
-      .all(sessionId) as EventRow[];
+    const rows = this.db.prepare<EventRow>(SELECT_BY_SESSION).all(sessionId) as EventRow[];
 
     return rows.map(rowToEntity);
   }

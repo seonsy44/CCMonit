@@ -1,6 +1,6 @@
 ---
 id: ARCH-DOC-SYSTEM
-title: "문서 시스템 아키텍처"
+title: '문서 시스템 아키텍처'
 type: spec
 status: active
 owners: [docs-steward]
@@ -27,14 +27,17 @@ links:
 ## 2. 구조 원칙
 
 ### A. source 와 wiki를 구분한다
+
 - raw source는 가능한 한 원형을 유지한다.
 - `docs/sources/`는 raw 자체가 아니라 **source summary page**를 둔다.
 
 ### B. spec 와 knowledge를 구분한다
+
 - `product/`, `architecture/`, `operations/`, `decisions/`는 기준 문서다.
 - `knowledge/`는 기준 문서 사이를 이어주는 재사용 지식 계층이다.
 
 ### C. schema 를 문서 안에 명시한다
+
 - `_system/`과 `registry/`가 문서 유지의 규칙과 카탈로그를 담당한다.
 - `index.md`는 콘텐츠 중심, `log.md`는 시간 중심이다.
 

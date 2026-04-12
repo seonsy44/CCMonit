@@ -81,35 +81,33 @@ export class SqliteSessionStore implements SessionStorePort {
   }
 
   async save(session: SessionEntity): Promise<void> {
-    this.db.prepare(UPSERT).run(
-      session.sessionId,
-      session.status,
-      session.startedAt,
-      session.endedAt ?? null,
-      session.cwd,
-      session.model ?? null,
-      session.provider ?? null,
-      session.totalElapsedSec,
-      session.totalIdleSec,
-      session.lastEventAt ?? null,
-      session.activeAgentCount,
-      session.activeTaskCount,
-      session.startedAtAccuracy,
-    );
+    this.db
+      .prepare(UPSERT)
+      .run(
+        session.sessionId,
+        session.status,
+        session.startedAt,
+        session.endedAt ?? null,
+        session.cwd,
+        session.model ?? null,
+        session.provider ?? null,
+        session.totalElapsedSec,
+        session.totalIdleSec,
+        session.lastEventAt ?? null,
+        session.activeAgentCount,
+        session.activeTaskCount,
+        session.startedAtAccuracy,
+      );
   }
 
   async findById(sessionId: SessionId): Promise<SessionEntity | null> {
-    const row = this.db
-      .prepare<SessionRow>(SELECT_BY_ID)
-      .get(sessionId) as SessionRow | undefined;
+    const row = this.db.prepare<SessionRow>(SELECT_BY_ID).get(sessionId) as SessionRow | undefined;
 
     return row ? rowToEntity(row) : null;
   }
 
   async listRecent(limit = 20): Promise<readonly SessionEntity[]> {
-    const rows = this.db
-      .prepare<SessionRow>(SELECT_RECENT)
-      .all(limit) as SessionRow[];
+    const rows = this.db.prepare<SessionRow>(SELECT_RECENT).all(limit) as SessionRow[];
 
     return rows.map(rowToEntity);
   }

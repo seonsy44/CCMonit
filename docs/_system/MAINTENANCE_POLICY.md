@@ -1,6 +1,6 @@
 ---
 id: DOCS-MAINTENANCE-POLICY
-title: "문서 유지보수 정책"
+title: '문서 유지보수 정책'
 type: policy
 status: active
 owners: [docs-steward]
@@ -16,16 +16,19 @@ links:
 ## 주기
 
 ### 매 세션
+
 - 관련 문서 1~3개 갱신
 - `index.md` 또는 `registry/page-index.md` 반영 여부 확인
 - `log.md` 기록
 
 ### 매 주
+
 - `reports/docs-health-baseline.md` 기준으로 lint 항목 재검토
 - `product/open-questions.md` 정리
 - `operations/release-readiness-checklist.md` 갱신
 
 ### 주요 의사결정 직후
+
 - ADR 작성 또는 기존 ADR 갱신
 - 관련 knowledge/concept page 갱신
 - source page 기록

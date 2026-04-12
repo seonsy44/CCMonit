@@ -73,8 +73,7 @@ export class TokenAggregationService {
       if (item.totalTokens != null) {
         totalTokens += item.totalTokens;
       } else {
-        totalTokens +=
-          (item.inputTokens ?? 0) + (item.outputTokens ?? 0);
+        totalTokens += (item.inputTokens ?? 0) + (item.outputTokens ?? 0);
       }
 
       const rank = ACCURACY_RANK[item.accuracy];

@@ -1,5 +1,1 @@
-export type AlertStatus =
-  | 'raised'
-  | 'acknowledged'
-  | 'suppressed'
-  | 'resolved';
+export type AlertStatus = 'raised' | 'acknowledged' | 'suppressed' | 'resolved';

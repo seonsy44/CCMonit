@@ -1,6 +1,6 @@
 ---
 id: ARCH-EVENT-FLOW
-title: "CCMonit 이벤트 모델 명세서"
+title: 'CCMonit 이벤트 모델 명세서'
 type: spec
 status: active
 owners: [architecture]
@@ -10,6 +10,7 @@ links:
   - ../knowledge/concepts/canonical-event.md
   - ../knowledge/concepts/read-model.md
 ---
+
 # CCMonit 이벤트 모델 명세서
 
 ## 1. 문서 목적
@@ -30,6 +31,7 @@ links:
 ## 2. 설계 원칙
 
 ### 2.1 외부 입력과 내부 이벤트를 분리한다
+
 Claude Code 로그 포맷, harness 출력 포맷, 파일 시스템 이벤트 포맷은 언제든 바뀔 수 있다.
 따라서 외부 raw 데이터를 그대로 내부 표준으로 간주하지 않는다.
 
@@ -38,6 +40,7 @@ Claude Code 로그 포맷, harness 출력 포맷, 파일 시스템 이벤트 포
 - 읽기 모델(read model): TUI와 리포트에서 사용하는 집계 결과
 
 ### 2.2 상태보다 이벤트를 우선 저장한다
+
 현재 상태는 언제든 다시 계산할 수 있어야 한다.
 따라서 저장의 기준은 상태 스냅샷이 아니라 이벤트 스트림이다.
 
@@ -46,6 +49,7 @@ Claude Code 로그 포맷, harness 출력 포맷, 파일 시스템 이벤트 포
 - 세션 중간 복구도 이벤트 재생(replay)을 기본으로 한다.
 
 ### 2.3 불완전성을 모델에 포함한다
+
 Claude Code 환경에서는 모든 관계를 100% 확정하기 어렵다.
 특히 아래 항목은 불확실할 수 있다.
 
@@ -63,6 +67,7 @@ Claude Code 환경에서는 모든 관계를 100% 확정하기 어렵다.
 - `evidence`: 원문 또는 매핑 근거
 
 ### 2.4 이벤트는 작게 나누되, 과도하게 세분화하지 않는다
+
 너무 거친 이벤트는 후처리가 어렵고, 너무 잘게 쪼개면 구현 복잡도와 저장 비용이 커진다.
 초기 MVP에서는 다음 기준을 따른다.
 
@@ -71,6 +76,7 @@ Claude Code 환경에서는 모든 관계를 100% 확정하기 어렵다.
 - 고빈도 값은 delta가 아닌 summary update 이벤트로 저장할 수 있다.
 
 ### 2.5 UI는 이벤트를 직접 해석하지 않는다
+
 TUI 패널은 raw event를 직접 읽지 않고, projector가 계산한 read model을 사용한다.
 이렇게 해야 화면 코드가 로그 포맷에 종속되지 않는다.
 
@@ -123,16 +129,20 @@ Session
 따라서 다음 두 개념을 함께 둔다.
 
 ### 4.1 structural parent
+
 명시적으로 확인된 상위 관계.
 
 예:
+
 - task가 특정 agent에 속함이 로그로 확인됨
 - tool call 이 특정 skill invocation 내부에서 발생함이 명확함
 
 ### 4.2 inferred parent
+
 정황상 추론된 상위 관계.
 
 예:
+
 - 동일 시간대/동일 prefix/동일 stream 으로 인해 task와 tool을 연결
 - 파일 수정 시점 직전 실행 중이던 task에 연결
 
@@ -154,16 +164,16 @@ inferred parent 는 반드시 아래 메타를 함께 가진다.
 
 ```ts
 interface CanonicalEvent<TPayload = unknown> {
-  event_id: string;             // UUID — 이벤트 고유 ID
-  event_kind: EventKind;        // 예: 'task.started', 'tool.finished'
-  session_id: string;           // 소속 세션
-  occurred_at: string;          // ISO 8601 — 실제 발생 시각
-  entity_type: EntityType;      // 이벤트 대상 개체 종류
-  entity_id: string;            // 이벤트 대상 개체 ID
-  parent_id?: string;           // 직접 부모 개체 ID (계층 구조용)
-  accuracy?: AccuracyStatus;    // 신뢰도 (token 관련 이벤트에서 주로 사용)
-  confidence_score?: number;    // 0.0~1.0 (추론 기반 매핑 시)
-  payload: TPayload;            // 이벤트별 상세 데이터
+  event_id: string; // UUID — 이벤트 고유 ID
+  event_kind: EventKind; // 예: 'task.started', 'tool.finished'
+  session_id: string; // 소속 세션
+  occurred_at: string; // ISO 8601 — 실제 발생 시각
+  entity_type: EntityType; // 이벤트 대상 개체 종류
+  entity_id: string; // 이벤트 대상 개체 ID
+  parent_id?: string; // 직접 부모 개체 ID (계층 구조용)
+  accuracy?: AccuracyStatus; // 신뢰도 (token 관련 이벤트에서 주로 사용)
+  confidence_score?: number; // 0.0~1.0 (추론 기반 매핑 시)
+  payload: TPayload; // 이벤트별 상세 데이터
 }
 ```
 
@@ -184,18 +194,18 @@ interface CanonicalEvent<TPayload = unknown> {
 
 아래 필드는 MVP 이후 필요에 따라 envelope 에 추가한다.
 
-| 필드 | 목적 | 추가 시점 |
-|------|------|-----------|
-| `event_version` | payload schema 버전 관리 | payload 구조 변경 시 |
-| `observed_at` | adapter 관측 시각 (occurred_at 과 분리) | 멀티 어댑터 지원 시 |
-| `correlation_id` | 같은 흐름의 이벤트 묶음 | 복잡한 tool call 추적 시 |
-| `causation_id` | 직접 원인 이벤트 ID | 인과관계 분석 시 |
-| `trace_id` | 세션 내 장기 흐름 추적 | 고급 디버깅 시 |
-| `actor` / `target` | 발생 주체와 대상 분리 | 멀티 에이전트 고급 분석 시 |
-| `related_refs` | 부모-자식이 아닌 관계 참조 | 파일-태스크 연관 분석 시 |
-| `source` | adapter/parser 메타데이터 | 어댑터 품질 검증 시 |
-| `tags` | 자유 태그 | 커스텀 필터링 시 |
-| `raw_ref` | 원본 로그 위치 참조 | replay/디버깅 고급 기능 시 |
+| 필드               | 목적                                    | 추가 시점                  |
+| ------------------ | --------------------------------------- | -------------------------- |
+| `event_version`    | payload schema 버전 관리                | payload 구조 변경 시       |
+| `observed_at`      | adapter 관측 시각 (occurred_at 과 분리) | 멀티 어댑터 지원 시        |
+| `correlation_id`   | 같은 흐름의 이벤트 묶음                 | 복잡한 tool call 추적 시   |
+| `causation_id`     | 직접 원인 이벤트 ID                     | 인과관계 분석 시           |
+| `trace_id`         | 세션 내 장기 흐름 추적                  | 고급 디버깅 시             |
+| `actor` / `target` | 발생 주체와 대상 분리                   | 멀티 에이전트 고급 분석 시 |
+| `related_refs`     | 부모-자식이 아닌 관계 참조              | 파일-태스크 연관 분석 시   |
+| `source`           | adapter/parser 메타데이터               | 어댑터 품질 검증 시        |
+| `tags`             | 자유 태그                               | 커스텀 필터링 시           |
+| `raw_ref`          | 원본 로그 위치 참조                     | replay/디버깅 고급 기능 시 |
 
 ---
 
@@ -204,11 +214,7 @@ interface CanonicalEvent<TPayload = unknown> {
 ### 6.1 AccuracyStatus
 
 ```ts
-type AccuracyStatus =
-  | 'exact'
-  | 'derived'
-  | 'estimated'
-  | 'unavailable';
+type AccuracyStatus = 'exact' | 'derived' | 'estimated' | 'unavailable';
 ```
 
 - `exact`: 원문에서 직접 확인됨
@@ -219,15 +225,7 @@ type AccuracyStatus =
 ### 6.2 EntityType
 
 ```ts
-type EntityType =
-  | 'session'
-  | 'agent'
-  | 'task'
-  | 'skill'
-  | 'tool'
-  | 'file'
-  | 'alert'
-  | 'adapter';
+type EntityType = 'session' | 'agent' | 'task' | 'skill' | 'tool' | 'file' | 'alert' | 'adapter';
 ```
 
 ### 6.3 V1 보조 타입 (향후 추가 예정)
@@ -251,6 +249,7 @@ type EntityType =
 ```
 
 예:
+
 - `session.started`
 - `agent.spawned`
 - `task.finished`
@@ -287,6 +286,7 @@ UI 내부 상태는 별도 presentation 레이어에서 처리한다.
 ## 9. Session 이벤트
 
 ### 9.1 `session.detected`
+
 세션 후보를 외부 입력에서 처음 발견했을 때.
 
 ```ts
@@ -300,6 +300,7 @@ interface SessionDetectedPayload {
 ```
 
 ### 9.2 `session.started`
+
 세션 시작이 확정되었을 때.
 
 ```ts
@@ -313,6 +314,7 @@ interface SessionStartedPayload {
 ```
 
 ### 9.3 `session.updated`
+
 세션 메타가 갱신되었을 때.
 
 ```ts
@@ -326,6 +328,7 @@ interface SessionUpdatedPayload {
 ```
 
 ### 9.4 `session.idle_started`
+
 일정 시간 이상 새 활동이 없다고 판단되었을 때.
 
 ```ts
@@ -336,6 +339,7 @@ interface SessionIdleStartedPayload {
 ```
 
 ### 9.5 `session.idle_ended`
+
 idle 상태에서 다시 활동이 발생했을 때.
 
 ```ts
@@ -345,6 +349,7 @@ interface SessionIdleEndedPayload {
 ```
 
 ### 9.6 `session.finished`
+
 세션 종료가 확정되었을 때.
 
 ```ts
@@ -360,6 +365,7 @@ interface SessionFinishedPayload {
 ## 10. Adapter 이벤트
 
 ### 10.1 `adapter.started`
+
 특정 adapter가 기동됨.
 
 ```ts
@@ -371,6 +377,7 @@ interface AdapterStartedPayload {
 ```
 
 ### 10.2 `adapter.health_changed`
+
 adapter health 상태 변화.
 
 ```ts
@@ -383,6 +390,7 @@ interface AdapterHealthChangedPayload {
 ```
 
 ### 10.3 `adapter.parse_failed`
+
 raw 입력을 canonical event 로 바꾸지 못했을 때.
 
 ```ts
@@ -395,6 +403,7 @@ interface AdapterParseFailedPayload {
 ```
 
 ### 10.4 `adapter.stopped`
+
 adapter 종료.
 
 ```ts
@@ -409,6 +418,7 @@ interface AdapterStoppedPayload {
 ## 11. Team 이벤트
 
 ### 11.1 `team.detected`
+
 team이 관측됨.
 
 ```ts
@@ -420,6 +430,7 @@ interface TeamDetectedPayload {
 ```
 
 ### 11.2 `team.updated`
+
 team 메타 갱신.
 
 ```ts
@@ -431,6 +442,7 @@ interface TeamUpdatedPayload {
 ```
 
 ### 11.3 `team.finished`
+
 team 단위 작업 종료.
 
 ```ts
@@ -445,6 +457,7 @@ interface TeamFinishedPayload {
 ## 12. Agent 이벤트
 
 ### 12.1 `agent.detected`
+
 agent 후보 발견.
 
 ```ts
@@ -457,6 +470,7 @@ interface AgentDetectedPayload {
 ```
 
 ### 12.2 `agent.spawned`
+
 agent 시작 확정.
 
 ```ts
@@ -468,6 +482,7 @@ interface AgentSpawnedPayload {
 ```
 
 ### 12.3 `agent.status_changed`
+
 agent 상태 변화.
 
 ```ts
@@ -479,6 +494,7 @@ interface AgentStatusChangedPayload {
 ```
 
 ### 12.4 `agent.summary_updated`
+
 agent 단위 집계 갱신.
 
 ```ts
@@ -491,6 +507,7 @@ interface AgentSummaryUpdatedPayload {
 ```
 
 ### 12.5 `agent.finished`
+
 agent 종료.
 
 ```ts
@@ -505,6 +522,7 @@ interface AgentFinishedPayload {
 ## 13. Task 이벤트
 
 ### 13.1 `task.detected`
+
 작업 후보 발견.
 
 ```ts
@@ -516,6 +534,7 @@ interface TaskDetectedPayload {
 ```
 
 ### 13.2 `task.started`
+
 작업 시작.
 
 ```ts
@@ -528,6 +547,7 @@ interface TaskStartedPayload {
 ```
 
 ### 13.3 `task.updated`
+
 작업 메타 또는 진행 상황 갱신.
 
 ```ts
@@ -540,17 +560,35 @@ interface TaskUpdatedPayload {
 ```
 
 ### 13.4 `task.status_changed`
+
 상태가 명시적으로 바뀜.
 
 ```ts
 interface TaskStatusChangedPayload {
-  prev_status?: 'queued' | 'running' | 'waiting' | 'blocked' | 'retrying' | 'completed' | 'failed' | 'cancelled';
-  next_status: 'queued' | 'running' | 'waiting' | 'blocked' | 'retrying' | 'completed' | 'failed' | 'cancelled';
+  prev_status?:
+    | 'queued'
+    | 'running'
+    | 'waiting'
+    | 'blocked'
+    | 'retrying'
+    | 'completed'
+    | 'failed'
+    | 'cancelled';
+  next_status:
+    | 'queued'
+    | 'running'
+    | 'waiting'
+    | 'blocked'
+    | 'retrying'
+    | 'completed'
+    | 'failed'
+    | 'cancelled';
   reason?: string;
 }
 ```
 
 ### 13.5 `task.retry_scheduled`
+
 재시도 예정.
 
 ```ts
@@ -562,6 +600,7 @@ interface TaskRetryScheduledPayload {
 ```
 
 ### 13.6 `task.stderr_detected`
+
 stderr 발생.
 
 ```ts
@@ -572,6 +611,7 @@ interface TaskStderrDetectedPayload {
 ```
 
 ### 13.7 `task.summary_updated`
+
 작업 요약 또는 결과가 업데이트됨.
 
 ```ts
@@ -582,6 +622,7 @@ interface TaskSummaryUpdatedPayload {
 ```
 
 ### 13.8 `task.stuck_detected`
+
 장시간 진전 없음으로 판단.
 
 ```ts
@@ -593,6 +634,7 @@ interface TaskStuckDetectedPayload {
 ```
 
 ### 13.9 `task.finished`
+
 정상 종료.
 
 ```ts
@@ -604,6 +646,7 @@ interface TaskFinishedPayload {
 ```
 
 ### 13.10 `task.failed`
+
 실패 종료.
 
 ```ts
@@ -615,6 +658,7 @@ interface TaskFailedPayload {
 ```
 
 ### 13.11 `task.cancelled`
+
 취소 종료.
 
 ```ts
@@ -629,6 +673,7 @@ interface TaskCancelledPayload {
 ## 14. Skill Invocation 이벤트
 
 ### 14.1 `skill.detected`
+
 스킬 호출 후보 발견.
 
 ```ts
@@ -640,6 +685,7 @@ interface SkillDetectedPayload {
 ```
 
 ### 14.2 `skill.started`
+
 스킬 시작.
 
 ```ts
@@ -651,6 +697,7 @@ interface SkillStartedPayload {
 ```
 
 ### 14.3 `skill.updated`
+
 스킬 메타/상태 갱신.
 
 ```ts
@@ -661,6 +708,7 @@ interface SkillUpdatedPayload {
 ```
 
 ### 14.4 `skill.finished`
+
 스킬 종료.
 
 ```ts
@@ -677,6 +725,7 @@ interface SkillFinishedPayload {
 툴 호출은 토큰 전략과 작업 회고에 핵심이므로 비교적 자세히 남긴다.
 
 ### 15.1 `tool.detected`
+
 툴 호출 후보 발견.
 
 ```ts
@@ -687,6 +736,7 @@ interface ToolDetectedPayload {
 ```
 
 ### 15.2 `tool.called`
+
 툴 호출 시작.
 
 ```ts
@@ -701,6 +751,7 @@ interface ToolCalledPayload {
 ```
 
 ### 15.3 `tool.stdout_detected`
+
 툴 stdout 감지.
 
 ```ts
@@ -712,6 +763,7 @@ interface ToolStdoutDetectedPayload {
 ```
 
 ### 15.4 `tool.stderr_detected`
+
 툴 stderr 감지.
 
 ```ts
@@ -723,6 +775,7 @@ interface ToolStderrDetectedPayload {
 ```
 
 ### 15.5 `tool.finished`
+
 툴 정상/비정상 종료.
 
 ```ts
@@ -737,6 +790,7 @@ interface ToolFinishedPayload {
 ```
 
 ### 15.6 `tool.relation_inferred`
+
 툴과 상위 skill/task 관계를 추론해서 연결함.
 
 ```ts
@@ -749,6 +803,7 @@ interface ToolRelationInferredPayload {
 ```
 
 ### 15.7 `tool.summary_updated`
+
 툴 호출 결과 요약 갱신.
 
 ```ts
@@ -764,6 +819,7 @@ interface ToolSummaryUpdatedPayload {
 ## 16. File Activity 이벤트
 
 ### 16.1 `file.detected`
+
 관심 대상 파일이 처음 감지됨.
 
 ```ts
@@ -774,6 +830,7 @@ interface FileDetectedPayload {
 ```
 
 ### 16.2 `file.changed`
+
 파일 수정.
 
 ```ts
@@ -787,6 +844,7 @@ interface FileChangedPayload {
 ```
 
 ### 16.3 `file.linked`
+
 파일 변경과 task/agent/tool 관계가 연결됨.
 
 ```ts
@@ -799,6 +857,7 @@ interface FileLinkedPayload {
 ```
 
 ### 16.4 `file.burst_detected`
+
 짧은 시간에 동일 파일 반복 갱신.
 
 ```ts
@@ -836,6 +895,7 @@ interface MeasuredValue {
 ```
 
 ### 17.2 `token.updated`
+
 특정 개체에 대한 토큰 정보가 갱신됨.
 
 ```ts
@@ -843,11 +903,14 @@ interface TokenUpdatedPayload {
   scope_type: 'session' | 'agent' | 'task' | 'skill_invocation' | 'tool_call';
   scope_id: string;
   token_usage: TokenUsageSnapshot;
-  delta_from_previous?: Partial<Record<'input' | 'output' | 'cache_read' | 'cache_write' | 'total', number>>;
+  delta_from_previous?: Partial<
+    Record<'input' | 'output' | 'cache_read' | 'cache_write' | 'total', number>
+  >;
 }
 ```
 
 ### 17.3 `token.budget_threshold_reached`
+
 예산/임계치 도달.
 
 ```ts
@@ -861,6 +924,7 @@ interface TokenBudgetThresholdReachedPayload {
 ```
 
 ### 17.4 `token.anomaly_detected`
+
 급격한 증가나 예상 대비 이상치.
 
 ```ts
@@ -877,6 +941,7 @@ interface TokenAnomalyDetectedPayload {
 ## 18. Alert 이벤트
 
 ### 18.1 `alert.raised`
+
 알림 생성.
 
 ```ts
@@ -898,6 +963,7 @@ interface AlertRaisedPayload {
 ```
 
 ### 18.2 `alert.acknowledged`
+
 사용자 또는 시스템이 확인 처리.
 
 ```ts
@@ -908,6 +974,7 @@ interface AlertAcknowledgedPayload {
 ```
 
 ### 18.3 `alert.resolved`
+
 알림 해소.
 
 ```ts
@@ -918,6 +985,7 @@ interface AlertResolvedPayload {
 ```
 
 ### 18.4 `alert.suppressed`
+
 알림 무시/침묵 처리.
 
 ```ts
@@ -933,6 +1001,7 @@ interface AlertSuppressedPayload {
 ## 19. User/System/Report 이벤트
 
 ### 19.1 `user.question_detected`
+
 AskUserQuestion 같은 상호작용이 감지됨.
 
 ```ts
@@ -943,6 +1012,7 @@ interface UserQuestionDetectedPayload {
 ```
 
 ### 19.2 `system.note_detected`
+
 Claude Code 또는 harness가 남긴 시스템 노트.
 
 ```ts
@@ -953,6 +1023,7 @@ interface SystemNoteDetectedPayload {
 ```
 
 ### 19.3 `report.generated`
+
 세션 리포트 생성 완료.
 
 ```ts
@@ -978,6 +1049,7 @@ detected → running → idle → running → finished
 ```
 
 허용 상태:
+
 - detected
 - running
 - idle
@@ -1018,6 +1090,7 @@ detected → called → success
 
 구현 시 projector는 **이벤트 순서가 꼬이거나 누락될 수 있음** 을 전제로 해야 한다.
 예:
+
 - `task.finished` 가 먼저 들어오고 `task.started` 가 늦게 들어오는 경우
 - `tool.finished` 는 있으나 `tool.called` 가 없는 경우
 
@@ -1032,24 +1105,30 @@ detected → called → success
 ## 21. 상관관계(correlation) 규칙
 
 ### 21.1 correlation_id 사용 기준
+
 동일한 작업 단위를 묶을 때 사용한다.
 
 예:
+
 - 하나의 tool call lifecycle
 - 하나의 skill invocation lifecycle
 - 하나의 task lifecycle
 
 ### 21.2 causation_id 사용 기준
+
 직접적인 원인 관계가 명확할 때만 사용한다.
 
 예:
+
 - `task.started` 의 직접 원인이 `agent.spawned`
 - `alert.raised` 의 직접 원인이 `token.anomaly_detected`
 
 ### 21.3 trace_id 사용 기준
+
 세션 내 큰 흐름을 따라갈 때 사용한다.
 
 예:
+
 - 특정 agent가 수행한 작업 줄기 전체
 - 하나의 상위 사용자 요청에서 파생된 task/skill/tool 흐름
 
@@ -1092,6 +1171,7 @@ sessions/<session_id>/
 5. projection snapshot 주기적 저장
 
 ### 22.3 이벤트 정렬 기준
+
 기본 정렬은 `occurred_at` 이지만, 저장과 재생 안전성을 위해 아래 둘 다 유지하는 것이 좋다.
 
 - `occurred_at`: 사용자에게 보여줄 실제 사건 시간
@@ -1106,15 +1186,18 @@ sessions/<session_id>/
 replay는 CCMonit 개발과 디버깅에 매우 중요하다.
 
 ### 23.1 replay 입력
+
 - canonical `events.jsonl`
 - 필요 시 `raw-events.jsonl`
 
 ### 23.2 replay 보장 사항
+
 - 동일 이벤트 순서로 재생 가능해야 한다.
 - refresh interval 과 무관하게 deterministic 모드 지원이 좋다.
 - 실시간 속도/배속/일시정지 기능은 차후 확장 가능하다.
 
 ### 23.3 replay 시 주의점
+
 - projector는 wall clock 이 아니라 event time 기반으로 동작할 수 있어야 한다.
 - idle/stuck 판단은 replay 모드에서 가상 clock 으로 재계산하는 구조가 바람직하다.
 
@@ -1125,6 +1208,7 @@ replay는 CCMonit 개발과 디버깅에 매우 중요하다.
 canonical event 위에 최소 아래 read model 을 둔다.
 
 ### 24.1 SessionSummaryProjection
+
 - session 메타
 - active/completed/failed task 수
 - active agent 수
@@ -1134,6 +1218,7 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - current alerts
 
 ### 24.2 ActiveTaskProjection
+
 - 현재 running/waiting/blocked task 목록
 - 관련 agent/team
 - 마지막 activity
@@ -1141,12 +1226,14 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - token snapshot
 
 ### 24.3 SkillRecentProjection
+
 - 최근 skill invocation 목록
 - 상태
 - 소요 시간
 - 관련 task
 
 ### 24.4 ToolUsageProjection
+
 - 툴별 호출 수
 - 최근 호출 시각
 - 평균 duration
@@ -1154,11 +1241,13 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - 토큰 기여도
 
 ### 24.5 FileActivityProjection
+
 - 최근 파일 변경 목록
 - file burst 여부
 - 관련 task/agent
 
 ### 24.6 AlertProjection
+
 - active alert 목록
 - severity
 - ack 상태
@@ -1171,15 +1260,18 @@ canonical event 위에 최소 아래 read model 을 둔다.
 사용자가 특히 원했던 부분이므로 토큰 이벤트는 아래 원칙을 강하게 권장한다.
 
 ### 25.1 토큰 값은 summary update 로 다룬다
+
 고빈도 chunk 단위 토큰보다, 의미 있는 시점에 스냅샷을 남긴다.
 
 예:
+
 - task 시작 시점 추정 초기값
 - tool 종료 시점 확정값
 - 세션 주기 집계 스냅샷
 - 세션 종료 최종값
 
 ### 25.2 total 과 breakdown 은 분리해서 다룬다
+
 `total` 만 있는 경우가 많으므로 아래처럼 허용해야 한다.
 
 - input/output/cache 분해값 없음
@@ -1187,14 +1279,17 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - cost는 token과 별도의 measured value
 
 ### 25.3 source_detail 을 남긴다
+
 추후 토큰 전략을 세우려면 값의 출처를 알아야 한다.
 
 예:
+
 - `source_detail: "parsed from usage line"`
 - `source_detail: "estimated from output chars / heuristic v1"`
 - `source_detail: "aggregated from tool.finished events"`
 
 ### 25.4 누락 자체도 이벤트로 다룰 수 있다
+
 반복적으로 토큰이 빠지는 경우는 중요한 운영 정보다.
 따라서 필요하면 `token.anomaly_detected` 로 남긴다.
 
@@ -1205,9 +1300,11 @@ canonical event 위에 최소 아래 read model 을 둔다.
 이벤트 모델은 raw 내용 저장을 허용하되, 다음 원칙을 따른다.
 
 ### 26.1 payload에는 full text를 직접 넣지 않는다
+
 기본 canonical event 에는 preview 중심으로 넣고, 전체 본문은 raw store 또는 별도 artifact 로 분리한다.
 
 ### 26.2 capture_policy를 명시한다
+
 특히 tool.called/tool.finished 는 아래 정책을 둔다.
 
 - `none`: 본문 미저장
@@ -1216,6 +1313,7 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - `masked`: 저장하되 민감정보 마스킹
 
 ### 26.3 마스킹 결과도 provenance를 남긴다
+
 값이 원문인지 마스킹본인지 구분돼야 디버깅이 쉬워진다.
 
 ---
@@ -1225,6 +1323,7 @@ canonical event 위에 최소 아래 read model 을 둔다.
 초기 구현에서는 아래 이벤트만 우선 지원해도 충분하다.
 
 ### 27.1 반드시 구현
+
 - `session.started`
 - `session.finished`
 - `adapter.started`
@@ -1243,6 +1342,7 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - `alert.resolved`
 
 ### 27.2 있으면 좋은 것
+
 - `task.retry_scheduled`
 - `task.stderr_detected`
 - `task.stuck_detected`
@@ -1253,6 +1353,7 @@ canonical event 위에 최소 아래 read model 을 둔다.
 - `report.generated`
 
 ### 27.3 후순위
+
 - `team.*`
 - `tool.stdout_detected`
 - `tool.stderr_detected`
@@ -1349,22 +1450,26 @@ canonical event 위에 최소 아래 read model 을 둔다.
 ## 29. 구현 권장 순서
 
 ### Phase 1. 이벤트 최소 세트
+
 - session/task/skill/tool/file/token/alert 핵심 이벤트 구현
 - JSONL 저장
 - 기본 projector 3개(session summary, active tasks, alerts)
 
 ### Phase 2. 관계 보강
+
 - task ↔ skill ↔ tool 상관관계 추론
 - orphan 처리
 - file ↔ task 링크 강화
 
 ### Phase 3. 운영성 강화
+
 - parse_failed burst 감지
 - adapter health 고도화
 - cost estimation
 - richer token anomaly rules
 
 ### Phase 4. 회고/분석 강화
+
 - replay
 - session comparison
 - top token consumers

@@ -13,11 +13,7 @@ export class CsvReportWriter implements ReportWriterPort {
   constructor(private readonly baseDir: string) {}
 
   async write(report: ReportDto): Promise<void> {
-    const filePath = join(
-      this.baseDir,
-      report.summary.sessionId,
-      'token-breakdown.csv',
-    );
+    const filePath = join(this.baseDir, report.summary.sessionId, 'token-breakdown.csv');
     await mkdir(dirname(filePath), { recursive: true });
 
     const lines: string[] = [];
@@ -54,14 +50,7 @@ export class CsvReportWriter implements ReportWriterPort {
       lines.push('alert_id,type,severity,title,raised_at,status');
       for (const a of report.alerts) {
         lines.push(
-          [
-            a.alertId,
-            a.alertType,
-            a.severity,
-            csvEscape(a.title),
-            a.raisedAt,
-            a.status,
-          ].join(','),
+          [a.alertId, a.alertType, a.severity, csvEscape(a.title), a.raisedAt, a.status].join(','),
         );
       }
     }

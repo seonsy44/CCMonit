@@ -13,11 +13,7 @@ export class MarkdownReportWriter implements ReportWriterPort {
   constructor(private readonly baseDir: string) {}
 
   async write(report: ReportDto): Promise<void> {
-    const filePath = join(
-      this.baseDir,
-      report.summary.sessionId,
-      'report.md',
-    );
+    const filePath = join(this.baseDir, report.summary.sessionId, 'report.md');
     await mkdir(dirname(filePath), { recursive: true });
 
     const md = buildMarkdown(report);

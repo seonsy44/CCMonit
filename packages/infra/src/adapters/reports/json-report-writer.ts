@@ -13,11 +13,7 @@ export class JsonReportWriter implements ReportWriterPort {
   constructor(private readonly baseDir: string) {}
 
   async write(report: ReportDto): Promise<void> {
-    const filePath = join(
-      this.baseDir,
-      report.summary.sessionId,
-      'report.json',
-    );
+    const filePath = join(this.baseDir, report.summary.sessionId, 'report.json');
     await mkdir(dirname(filePath), { recursive: true });
     await writeFile(filePath, JSON.stringify(report, null, 2), 'utf8');
   }

@@ -2,11 +2,7 @@ import type { SessionStatus } from '../types/session-status.js';
 
 // ── Types ──────────────────────────────────────────────
 
-export type SessionHealthLevel =
-  | 'healthy'
-  | 'degraded'
-  | 'unhealthy'
-  | 'critical';
+export type SessionHealthLevel = 'healthy' | 'degraded' | 'unhealthy' | 'critical';
 
 export interface SessionHealthInput {
   readonly sessionStatus: SessionStatus;
@@ -43,9 +39,7 @@ export class SessionHealthService {
 
     // ── Negative factors ───────────────────────────────
 
-    const isTerminated =
-      input.sessionStatus === 'failed' ||
-      input.sessionStatus === 'interrupted';
+    const isTerminated = input.sessionStatus === 'failed' || input.sessionStatus === 'interrupted';
 
     if (isTerminated) {
       factors.push({ signal: 'session_terminated', impact: 'negative' });
@@ -63,18 +57,14 @@ export class SessionHealthService {
       factors.push({ signal: 'failed_tasks', impact: 'negative' });
     }
 
-    const idleRatio =
-      input.totalElapsedSec > 0
-        ? input.totalIdleSec / input.totalElapsedSec
-        : 0;
+    const idleRatio = input.totalElapsedSec > 0 ? input.totalIdleSec / input.totalElapsedSec : 0;
 
     if (idleRatio > HIGH_IDLE_RATIO) {
       factors.push({ signal: 'high_idle_ratio', impact: 'negative' });
     }
 
     const isStale =
-      input.lastEventAgeSec != null &&
-      input.lastEventAgeSec > STALE_EVENT_THRESHOLD_SEC;
+      input.lastEventAgeSec != null && input.lastEventAgeSec > STALE_EVENT_THRESHOLD_SEC;
 
     if (isStale) {
       factors.push({ signal: 'stale_events', impact: 'negative' });
@@ -102,8 +92,7 @@ export class SessionHealthService {
     // ── Level determination ────────────────────────────
 
     const majorFailure =
-      input.totalTaskCount > 0 &&
-      input.failedTaskCount >= input.totalTaskCount / 2;
+      input.totalTaskCount > 0 && input.failedTaskCount >= input.totalTaskCount / 2;
 
     let level: SessionHealthLevel;
 

@@ -67,10 +67,7 @@ export class AnomalyDetector {
 
     for (const e of events) {
       if (e.eventKind !== 'token.updated') continue;
-      const total =
-        typeof e.payload?.total_tokens === 'number'
-          ? e.payload.total_tokens
-          : 0;
+      const total = typeof e.payload?.total_tokens === 'number' ? e.payload.total_tokens : 0;
 
       if (prevTotal > 0) {
         const delta = total - prevTotal;
@@ -124,8 +121,7 @@ export class AnomalyDetector {
         continue;
       }
 
-      const toolName =
-        typeof e.payload?.tool_name === 'string' ? e.payload.tool_name : '';
+      const toolName = typeof e.payload?.tool_name === 'string' ? e.payload.tool_name : '';
 
       if (toolName === consecutiveToolName) {
         consecutiveCount++;

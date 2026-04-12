@@ -1,7 +1,1 @@
-export type ToolCallStatus =
-  | 'detected'
-  | 'called'
-  | 'success'
-  | 'error'
-  | 'timeout'
-  | 'cancelled';
+export type ToolCallStatus = 'detected' | 'called' | 'success' | 'error' | 'timeout' | 'cancelled';

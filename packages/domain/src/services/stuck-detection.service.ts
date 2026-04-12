@@ -36,12 +36,10 @@ export class StuckDetectionService {
         ? Math.max(0, input.nowMs - input.lastMeaningfulEventMs)
         : 0;
 
-    const silenceExceedsThreshold =
-      silenceDurationMs >= input.stuckThresholdMs;
+    const silenceExceedsThreshold = silenceDurationMs >= input.stuckThresholdMs;
     const noRecentToolCalls = !input.hasRecentToolCall;
     const noRecentFileChanges = !input.hasRecentFileChange;
-    const errorRepetition =
-      input.recentErrorCount >= ERROR_REPETITION_THRESHOLD;
+    const errorRepetition = input.recentErrorCount >= ERROR_REPETITION_THRESHOLD;
 
     const evidence: StuckEvidence = {
       silenceExceedsThreshold,
@@ -56,8 +54,7 @@ export class StuckDetectionService {
       isStuck = false;
     } else if (input.isLongRunningExpected) {
       // Long-running tasks need stronger corroboration
-      isStuck =
-        (noRecentToolCalls && noRecentFileChanges) || errorRepetition;
+      isStuck = (noRecentToolCalls && noRecentFileChanges) || errorRepetition;
     } else {
       // Normal tasks: silence + any one corroborating signal
       isStuck = noRecentToolCalls || noRecentFileChanges || errorRepetition;

@@ -1,7 +1,1 @@
-export type SessionStatus =
-  | 'detected'
-  | 'active'
-  | 'idle'
-  | 'completed'
-  | 'interrupted'
-  | 'failed';
+export type SessionStatus = 'detected' | 'active' | 'idle' | 'completed' | 'interrupted' | 'failed';

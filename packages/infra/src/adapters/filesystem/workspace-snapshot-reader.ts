@@ -64,10 +64,4 @@ export class WorkspaceSnapshotReader {
   }
 }
 
-const IGNORE_DIRS = new Set([
-  'node_modules',
-  '.git',
-  'dist',
-  '.cache',
-  '.pnpm-store',
-]);
+const IGNORE_DIRS = new Set(['node_modules', '.git', 'dist', '.cache', '.pnpm-store']);

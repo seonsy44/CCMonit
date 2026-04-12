@@ -1,6 +1,6 @@
 ---
 id: DOCS-GLOSSARY
-title: "CCMonit 용어집"
+title: 'CCMonit 용어집'
 type: registry
 status: active
 owners: [architecture]

@@ -1,6 +1,6 @@
 ---
 id: CONCEPT-CANONICAL_EVENT
-title: "Canonical Event"
+title: 'Canonical Event'
 type: concept
 status: active
 owners: [architecture]
@@ -10,18 +10,20 @@ links:
   - ../overview/project-map.md
 ---
 
-
 # Canonical Event
 
 ## 정의
+
 외부 로그, harness 출력, 파일 시스템 이벤트를 CCMonit 내부 표준 구조로 정규화한 이벤트다.
 
 ## 핵심 역할
+
 - 저장 형식의 일관성 확보
 - TUI / reporter / alerting / replay 공통 기반 제공
 - 외부 로그 포맷 변화 흡수
 
 ## 중요한 메타
+
 - event_id
 - session_id
 - category
@@ -32,5 +34,6 @@ links:
 - correlation / causation / trace
 
 ## 관련 문서
+
 - [architecture/event-flow](../../architecture/event-flow.md)
 - [knowledge/concepts/read-model](read-model.md)

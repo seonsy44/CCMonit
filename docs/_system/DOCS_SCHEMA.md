@@ -1,6 +1,6 @@
 ---
 id: DOCS-SCHEMA
-title: "CCMonit 문서 스키마"
+title: 'CCMonit 문서 스키마'
 type: schema
 status: active
 owners: [docs-steward]
@@ -24,7 +24,9 @@ CCMonit 문서는 더 이상 단발성 명세 파일 모음이 아니다.
 ## 2. 세 계층
 
 ### A. Raw sources
+
 문서의 직접 출처. 예:
+
 - 대화에서 생성된 초안
 - 구현 결과
 - 세션 회고
@@ -32,11 +34,14 @@ CCMonit 문서는 더 이상 단발성 명세 파일 모음이 아니다.
 - 회의 기록
 
 원칙:
+
 - raw source 는 가능한 한 **원본을 수정하지 않는다.**
 - `docs/` 안에는 raw 자체보다 **raw를 요약한 source page**를 둔다.
 
 ### B. Wiki
+
 LLM이 유지하는 실제 지식 계층. 예:
+
 - `product/`
 - `architecture/`
 - `operations/`
@@ -45,7 +50,9 @@ LLM이 유지하는 실제 지식 계층. 예:
 - `reports/`
 
 ### C. Schema
+
 문서 유지 규칙과 워크플로우. 예:
+
 - `_system/`
 - `registry/`
 - `index.md`
@@ -112,7 +119,7 @@ LLM이 유지하는 실제 지식 계층. 예:
 
 ## 8. 권장 세션 루틴
 
-- 새 문서/아이디어 편입: [_system/INGEST_WORKFLOW](INGEST_WORKFLOW.md)
-- 질문 응답을 자산화: [_system/QUERY_WORKFLOW](QUERY_WORKFLOW.md)
-- 건강 상태 점검: [_system/LINT_WORKFLOW](LINT_WORKFLOW.md)
-- 주기 운영: [_system/MAINTENANCE_POLICY](MAINTENANCE_POLICY.md)
+- 새 문서/아이디어 편입: [\_system/INGEST_WORKFLOW](INGEST_WORKFLOW.md)
+- 질문 응답을 자산화: [\_system/QUERY_WORKFLOW](QUERY_WORKFLOW.md)
+- 건강 상태 점검: [\_system/LINT_WORKFLOW](LINT_WORKFLOW.md)
+- 주기 운영: [\_system/MAINTENANCE_POLICY](MAINTENANCE_POLICY.md)

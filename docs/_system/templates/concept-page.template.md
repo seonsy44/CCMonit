@@ -1,6 +1,6 @@
 ---
 id: CONCEPT-TEMPLATE
-title: "Concept Page Template"
+title: 'Concept Page Template'
 type: template
 status: active
 owners: [architecture]
@@ -19,4 +19,5 @@ links:
 ## CCMonit에서의 적용
 
 ## 관련 문서
+
 -

@@ -104,9 +104,7 @@ export class ClaudeLogWatcher implements EventSourcePort {
             await this.emitEvent(event);
           }
         } catch (err) {
-          this.emitError(
-            err instanceof Error ? err : new Error(String(err)),
-          );
+          this.emitError(err instanceof Error ? err : new Error(String(err)));
         }
       }
     } catch (err) {

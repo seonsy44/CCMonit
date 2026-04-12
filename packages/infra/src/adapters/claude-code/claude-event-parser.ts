@@ -144,9 +144,7 @@ export class ClaudeEventParser {
           parentId: agentId,
           payload: {
             is_error: block.is_error ?? false,
-            output_preview: truncate(
-              typeof block.content === 'string' ? block.content : '',
-            ),
+            output_preview: truncate(typeof block.content === 'string' ? block.content : ''),
           },
         }),
       );
@@ -215,8 +213,7 @@ export class ClaudeEventParser {
 
       case 'TaskUpdate':
       case 'TodoUpdate': {
-        const taskEntityId =
-          typeof input.taskId === 'string' ? input.taskId : toolId;
+        const taskEntityId = typeof input.taskId === 'string' ? input.taskId : toolId;
         out.push(
           this.makeEvent('task.updated', 'task', taskEntityId, {
             sessionId,

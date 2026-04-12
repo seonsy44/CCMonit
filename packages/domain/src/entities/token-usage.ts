@@ -3,12 +3,7 @@ import type { TokenSource } from '../value-objects/token-source.js';
 
 export type TokenUsageId = string;
 
-export type TokenUsageScopeType =
-  | 'session'
-  | 'agent'
-  | 'task'
-  | 'skill'
-  | 'tool_call';
+export type TokenUsageScopeType = 'session' | 'agent' | 'task' | 'skill' | 'tool_call';
 
 export interface TokenUsageEntity {
   readonly tokenUsageId: TokenUsageId;

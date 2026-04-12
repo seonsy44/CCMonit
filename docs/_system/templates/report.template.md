@@ -1,6 +1,6 @@
 ---
 id: REPORT-TEMPLATE
-title: "Report Template"
+title: 'Report Template'
 type: template
 status: active
 owners: [operations]

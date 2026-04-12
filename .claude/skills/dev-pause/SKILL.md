@@ -10,10 +10,12 @@ disable-model-invocation: true
 dev-close와 달리 개발건을 dev-list에서 제거하지 않고, 이어받기에 필요한 최소 컨텍스트만 기록한다.
 
 **언제 쓰나:**
+
 - dev-open 후 스프린트를 일부만 진행하고 다른 dev로 전환해야 할 때
 - 긴급한 다른 작업이 생겨서 현재 dev를 나중에 이어해야 할 때
 
 **언제 안 쓰나:**
+
 - 개발건이 완결됐으면 `dev-close`를 쓴다
 - 같은 세션에서 이어서 진행하면 그냥 `dev-sprint`를 쓴다
 

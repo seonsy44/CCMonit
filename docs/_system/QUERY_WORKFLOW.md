@@ -1,6 +1,6 @@
 ---
 id: DOCS-QUERY-WORKFLOW
-title: "문서 Query 워크플로우"
+title: '문서 Query 워크플로우'
 type: guide
 status: active
 owners: [docs-steward]
@@ -16,6 +16,7 @@ links:
 질문에 대한 답변을 **문서 자산**으로 되돌려 넣는 절차다.
 
 ## 1. 우선 읽을 문서
+
 질문을 받으면 다음 순서로 훑는다.
 
 1. `index.md`

@@ -35,8 +35,7 @@ export class BudgetPolicy {
   }
 
   check(totalTokens: number): BudgetCheckResult {
-    const usageRatio =
-      this.budgetTokens > 0 ? totalTokens / this.budgetTokens : 0;
+    const usageRatio = this.budgetTokens > 0 ? totalTokens / this.budgetTokens : 0;
 
     let status: BudgetStatus;
     if (totalTokens >= this.budgetTokens) {
