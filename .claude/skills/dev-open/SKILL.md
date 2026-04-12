@@ -37,6 +37,8 @@ disable-model-invocation: true
 - `.claude/scratch/notes.md`
 - `.claude/scratch/dev-list.md` (**필수** — slug 확인 및 예상 스프린트 참조)
 
+> 참고: `dev-kickoff` 직후 같은 세션에서 실행할 경우, `docs/operations/claude-code-session-workflow.md`와 `.claude/context/*.md`는 이미 로드됨 — 재읽기 불필요. `notes.md`와 `dev-list.md`는 항상 읽는다.
+
 결정된 scratch 경로에서 (있으면):
 - `{scratch경로}/next-prompt.md`
 - `{scratch경로}/worklog.md`

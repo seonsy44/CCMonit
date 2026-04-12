@@ -42,7 +42,7 @@ disable-model-invocation: true
 
 상태 파악:
 - `.claude/scratch/dev-list.md` (있으면 — 중복 방지를 위해)
-- `docs/index.md`, `docs/log.md`
+- `docs/index.md`, `docs/log.md` (dev-list에 최신 상태 요약이 있으면 생략 가능)
 
 진행 중인 개발건 확인:
 - `.claude/scratch/devs/` 하위 디렉토리 목록 확인
