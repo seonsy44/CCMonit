@@ -48,5 +48,8 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
 
 세션 흐름 source of truth: `docs/operations/claude-code-session-workflow.md`
 
-빠른 참조: `/flow-start` → `/flow-work [작업]` × N → `/flow-close`  
+빠른 참조: `/flow-start [흐름명?]` → `/flow-work [작업]` × N → `/flow-close`  
 체크포인트 필요 시: flow-work 사이에 `/flow-check` 추가 (optional)
+
+흐름 예시: 파라미터 없음(기본 개발), `docs 건강도 유지`, `워크플로우 고도화`  
+흐름마다 scratch 네임스페이스가 분리된다 (§1-2).

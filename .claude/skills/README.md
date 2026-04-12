@@ -15,10 +15,13 @@
 3. `.claude/scratch/*`
 
 현재 스킬:
-1. `/flow-start` — 작업 후보 추천 + 세션 계획 고정
+1. `/flow-start [흐름명?]` — 작업 후보 추천 + 세션 계획 고정. 파라미터 없으면 기본 개발 흐름.
 2. `/flow-work [작업]` — 작업 1개 실행 + 커밋 메시지 추천 (N번 반복)
-3. `/flow-close` — docs-sync(optional) + handoff 정리
+3. `/flow-close` — docs-sync(optional) + handoff 정리 (flow별 scratch 경로에 기록)
 4. `/flow-check` — (optional) flow-work 사이 체크포인트, 작업 3개 이상일 때
+
+흐름 예시: 파라미터 없음(기본 ccmonit 개발), `docs 건강도 유지`, `워크플로우 고도화`  
+흐름마다 scratch 경로가 분리됨: 기본 → `.claude/scratch/`, named → `.claude/scratch/flows/{slug}/`
 
 구조 원칙:
 - `.claude/context/`는 사람+일반 세션 공용 안정 요약 및 실행 컨텍스트를 둔다.

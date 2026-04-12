@@ -4,7 +4,7 @@ title: "Claude Code 세션 운영 워크플로우"
 type: guide
 status: active
 owners: [operations, docs-steward]
-updated: 2026-04-12
+updated: 2026-04-12 (flow 파라미터 + scratch 네임스페이스 추가)
 tags: [claude-code, workflow, practical]
 links:
   - docs-operations.md
@@ -25,10 +25,11 @@ links:
 
 - 한 세션에 흐름(flow)은 1개다. 흐름 안에서 작업(task)은 2~3개를 처리한다.
 - 스킬 수를 최소화한다.
-- `flow-start`가 작업 후보를 추천하고 이번 세션 계획을 고정한다.
+- `flow-start`가 작업 후보를 추천하고 이번 세션 계획을 고정한다. optional 파라미터로 흐름을 지정할 수 있다.
 - `flow-work`가 작업 1개를 처음부터 끝까지 실행한다. N번 반복한다.
 - `flow-close`가 문서 반영(필요 시)과 handoff 정리를 함께 처리한다.
 - `flow-check`는 optional. 작업 3개 이상이거나 중간 재조정이 필요할 때만 쓴다.
+- 흐름(flow)마다 독립된 scratch 네임스페이스를 사용한다. 기본 흐름은 루트, named flow는 `flows/{slug}/`.
 - 프로젝트 사실과 기준의 source of truth는 항상 `docs/`다.
 - 세레모니(읽기/계획/정리) 대비 실제 작업 비율이 합리적이어야 한다.
 
@@ -49,6 +50,36 @@ links:
 - 도메인 엔티티 타입 정의 (SessionEntity → AgentEntity → ... 패턴 확립됨): 넓은 범위 — 남은 엔티티 3개를 한 세션에 일괄 처리.
 - 도메인 서비스 구현 (각 서비스마다 고유 로직): 좁은 범위 — 서비스 1개씩 처리.
 
+## 1-2. flow 파라미터와 scratch 네임스페이스
+
+`flow-start`는 optional 파라미터로 흐름 이름을 받는다.
+
+| 입력 | 흐름 | scratch 경로 |
+|------|------|-------------|
+| `/flow-start` | 기본 ccmonit 개발 | `.claude/scratch/` |
+| `/flow-start docs 건강도 유지` | docs-health | `.claude/scratch/flows/docs-health/` |
+| `/flow-start 워크플로우 고도화` | workflow-improve | `.claude/scratch/flows/workflow-improve/` |
+
+**규칙:**
+- 파라미터를 영문 kebab-case slug로 변환해 경로를 결정한다.
+- 해당 경로가 없으면 신규 흐름으로 취급하고 빈 상태에서 시작한다.
+- `notes.md`는 항상 `.claude/scratch/notes.md` 하나만 사용한다 (flow 무관 공통).
+- flow-close는 반드시 flow-start가 사용한 scratch 경로에만 기록한다. 혼용 금지.
+
+**scratch 구조:**
+```
+.claude/scratch/
+├── notes.md               # 공통 (flow 무관)
+├── worklog.md             # 기본 흐름
+├── next-prompt.md         # 기본 흐름
+├── open-questions.md      # 기본 흐름
+└── flows/
+    └── {slug}/
+        ├── worklog.md
+        ├── next-prompt.md
+        └── open-questions.md
+```
+
 ## 2. 먼저 읽는 순서
 
 1. `CLAUDE.md`
@@ -63,9 +94,10 @@ links:
 
 ## 3. 현재 사용 스킬
 
-### `flow-start`
+### `flow-start [흐름명]`
 작업 후보를 추천하고 이번 세션 계획을 고정한다.  
-kick-off(추천)와 session-start(계획 고정)를 한 번에 처리한다.
+kick-off(추천)와 session-start(계획 고정)를 한 번에 처리한다.  
+optional 파라미터로 흐름을 지정한다. 없으면 기본 ccmonit 개발 흐름.
 
 ### `flow-work`
 작업 1개를 처음부터 끝까지 실행하는 메인 스킬.  
@@ -202,6 +234,23 @@ flow-work → flow-close
 ```
 
 ## 7. 자주 생기는 혼동 정리
+
+### `flow-start` 파라미터는 어떻게 정하나?
+
+자유롭게 한국어로 줘도 된다. slug 변환은 flow-start가 처리한다.
+- "docs 건강도 유지" → `docs-health`
+- "워크플로우 고도화" → `workflow-improve`
+- "terminal 최초 화면 띄우기" → `terminal-first-screen`
+
+중요한 건 **같은 흐름을 이어갈 때 같은 파라미터를 쓰는 것**이다. 파라미터가 다르면 다른 scratch 경로를 읽는다.
+
+### named flow의 scratch가 없으면?
+
+신규 흐름으로 취급하고 빈 상태에서 시작한다. flow-close가 새 경로에 handoff를 생성한다.
+
+### 기본 흐름과 named flow를 같은 세션에서 섞을 수 있나?
+
+안 된다. 한 세션에 흐름 1개만 사용한다. 다른 흐름으로 전환하려면 flow-close로 현재 세션을 마감하고 새 세션에서 flow-start에 다른 파라미터를 준다.
 
 ### `flow-start`에서 작업을 몇 개 잡아야 하나?
 

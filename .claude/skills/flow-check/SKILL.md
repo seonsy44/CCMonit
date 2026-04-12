@@ -15,6 +15,10 @@ disable-model-invocation: true
 
 2개 이하 작업이면 불필요하다.
 
+## 현재 흐름 인지
+
+flow-start에서 명시한 흐름(기본 or named)과 scratch 경로를 그대로 따른다. flow-check는 scratch를 직접 읽거나 쓰지 않는다.
+
 ## 해야 할 일
 
 1. flow-start에서 확정한 작업 목록과 현재 완료 상태를 대조한다.
@@ -26,6 +30,7 @@ disable-model-invocation: true
 
 ## 출력 형식
 
+- 현재 흐름 및 scratch 경로 (flow-start에서 명시된 것)
 - 완료된 작업
 - 남은 작업 목록 (변경 시 조정 내용 포함)
 - 계속 진행 여부 / 다음 `flow-work` 대상
