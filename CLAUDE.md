@@ -48,4 +48,5 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
 
 세션 흐름 source of truth: `docs/operations/claude-code-session-workflow.md`
 
-빠른 참조: `/kick-off` → `/session-start [목표]` → `/work [배치]` → `/docs-sync` (선택) → `/close-session`
+빠른 참조: `/flow-start` → `/flow-work [작업]` × N → `/flow-close`  
+체크포인트 필요 시: flow-work 사이에 `/flow-check` 추가 (optional)
