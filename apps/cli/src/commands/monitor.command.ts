@@ -8,8 +8,16 @@ export function registerMonitorCommand(program: Command, app: CliApp): void {
     .description('Real-time session monitor')
     .action(async () => {
       await app.start();
-      const screen = new AppScreen({});
+
+      const screen = new AppScreen({
+        sessionStore: app.sessionStore,
+        buildSummary: app.buildSummary,
+        presenter: app.presenter,
+        refreshIntervalMs: app.config.monitor?.refreshIntervalMs ?? 1000,
+      });
+
       screen.mount();
       await screen.waitUntilExit();
+      await app.stop();
     });
 }
