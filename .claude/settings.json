@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "allow": ["Bash", "Read", "Edit", "Glop", "Grep", "Write"]
+    "allow": ["Bash", "Read", "Edit", "Glob", "Grep", "Write"]
   },
   "planDirectory": ".claude/plans"
 }

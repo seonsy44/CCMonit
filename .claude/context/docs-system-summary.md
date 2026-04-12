@@ -23,4 +23,4 @@
 - 새 문서를 만들면 index / registry 를 같이 갱신한다.
 - 중요 변경은 `docs/log.md`에 append 한다.
 - Claude Code 운영 흐름의 source of truth는 `docs/operations/claude-code-session-workflow.md`다.
-- 간소화된 현재 스킬 구조는 `kick-off`, `session-start`, `work`, `docs-sync`, `close-session` 다섯 개다.
+- 간소화된 현재 스킬 구조는 `dev-kickoff`(optional), `dev-open`, `dev-sprint`, `dev-close`, `dev-check`(optional) 다섯 개다.
