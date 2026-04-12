@@ -33,8 +33,8 @@ disable-model-invocation: true
 
 ## 먼저 읽을 것
 
-공통 (항상):
-- `docs/operations/claude-code-session-workflow.md`
+공통:
+- `docs/operations/claude-code-session-workflow.md` *(선택 — 범위 판단이 불명확할 때만. §1-1과 §1-2가 핵심)*
 - `.claude/context/product-summary.md`
 - `.claude/context/architecture-summary.md`
 - `.claude/context/model-effort-guide.md`

@@ -95,6 +95,12 @@ links:
 - scratch/next-prompt.md 갱신: dev-list 완성 및 domain-services 방향 반영.
 - context/model-effort-guide.md: packages/config 별도 항목 제거 (2026-04-11 shared 병합 반영). TL;DR 표 및 상세 섹션 양쪽 수정.
 
+## [2026-04-12] maintenance | workflow.md 경량화 및 .claude 토큰 최적화
+- `docs/operations/claude-code-session-workflow.md`: §4(워크플로우 다이어그램), §5(스킬별 읽기 대상), §7(FAQ) 제거. 346줄 → 130줄. 다이어그램은 CLAUDE.md 참조로, 스킬 상세는 각 SKILL.md 포인터로 대체.
+- `.claude/skills/`: dev-kickoff/dev-open의 workflow.md 읽기를 선택적으로 전환. dev-open에 "dev-kickoff 직후 context 재읽기 불필요" 가이드 추가(dev-sprint 패턴 적용). dev-sprint의 index.md 탐색 조건 명확화.
+- `.claude/context/docs-system-summary.md`: 옛 스킬명(kick-off/session-start/work 등) → 현재 dev-* 체계로 수정.
+- `.claude/scratch/notes.md`, `.claude/README.md`, `settings.json`: stale 참조 제거 및 Glob 오타 수정.
+
 ## [2026-04-12] implement | 도메인 엔티티 완성 (ToolUsage, TokenUsage, Alert)
 - ToolUsageEntity: ToolCallId + ToolCallStatus(6종) + ToolUsageEntity(11필드). event-flow §15, §20.5 기반.
 - TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).

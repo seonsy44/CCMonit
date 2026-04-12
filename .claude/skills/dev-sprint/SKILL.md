@@ -21,8 +21,7 @@ disable-model-invocation: true
 
 ## 먼저 읽을 것
 
-- 스프린트 대상 관련 docs 파일 (어떤 파일인지 모를 때는 `docs/index.md` 먼저 확인)
-- 관련 코드 파일
+- 스프린트 대상 관련 docs 파일 및 코드 파일. **파일 경로를 이미 알면 바로 해당 파일을 읽는다** — `docs/index.md`는 대상 파일이 불명확할 때만 확인한다.
 
 > 참고: `.claude/context/*.md`는 `dev-open`에서 이미 로드됨. 새 세션에서 직접 시작할 경우에만 읽는다.
 
