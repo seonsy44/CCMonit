@@ -102,9 +102,9 @@ links:
 
 ## 3. 현재 사용 스킬
 
-### `dev-kickoff [주제?]` (optional)
+### `dev-kickoff [true?]` (optional)
 프로젝트 상태를 분석하여 개발건 후보를 도출하고 `.claude/scratch/dev-list.md`에 추가한다.
-어떤 개발건을 할지 불분명할 때만 쓴다. `dev-open` 전 단계.
+어떤 개발건을 할지 불분명할 때만 쓴다. `true` 파라미터 시 `.claude/scratch/user-req.md` 요구사항을 반영한다. `dev-open` 전 단계.
 
 ### `dev-open {slug}`
 dev-list에 있는 개발건을 시작하고 이번 세션 스프린트 계획을 고정한다.

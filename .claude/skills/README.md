@@ -15,7 +15,7 @@
 3. `.claude/scratch/*`
 
 현재 스킬:
-0. `/dev-kickoff [주제?]` — (optional) 개발건 후보 도출 + `.claude/scratch/dev-list.md`에 추가. 할 개발건이 불분명할 때만.
+0. `/dev-kickoff [true?]` — (optional) 개발건 후보 도출 + `.claude/scratch/dev-list.md`에 추가. 할 개발건이 불분명할 때만. `true` 시 `user-req.md` 요구사항 반영.
 1. `/dev-open {slug}` — dev-list의 개발건 시작 + 스프린트 계획 고정. **dev-list에 있는 slug만 가능.**
 2. `/dev-sprint [스프린트]` — 스프린트 1개 실행 + 커밋 메시지 추천 (N번 반복)
 3. `/dev-close` — dev-list에서 완료된 개발건 제거 + handoff 정리

@@ -137,7 +137,7 @@ Claude Code의 수동 스킬 정의를 둔다.
 ## 5. 추천 세션 루틴
 
 ### 개발건이 불분명할 때
-- `/dev-kickoff [주제?]`
+- `/dev-kickoff [true?]`
 - 선택 후 `/dev-open {slug}`
 - `/dev-sprint [스프린트]` × N
 - `/dev-close`

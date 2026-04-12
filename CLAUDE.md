@@ -48,7 +48,7 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
 
 세션 흐름 source of truth: `docs/operations/claude-code-session-workflow.md`
 
-빠른 참조: `/dev-kickoff [주제?]` → 선택 → `/dev-open {slug}` → `/dev-sprint [스프린트]` × N → `/dev-close`  
+빠른 참조: `/dev-kickoff [true?]` → 선택 → `/dev-open {slug}` → `/dev-sprint [스프린트]` × N → `/dev-close`  
 체크포인트 필요 시: dev-sprint 사이에 `/dev-check` 추가 (optional)  
 개발건이 명확할 때: `/dev-sprint [스프린트]` → `/dev-close` (dev-open 생략 가능)
 
