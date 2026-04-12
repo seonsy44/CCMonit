@@ -78,3 +78,9 @@ links:
 - event-flow §14 payload, knowledge/entities/skill.md 추적 포인트 기반 설계
 - tsc --noEmit strict 통과. 기존 파일이 Skill을 import하는 곳 없어 호환성 문제 없음.
 
+## [2026-04-12] implement | 도메인 엔티티 완성 (ToolUsage, TokenUsage, Alert)
+- ToolUsageEntity: ToolCallId + ToolCallStatus(6종) + ToolUsageEntity(11필드). event-flow §15, §20.5 기반.
+- TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).
+- AlertEntity: AlertId + AlertType(8종) + AlertSeverity(3종) + AlertStatus(4종) + AlertEntity(11필드). event-flow §18 기반.
+- 도메인 엔티티 계층 7개(Session, Agent, Task, Skill, ToolUsage, TokenUsage, Alert) 모두 완성. 다음: 도메인 서비스 또는 TeamId VO.
+
