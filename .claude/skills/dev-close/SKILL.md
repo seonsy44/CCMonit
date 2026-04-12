@@ -12,9 +12,9 @@ disable-model-invocation: true
 
 이번 세션에서 사용한 scratch 경로를 먼저 확인한다. `dev-open` 출력에서 명시됐어야 한다:
 
-| 흐름 | scratch 경로 |
-|------|-------------|
-| named 개발건 | `.claude/scratch/devs/{slug}/` |
+| 흐름               | scratch 경로                   |
+| ------------------ | ------------------------------ |
+| named 개발건       | `.claude/scratch/devs/{slug}/` |
 | dev-open 없이 직행 | `.claude/scratch/devs/_adhoc/` |
 
 **notes.md는 항상 `.claude/scratch/notes.md`만 참조한다.**
@@ -22,17 +22,20 @@ disable-model-invocation: true
 ## 먼저 읽을 것
 
 결정된 scratch 경로에서:
+
 - `{scratch경로}/worklog.md`
 - `{scratch경로}/next-prompt.md`
 - `{scratch경로}/open-questions.md`
 
 공통:
+
 - `.claude/scratch/notes.md`
 - `.claude/scratch/dev-list.md` (있으면 — 완료된 개발건 제거용)
 - 현재 세션에서 수정한 파일 목록
 - 필요 시 `docs/log.md`
 
 > docs-sync가 필요한 경우에만 추가로 읽는다:
+>
 > - `docs/operations/docs-operations.md`
 > - 변경과 관련된 기준 문서
 
@@ -41,6 +44,7 @@ disable-model-invocation: true
 ### 1단계: docs-sync (필요 시만)
 
 장기 규칙이나 구조가 바뀐 경우에만 수행한다:
+
 1. 이번 세션에서 장기 반영이 필요한 변경을 식별한다.
 2. 기준 문서를 먼저 갱신한다.
 3. 필요 시 `docs/index.md`, `docs/registry/page-index.md`, `docs/log.md`를 보정한다.
@@ -60,16 +64,19 @@ disable-model-invocation: true
 ### 3단계: dev-list 정리
 
 `.claude/scratch/dev-list.md`가 있으면:
+
 1. 이번 세션에서 완료한 개발건의 slug를 dev-list에서 찾는다.
 2. 해당 행을 삭제한다.
 3. 목록이 비면 "프로젝트 상태 요약"만 남기고 table은 비워둔다.
 
 ### 4단계: scratch 정리
 
-**_adhoc인 경우:**
+**\_adhoc인 경우:**
+
 1. handoff 내용을 출력에 포함한 뒤, `_adhoc/` 내 파일 내용을 비운다.
 
 **named dev인 경우:**
+
 1. 2단계에서 작성한 next-prompt.md를 확인한다.
 2. 같은 개발건의 구체적 후속 스프린트가 적혀 있으면 → 폴더를 보존한다.
 3. 개발건이 완결됐으면 → `devs/{slug}/` 폴더 전체를 삭제한다.
@@ -82,10 +89,12 @@ disable-model-invocation: true
 **현재 개발건 및 scratch 경로 명시** (예: `domain-services -> .claude/scratch/devs/domain-services/`)
 
 **docs-sync (해당 시):**
+
 - 반영한 기준 문서
 - 갱신한 context 파일
 
 **handoff:**
+
 - 완료 항목
 - 미완료 항목
 - 다음 세션 첫 스프린트
@@ -93,7 +102,13 @@ disable-model-invocation: true
 - scratch 반영 초안 (경로 명시 포함)
 
 **dev-list 정리 (해당 시):**
+
 - dev-list에서 제거한 개발건: `{slug}`
 
 **scratch 정리:**
+
 - `devs/{slug}/` 삭제됨 / 보존 (사유)
+
+**commit message**
+
+- 현 스킬로 인한 변경사항에 대한 한줄의 영어 커밋 메시지
