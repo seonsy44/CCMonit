@@ -78,6 +78,12 @@ links:
 - event-flow §14 payload, knowledge/entities/skill.md 추적 포인트 기반 설계
 - tsc --noEmit strict 통과. 기존 파일이 Skill을 import하는 곳 없어 호환성 문제 없음.
 
+## [2026-04-12] bootstrap | CLI 최소 실행 환경 구성
+- 부트스트랩 경로 unblock: `loadConfig` 기본값 반환, `createApp` start/stop no-op
+- ink 7 + react 19 설치. `App` 컴포넌트 + `AppScreen` 연결로 `pnpm dev` TUI 렌더링 가능
+- tsup 빌드 파이프라인: `pnpm build` → `apps/cli/dist/main.js` (shebang 포함), `bin.ccmonit` 등록
+- `npm install -g @ccmonit/cli` → `ccmonit monitor` 실행 가능한 구조 완성
+
 ## [2026-04-12] implement | 도메인 엔티티 완성 (ToolUsage, TokenUsage, Alert)
 - ToolUsageEntity: ToolCallId + ToolCallStatus(6종) + ToolUsageEntity(11필드). event-flow §15, §20.5 기반.
 - TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).
