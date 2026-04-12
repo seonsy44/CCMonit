@@ -21,7 +21,7 @@ disable-model-invocation: true
 3. 다음 세션 첫 작업을 1줄로 적는다.
 4. 열린 질문을 정리한다.
 5. `worklog.md`, `next-prompt.md`, `open-questions.md`에 반영할 내용을 제안한다.
-   - `worklog.md`는 **최신 2개 batch만 유지**한다. 3번째 이상은 삭제한다.
+   - `worklog.md`는 **최신 3-5개 batch를 유지**한다. 내용이 지나치게 길어지면 오래된 항목을 1줄 요약으로 축약한다.
 
 ## 출력 형식
 - 완료 항목

@@ -40,7 +40,7 @@ Shared  → 전 레이어 (유틸, 에러, 상수)
 
 - source of truth는 `docs/`. `.claude/`는 보조 레이어다.
 - 채팅 설명보다 문서와 파일 상태를 우선 신뢰한다.
-- 범위를 먼저 고정하고, 그 다음에 구현한다.
+- 범위를 먼저 고정하고, 그 다음에 구현한다. 범위의 적정 크기는 불확실성과 패턴 반복도에 따라 달라진다 (기준: `docs/operations/claude-code-session-workflow.md` §1-1).
 - `.claude/` 내부에 source of truth를 새로 만들지 않는다.
 - 세션 종료 시 `.claude/scratch/`가 다음 세션을 이어받을 수 있는 상태로 둔다.
 
