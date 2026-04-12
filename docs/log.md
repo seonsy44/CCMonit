@@ -107,6 +107,15 @@ links:
 - `.claude/context/docs-system-summary.md`: 옛 스킬명(kick-off/session-start/work 등) → 현재 dev-* 체계로 수정.
 - `.claude/scratch/notes.md`, `.claude/README.md`, `settings.json`: stale 참조 제거 및 Glob 오타 수정.
 
+## [2026-04-12] implement | 인프라 어댑터 전체 구현 완료
+
+- **파싱 파이프라인**: `claude-event-parser`, `claude-session-detector`, `claude-token-extractor`, `claude-log-watcher` 구현. 실제 Claude Code JSONL 포맷(message.usage, tool_use, tool_result 블록) 파싱. EventSourcePort 완성.
+- **저장소**: MemorySessionStore, NdjsonLogWriter(EventStorePort), RotatingLogPolicy, SqliteEventStore, SqliteSessionStore 구현. SQLite 저장소는 better-sqlite3 DI 방식으로 직접 의존 없음.
+- **파일 감시**: ClaudeLogWatcher(glob 기반 JSONL 스캔), FileActivityWatcher(fs.watch recursive), WorkspaceSnapshotReader 구현.
+- **리포트 writer**: JsonReportWriter, CsvReportWriter, MarkdownReportWriter — ReportWriterPort 완성.
+- **메트릭**: MetricsCalculator(이벤트 통계), AnomalyDetector(token spike/long gap/retry loop), BudgetPolicy(토큰 예산 정책) 구현.
+- `packages/infra` 스텁 22파일 → 전체 구현 완료. 다음: TUI 패널 데이터 연결.
+
 ## [2026-04-12] implement | 도메인 엔티티 완성 (ToolUsage, TokenUsage, Alert)
 - ToolUsageEntity: ToolCallId + ToolCallStatus(6종) + ToolUsageEntity(11필드). event-flow §15, §20.5 기반.
 - TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).
