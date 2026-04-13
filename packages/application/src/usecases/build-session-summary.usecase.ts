@@ -15,6 +15,7 @@ import type { SessionSummaryDto } from '../dto/session-summary.dto.js';
 import type { AgentSummaryItem } from '../dto/agent-summary-item.dto.js';
 import type { TaskSummaryItem } from '../dto/task-summary-item.dto.js';
 import type { SkillSummaryItem } from '../dto/skill-summary-item.dto.js';
+import type { ToolSummaryItem } from '../dto/tool-summary-item.dto.js';
 import type { FileActivityItem } from '../dto/file-activity-item.dto.js';
 import type { EventLogItem } from '../dto/event-log-item.dto.js';
 
@@ -55,6 +56,7 @@ export class BuildSessionSummaryUsecase {
     const agentSummaries = this.projectAgents(events);
     const taskSummaries = this.projectTasks(events);
     const skillSummaries = this.projectSkills(events);
+    const toolSummaries = this.projectTools(events);
     const fileActivities = this.projectFileActivities(events);
     const recentEvents = this.projectRecentEvents(events);
 
@@ -82,6 +84,7 @@ export class BuildSessionSummaryUsecase {
       agentSummaries,
       taskSummaries,
       skillSummaries,
+      toolSummaries,
       fileActivities,
       recentEvents,
     };
@@ -211,6 +214,44 @@ export class BuildSessionSummaryUsecase {
     }
 
     return items;
+  }
+
+  private projectTools(events: readonly EventEntity[]): ToolSummaryItem[] {
+    const toolEvents = events.filter(
+      (e) => e.eventKind === 'tool.started' || e.eventKind === 'tool.finished',
+    );
+
+    const stats = new Map<string, { calls: number; errors: number }>();
+
+    for (const e of toolEvents) {
+      if (e.eventKind !== 'tool.started') continue;
+      const toolName = typeof e.payload['tool_name'] === 'string'
+        ? e.payload['tool_name']
+        : String(e.entityId);
+      const entry = stats.get(toolName) ?? { calls: 0, errors: 0 };
+      entry.calls++;
+      stats.set(toolName, entry);
+    }
+
+    // Count errors from tool.finished events
+    for (const e of toolEvents) {
+      if (e.eventKind !== 'tool.finished') continue;
+      const toolName = typeof e.payload['tool_name'] === 'string'
+        ? e.payload['tool_name']
+        : String(e.entityId);
+      if (e.payload['is_error'] === true) {
+        const entry = stats.get(toolName);
+        if (entry) entry.errors++;
+      }
+    }
+
+    return Array.from(stats.entries())
+      .map(([toolName, s]) => ({
+        toolName,
+        callCount: s.calls,
+        errorCount: s.errors,
+      }))
+      .sort((a, b) => b.callCount - a.callCount);
   }
 
   private projectFileActivities(events: readonly EventEntity[]): FileActivityItem[] {

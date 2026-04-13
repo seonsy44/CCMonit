@@ -7,11 +7,10 @@ import type { SessionPresenter, SessionViewModel } from '../../presenters/sessio
 import { TokenPresenter, type TokenBreakdownViewModel } from '../../presenters/token.presenter.js';
 import { AlertPresenter, type AlertViewModel } from '../../presenters/alert.presenter.js';
 import { defaultTheme } from '../theme/default-theme.js';
-import { SummaryPanel } from '../panels/summary.panel.js';
-import { TokenBreakdownView } from '../views/token-breakdown.view.js';
 import { AlertsPanel } from '../panels/alerts.panel.js';
 import { HeaderPanel } from '../panels/header.panel.js';
 import { FooterPanel } from '../panels/footer.panel.js';
+import { ToolsPanel } from '../panels/tools.panel.js';
 import { SubagentPanel } from '../panels/subagent.panel.js';
 import { TeamPanel } from '../panels/team.panel.js';
 import { TaskPanel } from '../panels/task.panel.js';
@@ -26,6 +25,7 @@ import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.p
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
 import type { TaskSummaryItem } from '@ccmonit/application/dto/task-summary-item.dto.js';
 import type { SkillSummaryItem } from '@ccmonit/application/dto/skill-summary-item.dto.js';
+import type { ToolSummaryItem } from '@ccmonit/application/dto/tool-summary-item.dto.js';
 import {
   SubagentPresenter,
   type AgentViewModel,
@@ -33,6 +33,7 @@ import {
 } from '../../presenters/subagent.presenter.js';
 import { TaskPresenter, type TaskViewModel } from '../../presenters/task.presenter.js';
 import { SkillPresenter, type SkillViewModel } from '../../presenters/skill.presenter.js';
+import { ToolsPresenter, type ToolViewModel } from '../../presenters/tools.presenter.js';
 import type { FileActivityItem } from '@ccmonit/application/dto/file-activity-item.dto.js';
 import {
   FileActivityPresenter,
@@ -58,6 +59,7 @@ const headerPresenter = new HeaderPresenter();
 const subagentPresenter = new SubagentPresenter();
 const taskPresenter = new TaskPresenter();
 const skillPresenter = new SkillPresenter();
+const toolsPresenter = new ToolsPresenter();
 const fileActivityPresenter = new FileActivityPresenter();
 const eventLogPresenter = new EventLogPresenter();
 
@@ -76,6 +78,7 @@ export function App({
   const [teams, setTeams] = useState<TeamViewModel[]>([]);
   const [tasks, setTasks] = useState<TaskViewModel[]>([]);
   const [skills, setSkills] = useState<SkillViewModel[]>([]);
+  const [tools, setTools] = useState<ToolViewModel[]>([]);
   const [fileActivities, setFileActivities] = useState<FileActivityViewModel[]>([]);
   const [eventLogs, setEventLogs] = useState<EventLogViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
@@ -106,6 +109,7 @@ export function App({
       let allAgentItems: AgentSummaryItem[] = [];
       let allTaskItems: TaskSummaryItem[] = [];
       let allSkillItems: SkillSummaryItem[] = [];
+      let allToolItems: ToolSummaryItem[] = [];
       let allFileItems: FileActivityItem[] = [];
       let allEventItems: EventLogItem[] = [];
 
@@ -121,6 +125,7 @@ export function App({
             allAgentItems = [...summary.agentSummaries];
             allTaskItems = [...summary.taskSummaries];
             allSkillItems = [...summary.skillSummaries];
+            allToolItems = [...summary.toolSummaries];
             allFileItems = [...summary.fileActivities];
             allEventItems = [...summary.recentEvents];
           }
@@ -140,6 +145,7 @@ export function App({
       setTeams(subagentPresenter.toTeamViewModels(allAgentItems));
       setTasks(taskPresenter.toViewModels(allTaskItems));
       setSkills(skillPresenter.toViewModels(allSkillItems));
+      setTools(toolsPresenter.toViewModels(allToolItems));
       setFileActivities(fileActivityPresenter.toViewModels(allFileItems));
       setEventLogs(eventLogPresenter.toViewModels(allEventItems));
       setAlerts(allAlerts);
@@ -193,46 +199,39 @@ export function App({
 
       {currentView === 'dashboard' ? (
         <>
-          {/* Panels */}
-          <Box marginTop={1} gap={4}>
-            <Box flexGrow={1}>
-              <SummaryPanel sessions={sessions} />
+          {/* Row 1: Tools | Agents */}
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
+            <Box flexGrow={1} paddingRight={2}>
+              <ToolsPanel tools={tools} />
             </Box>
-            {tokenBreakdown && (
-              <Box>
-                <TokenBreakdownView breakdown={tokenBreakdown} />
-              </Box>
-            )}
-          </Box>
-
-          {/* Agents / Teams */}
-          <Box marginTop={1} gap={4}>
-            <Box flexGrow={1}>
+            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
               <SubagentPanel agents={agents} />
             </Box>
-            <Box flexGrow={1}>
-              <TeamPanel teams={teams} />
-            </Box>
           </Box>
 
-          {/* Skills / Tasks */}
-          <Box marginTop={1} gap={4}>
-            <Box flexGrow={1}>
+          {/* Row 2: Skills | Tasks */}
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
+            <Box flexGrow={1} paddingRight={2}>
               <SkillPanel skills={skills} />
             </Box>
-            <Box flexGrow={1}>
+            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
               <TaskPanel tasks={tasks} />
             </Box>
           </Box>
 
-          {/* File Activity / Alerts */}
-          <Box marginTop={1} gap={4}>
-            <Box flexGrow={1}>
+          {/* Row 3: Teams | File Activity */}
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
+            <Box flexGrow={1} paddingRight={2}>
+              <TeamPanel teams={teams} />
+            </Box>
+            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
               <FileActivityPanel files={fileActivities} />
             </Box>
-            <Box flexGrow={1}>
-              <AlertsPanel alerts={alerts} />
-            </Box>
+          </Box>
+
+          {/* Row 4: Alerts (full width) */}
+          <Box>
+            <AlertsPanel alerts={alerts} />
           </Box>
         </>
       ) : (
