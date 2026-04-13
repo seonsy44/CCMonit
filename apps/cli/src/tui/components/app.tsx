@@ -16,6 +16,7 @@ import { SubagentPanel } from '../panels/subagent.panel.js';
 import { TeamPanel } from '../panels/team.panel.js';
 import { TaskPanel } from '../panels/task.panel.js';
 import { SkillPanel } from '../panels/skill.panel.js';
+import { FileActivityPanel } from '../panels/file-activity.panel.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
 import type { TaskSummaryItem } from '@ccmonit/application/dto/task-summary-item.dto.js';
@@ -27,6 +28,11 @@ import {
 } from '../../presenters/subagent.presenter.js';
 import { TaskPresenter, type TaskViewModel } from '../../presenters/task.presenter.js';
 import { SkillPresenter, type SkillViewModel } from '../../presenters/skill.presenter.js';
+import type { FileActivityItem } from '@ccmonit/application/dto/file-activity-item.dto.js';
+import {
+  FileActivityPresenter,
+  type FileActivityViewModel,
+} from '../../presenters/file-activity.presenter.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -42,6 +48,7 @@ const headerPresenter = new HeaderPresenter();
 const subagentPresenter = new SubagentPresenter();
 const taskPresenter = new TaskPresenter();
 const skillPresenter = new SkillPresenter();
+const fileActivityPresenter = new FileActivityPresenter();
 
 export function App({
   sessionStore,
@@ -58,6 +65,7 @@ export function App({
   const [teams, setTeams] = useState<TeamViewModel[]>([]);
   const [tasks, setTasks] = useState<TaskViewModel[]>([]);
   const [skills, setSkills] = useState<SkillViewModel[]>([]);
+  const [fileActivities, setFileActivities] = useState<FileActivityViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
 
@@ -74,6 +82,7 @@ export function App({
       let allAgentItems: AgentSummaryItem[] = [];
       let allTaskItems: TaskSummaryItem[] = [];
       let allSkillItems: SkillSummaryItem[] = [];
+      let allFileItems: FileActivityItem[] = [];
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -87,6 +96,7 @@ export function App({
             allAgentItems = [...summary.agentSummaries];
             allTaskItems = [...summary.taskSummaries];
             allSkillItems = [...summary.skillSummaries];
+            allFileItems = [...summary.fileActivities];
           }
         }
 
@@ -104,6 +114,7 @@ export function App({
       setTeams(subagentPresenter.toTeamViewModels(allAgentItems));
       setTasks(taskPresenter.toViewModels(allTaskItems));
       setSkills(skillPresenter.toViewModels(allSkillItems));
+      setFileActivities(fileActivityPresenter.toViewModels(allFileItems));
       setAlerts(allAlerts);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
@@ -154,9 +165,14 @@ export function App({
         </Box>
       </Box>
 
-      {/* Alerts */}
-      <Box marginTop={1}>
-        <AlertsPanel alerts={alerts} />
+      {/* File Activity / Alerts */}
+      <Box marginTop={1} gap={4}>
+        <Box flexGrow={1}>
+          <FileActivityPanel files={fileActivities} />
+        </Box>
+        <Box flexGrow={1}>
+          <AlertsPanel alerts={alerts} />
+        </Box>
       </Box>
 
       {/* Footer */}

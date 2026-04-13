@@ -15,6 +15,7 @@ import type { SessionSummaryDto } from '../dto/session-summary.dto.js';
 import type { AgentSummaryItem } from '../dto/agent-summary-item.dto.js';
 import type { TaskSummaryItem } from '../dto/task-summary-item.dto.js';
 import type { SkillSummaryItem } from '../dto/skill-summary-item.dto.js';
+import type { FileActivityItem } from '../dto/file-activity-item.dto.js';
 
 export interface BuildSessionSummaryInput {
   readonly sessionId: SessionId;
@@ -53,6 +54,7 @@ export class BuildSessionSummaryUsecase {
     const agentSummaries = this.projectAgents(events);
     const taskSummaries = this.projectTasks(events);
     const skillSummaries = this.projectSkills(events);
+    const fileActivities = this.projectFileActivities(events);
 
     // Health evaluation
     const alertCount = this.countAlerts(events);
@@ -78,6 +80,7 @@ export class BuildSessionSummaryUsecase {
       agentSummaries,
       taskSummaries,
       skillSummaries,
+      fileActivities,
     };
   }
 
@@ -205,6 +208,23 @@ export class BuildSessionSummaryUsecase {
     }
 
     return items;
+  }
+
+  private projectFileActivities(events: readonly EventEntity[]): FileActivityItem[] {
+    const fileEvents = events.filter((e) => e.entityType === 'file');
+
+    return fileEvents
+      .slice(-20)
+      .reverse()
+      .map((e) => ({
+        filePath: String(e.payload['filePath'] ?? e.entityId),
+        action: String(e.payload['action'] ?? 'changed'),
+        occurredAt: e.occurredAt,
+        agentId:
+          e.payload['agentId'] != null ? String(e.payload['agentId']) : undefined,
+        taskId:
+          e.payload['taskId'] != null ? String(e.payload['taskId']) : undefined,
+      }));
   }
 
   private countAlerts(events: readonly EventEntity[]): number {
