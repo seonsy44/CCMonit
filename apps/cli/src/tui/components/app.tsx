@@ -84,6 +84,12 @@ export function App({
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
   const [currentView, setCurrentView] = useState<ViewKind>('dashboard');
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+
+  const handleSelectSession = useCallback((sessionId: string) => {
+    setSelectedSessionId(sessionId);
+    setCurrentView('dashboard');
+  }, []);
 
   useInput((input, key) => {
     if (input === 'q') { exit(); return; }
@@ -119,7 +125,10 @@ export function App({
         });
         if (summary) {
           viewModels.push(presenter.toViewModel(summary));
-          if (!primaryToken) {
+          const isTarget = selectedSessionId
+            ? session.sessionId === selectedSessionId
+            : !primaryToken;
+          if (isTarget) {
             primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
             setHeader(headerPresenter.toViewModel(summary));
             allAgentItems = [...summary.agentSummaries];
@@ -153,7 +162,7 @@ export function App({
     } catch {
       // 폴링 실패는 무시 — 다음 틱에서 재시도
     }
-  }, [sessionStore, buildSummary, detectAlerts, presenter]);
+  }, [sessionStore, buildSummary, detectAlerts, presenter, selectedSessionId]);
 
   useEffect(() => {
     void refresh();
@@ -164,7 +173,13 @@ export function App({
   const renderViewContent = (): React.ReactElement => {
     switch (currentView) {
       case 'session-list':
-        return <SessionListView sessions={sessions} />;
+        return (
+          <SessionListView
+            sessions={sessions}
+            selectedSessionId={selectedSessionId ?? undefined}
+            onSelect={handleSelectSession}
+          />
+        );
       case 'event-log':
         return <EventLogView events={eventLogs} />;
       case 'session-detail':
