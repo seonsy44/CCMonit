@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Box, Text, useApp, useInput } from 'ink';
+import { Box, useApp, useInput } from 'ink';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
 import type { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
@@ -10,6 +10,9 @@ import { defaultTheme } from '../theme/default-theme.js';
 import { SummaryPanel } from '../panels/summary.panel.js';
 import { TokenBreakdownView } from '../views/token-breakdown.view.js';
 import { AlertsPanel } from '../panels/alerts.panel.js';
+import { HeaderPanel } from '../panels/header.panel.js';
+import { FooterPanel } from '../panels/footer.panel.js';
+import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -21,6 +24,7 @@ export interface AppProps {
 
 const tokenPresenter = new TokenPresenter();
 const alertPresenter = new AlertPresenter();
+const headerPresenter = new HeaderPresenter();
 
 export function App({
   sessionStore,
@@ -31,6 +35,7 @@ export function App({
 }: AppProps): React.ReactElement {
   const { exit } = useApp();
   const [sessions, setSessions] = useState<SessionViewModel[]>([]);
+  const [header, setHeader] = useState<HeaderViewModel | null>(null);
   const [tokenBreakdown, setTokenBreakdown] = useState<TokenBreakdownViewModel | null>(null);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
@@ -54,6 +59,7 @@ export function App({
           viewModels.push(presenter.toViewModel(summary));
           if (!primaryToken) {
             primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
+            setHeader(headerPresenter.toViewModel(summary));
           }
         }
 
@@ -83,15 +89,7 @@ export function App({
   return (
     <Box flexDirection="column" borderStyle="round" borderColor={defaultTheme.border} paddingX={1}>
       {/* Header */}
-      <Box justifyContent="space-between">
-        <Box gap={1}>
-          <Text bold color={defaultTheme.border}>
-            ccmonit
-          </Text>
-          <Text color={defaultTheme.muted}>v0.0.0</Text>
-        </Box>
-        <Text color={defaultTheme.muted}>{lastRefresh}</Text>
-      </Box>
+      <HeaderPanel header={header} refreshedAt={lastRefresh} />
 
       {/* Panels */}
       <Box marginTop={1} gap={4}>
@@ -111,8 +109,8 @@ export function App({
       </Box>
 
       {/* Footer */}
-      <Box marginTop={1} justifyContent="center">
-        <Text color={defaultTheme.muted}>q: quit</Text>
+      <Box marginTop={1}>
+        <FooterPanel refreshIntervalMs={refreshIntervalMs} />
       </Box>
     </Box>
   );
