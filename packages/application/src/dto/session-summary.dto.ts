@@ -8,6 +8,7 @@ import type { AgentSummaryItem } from './agent-summary-item.dto.js';
 import type { TaskSummaryItem } from './task-summary-item.dto.js';
 import type { SkillSummaryItem } from './skill-summary-item.dto.js';
 import type { FileActivityItem } from './file-activity-item.dto.js';
+import type { EventLogItem } from './event-log-item.dto.js';
 
 export interface SessionSummaryDto {
   readonly sessionId: SessionId;
@@ -29,4 +30,5 @@ export interface SessionSummaryDto {
   readonly taskSummaries: readonly TaskSummaryItem[];
   readonly skillSummaries: readonly SkillSummaryItem[];
   readonly fileActivities: readonly FileActivityItem[];
+  readonly recentEvents: readonly EventLogItem[];
 }

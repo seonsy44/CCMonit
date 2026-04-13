@@ -18,6 +18,7 @@ import { TaskPanel } from '../panels/task.panel.js';
 import { SkillPanel } from '../panels/skill.panel.js';
 import { FileActivityPanel } from '../panels/file-activity.panel.js';
 import { SessionListView } from '../views/session-list.view.js';
+import { EventLogView } from '../views/event-log.view.js';
 import type { ViewKind } from '../types/view-kind.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
@@ -35,6 +36,11 @@ import {
   FileActivityPresenter,
   type FileActivityViewModel,
 } from '../../presenters/file-activity.presenter.js';
+import type { EventLogItem } from '@ccmonit/application/dto/event-log-item.dto.js';
+import {
+  EventLogPresenter,
+  type EventLogViewModel,
+} from '../../presenters/event-log.presenter.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -51,6 +57,7 @@ const subagentPresenter = new SubagentPresenter();
 const taskPresenter = new TaskPresenter();
 const skillPresenter = new SkillPresenter();
 const fileActivityPresenter = new FileActivityPresenter();
+const eventLogPresenter = new EventLogPresenter();
 
 export function App({
   sessionStore,
@@ -68,6 +75,7 @@ export function App({
   const [tasks, setTasks] = useState<TaskViewModel[]>([]);
   const [skills, setSkills] = useState<SkillViewModel[]>([]);
   const [fileActivities, setFileActivities] = useState<FileActivityViewModel[]>([]);
+  const [eventLogs, setEventLogs] = useState<EventLogViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
   const [currentView, setCurrentView] = useState<ViewKind>('dashboard');
@@ -97,6 +105,7 @@ export function App({
       let allTaskItems: TaskSummaryItem[] = [];
       let allSkillItems: SkillSummaryItem[] = [];
       let allFileItems: FileActivityItem[] = [];
+      let allEventItems: EventLogItem[] = [];
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -111,6 +120,7 @@ export function App({
             allTaskItems = [...summary.taskSummaries];
             allSkillItems = [...summary.skillSummaries];
             allFileItems = [...summary.fileActivities];
+            allEventItems = [...summary.recentEvents];
           }
         }
 
@@ -129,6 +139,7 @@ export function App({
       setTasks(taskPresenter.toViewModels(allTaskItems));
       setSkills(skillPresenter.toViewModels(allSkillItems));
       setFileActivities(fileActivityPresenter.toViewModels(allFileItems));
+      setEventLogs(eventLogPresenter.toViewModels(allEventItems));
       setAlerts(allAlerts);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
@@ -147,6 +158,7 @@ export function App({
       case 'session-list':
         return <SessionListView sessions={sessions} />;
       case 'event-log':
+        return <EventLogView events={eventLogs} />;
       case 'session-detail':
       case 'report-preview':
         return (
