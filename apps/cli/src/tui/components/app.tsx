@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Box, Text, useApp, useInput } from 'ink';
+import { Box, useApp, useInput } from 'ink';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
 import type { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
@@ -19,6 +19,8 @@ import { SkillPanel } from '../panels/skill.panel.js';
 import { FileActivityPanel } from '../panels/file-activity.panel.js';
 import { SessionListView } from '../views/session-list.view.js';
 import { EventLogView } from '../views/event-log.view.js';
+import { SessionDetailView } from '../views/session-detail.view.js';
+import { ReportPreviewView } from '../views/report-preview.view.js';
 import type { ViewKind } from '../types/view-kind.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
@@ -160,13 +162,24 @@ export function App({
       case 'event-log':
         return <EventLogView events={eventLogs} />;
       case 'session-detail':
+        return (
+          <SessionDetailView
+            header={header}
+            tokenBreakdown={tokenBreakdown}
+            agents={agents}
+            tasks={tasks}
+            skills={skills}
+            alertCount={alerts.length}
+          />
+        );
       case 'report-preview':
         return (
-          <Box marginTop={1}>
-            <Text color={defaultTheme.muted}>
-              {currentView} view — not yet implemented
-            </Text>
-          </Box>
+          <ReportPreviewView
+            header={header}
+            tokenBreakdown={tokenBreakdown}
+            alerts={alerts}
+            tasks={tasks}
+          />
         );
       default:
         return <></>;
