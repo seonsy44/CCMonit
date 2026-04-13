@@ -36,8 +36,17 @@ export class ClaudeEventParser {
     const line = safeJsonParse<RawClaudeLine>(raw);
     if (!line?.sessionId) return [];
 
+    try {
+      return this.parseValidLine(line);
+    } catch {
+      // 예상 밖 런타임 에러 — 한 줄 실패가 전체 파이프라인을 중단하면 안 된다
+      return [];
+    }
+  }
+
+  private parseValidLine(line: RawClaudeLine): EventEntity[] {
     const events: EventEntity[] = [];
-    const { sessionId } = line;
+    const sessionId = line.sessionId!;
     const occurredAt = line.timestamp ?? new Date().toISOString();
     const hasExactTime = typeof line.timestamp === 'string';
 

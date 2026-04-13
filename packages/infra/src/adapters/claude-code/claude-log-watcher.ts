@@ -49,8 +49,12 @@ export class ClaudeLogWatcher implements EventSourcePort {
   }
 
   async start(): Promise<void> {
-    // 최초 스캔
-    await this.scanForNewFiles();
+    // 최초 스캔 — 실패해도 앱을 중단하지 않고 주기적 스캔으로 복구한다
+    try {
+      await this.scanForNewFiles();
+    } catch (err) {
+      this.emitError(err instanceof Error ? err : new Error(String(err)));
+    }
 
     // 주기적으로 새 파일 탐색 (새 세션/에이전트 시작 시)
     this.scanIntervalId = setInterval(() => {
