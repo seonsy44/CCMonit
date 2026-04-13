@@ -12,7 +12,15 @@ import { TokenBreakdownView } from '../views/token-breakdown.view.js';
 import { AlertsPanel } from '../panels/alerts.panel.js';
 import { HeaderPanel } from '../panels/header.panel.js';
 import { FooterPanel } from '../panels/footer.panel.js';
+import { SubagentPanel } from '../panels/subagent.panel.js';
+import { TeamPanel } from '../panels/team.panel.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
+import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
+import {
+  SubagentPresenter,
+  type AgentViewModel,
+  type TeamViewModel,
+} from '../../presenters/subagent.presenter.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -25,6 +33,7 @@ export interface AppProps {
 const tokenPresenter = new TokenPresenter();
 const alertPresenter = new AlertPresenter();
 const headerPresenter = new HeaderPresenter();
+const subagentPresenter = new SubagentPresenter();
 
 export function App({
   sessionStore,
@@ -37,6 +46,8 @@ export function App({
   const [sessions, setSessions] = useState<SessionViewModel[]>([]);
   const [header, setHeader] = useState<HeaderViewModel | null>(null);
   const [tokenBreakdown, setTokenBreakdown] = useState<TokenBreakdownViewModel | null>(null);
+  const [agents, setAgents] = useState<AgentViewModel[]>([]);
+  const [teams, setTeams] = useState<TeamViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
 
@@ -50,6 +61,7 @@ export function App({
       const viewModels: SessionViewModel[] = [];
       let primaryToken: TokenBreakdownViewModel | null = null;
       const allAlerts: AlertViewModel[] = [];
+      let allAgentItems: AgentSummaryItem[] = [];
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -60,6 +72,7 @@ export function App({
           if (!primaryToken) {
             primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
             setHeader(headerPresenter.toViewModel(summary));
+            allAgentItems = [...summary.agentSummaries];
           }
         }
 
@@ -73,6 +86,8 @@ export function App({
 
       setSessions(viewModels);
       setTokenBreakdown(primaryToken);
+      setAgents(subagentPresenter.toAgentViewModels(allAgentItems));
+      setTeams(subagentPresenter.toTeamViewModels(allAgentItems));
       setAlerts(allAlerts);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
@@ -101,6 +116,16 @@ export function App({
             <TokenBreakdownView breakdown={tokenBreakdown} />
           </Box>
         )}
+      </Box>
+
+      {/* Agents / Teams */}
+      <Box marginTop={1} gap={4}>
+        <Box flexGrow={1}>
+          <SubagentPanel agents={agents} />
+        </Box>
+        <Box flexGrow={1}>
+          <TeamPanel teams={teams} />
+        </Box>
       </Box>
 
       {/* Alerts */}

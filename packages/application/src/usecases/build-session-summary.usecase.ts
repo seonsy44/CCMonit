@@ -12,6 +12,7 @@ import type { EventStorePort } from '../ports/event-store.port.js';
 import type { SessionStorePort } from '../ports/session-store.port.js';
 import type { ClockPort } from '../ports/clock.port.js';
 import type { SessionSummaryDto } from '../dto/session-summary.dto.js';
+import type { AgentSummaryItem } from '../dto/agent-summary-item.dto.js';
 
 export interface BuildSessionSummaryInput {
   readonly sessionId: SessionId;
@@ -46,6 +47,9 @@ export class BuildSessionSummaryUsecase {
       cacheWriteTokens: tokens.cacheWriteTokens,
     });
 
+    // Agent projection
+    const agentSummaries = this.projectAgents(events);
+
     // Health evaluation
     const alertCount = this.countAlerts(events);
     const healthInput = this.buildHealthInput(session, events, alertCount);
@@ -67,6 +71,7 @@ export class BuildSessionSummaryUsecase {
       healthLevel: health.level,
       alertCount,
       accuracy: session.startedAtAccuracy,
+      agentSummaries,
     };
   }
 
@@ -87,6 +92,44 @@ export class BuildSessionSummaryUsecase {
         source: (e.payload['source'] as TokenUsageEntity['source']) ?? 'unknown',
         recordedAt: String(e.payload['recordedAt'] ?? e.occurredAt),
       }));
+  }
+
+  private projectAgents(events: readonly EventEntity[]): AgentSummaryItem[] {
+    const agentEvents = events.filter((e) => e.entityType === 'agent');
+
+    const byAgent = new Map<string, EventEntity[]>();
+    for (const e of agentEvents) {
+      const list = byAgent.get(e.entityId) ?? [];
+      list.push(e);
+      byAgent.set(e.entityId, list);
+    }
+
+    const now = this.clock.now();
+    const items: AgentSummaryItem[] = [];
+
+    for (const [agentId, agentEvts] of byAgent) {
+      const first = agentEvts[0]!;
+      const last = agentEvts[agentEvts.length - 1]!;
+
+      const startedAt = new Date(first.occurredAt);
+      const elapsedSec = (now.getTime() - startedAt.getTime()) / 1000;
+
+      items.push({
+        agentId,
+        roleName: String(last.payload['roleName'] ?? agentId),
+        status: String(last.payload['status'] ?? 'running'),
+        teamId:
+          last.payload['teamId'] != null ? String(last.payload['teamId']) : undefined,
+        elapsedSec: Math.max(0, Math.floor(elapsedSec)),
+        toolCallCount:
+          typeof last.payload['toolCallCount'] === 'number'
+            ? last.payload['toolCallCount']
+            : 0,
+        lastActivityAt: last.occurredAt,
+      });
+    }
+
+    return items;
   }
 
   private countAlerts(events: readonly EventEntity[]): number {

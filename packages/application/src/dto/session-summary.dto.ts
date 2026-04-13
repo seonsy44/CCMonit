@@ -4,6 +4,7 @@ import type { TokenAccuracy } from '@ccmonit/domain/value-objects/token-accuracy
 import type { SessionHealthLevel } from '@ccmonit/domain/services/session-health.service.js';
 import type { CostEstimationResult } from '@ccmonit/domain/services/cost-estimation.service.js';
 import type { TokenBreakdownDto } from './token-breakdown.dto.js';
+import type { AgentSummaryItem } from './agent-summary-item.dto.js';
 
 export interface SessionSummaryDto {
   readonly sessionId: SessionId;
@@ -21,4 +22,5 @@ export interface SessionSummaryDto {
   readonly healthLevel: SessionHealthLevel;
   readonly alertCount: number;
   readonly accuracy: TokenAccuracy;
+  readonly agentSummaries: readonly AgentSummaryItem[];
 }
