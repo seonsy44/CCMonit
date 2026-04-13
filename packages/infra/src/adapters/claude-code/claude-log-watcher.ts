@@ -8,7 +8,7 @@ import { ClaudeEventParser } from './claude-event-parser.js';
 export interface ClaudeLogWatcherOptions {
   /** Claude Code 프로젝트 로그 디렉터리 (e.g. ~/.claude/projects/{path}) */
   readonly logDir: string;
-  /** JSONL 파일 glob 패턴. 기본: ** /subagents/agent-*.jsonl */
+  /** JSONL 파일 glob 패턴. 기본: **\/*.jsonl (루트 세션 + 서브에이전트 모두 포함) */
   readonly globPattern?: string;
   /** 파일 폴링 주기 (ms). 기본: 250 */
   readonly pollIntervalMs?: number;
@@ -43,7 +43,7 @@ export class ClaudeLogWatcher implements EventSourcePort {
 
   constructor(options: ClaudeLogWatcherOptions) {
     this.logDir = options.logDir;
-    this.globPattern = options.globPattern ?? '**/subagents/agent-*.jsonl';
+    this.globPattern = options.globPattern ?? '**/*.jsonl';
     this.pollIntervalMs = options.pollIntervalMs ?? 250;
     this.fromStart = options.fromStart ?? false;
   }

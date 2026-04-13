@@ -144,7 +144,7 @@ export class ClaudeEventParser {
           parentId: agentId,
           payload: {
             is_error: block.is_error ?? false,
-            output_preview: truncate(typeof block.content === 'string' ? block.content : ''),
+            output_preview: truncate(extractContentText(block.content)),
           },
         }),
       );
@@ -288,4 +288,14 @@ function truncate(s: string, max = PREVIEW_MAX_LEN): string {
 
 function stringOrEmpty(v: unknown): string {
   return typeof v === 'string' ? v : '';
+}
+
+/** tool_result.content를 문자열로 변환한다. string이면 그대로, 배열이면 text 블록을 결합한다. */
+function extractContentText(content: string | readonly RawContentBlock[] | undefined): string {
+  if (typeof content === 'string') return content;
+  if (!Array.isArray(content)) return '';
+  return (content as readonly RawContentBlock[])
+    .filter((b) => b.type === 'text' && typeof b.text === 'string')
+    .map((b) => b.text!)
+    .join('\n');
 }
