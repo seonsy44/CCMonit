@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Box, useApp, useInput } from 'ink';
+import { Box, Text, useApp, useInput } from 'ink';
 import type { SessionStorePort } from '@ccmonit/application/ports/session-store.port.js';
 import type { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-session-summary.usecase.js';
 import type { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
@@ -17,6 +17,8 @@ import { TeamPanel } from '../panels/team.panel.js';
 import { TaskPanel } from '../panels/task.panel.js';
 import { SkillPanel } from '../panels/skill.panel.js';
 import { FileActivityPanel } from '../panels/file-activity.panel.js';
+import { SessionListView } from '../views/session-list.view.js';
+import type { ViewKind } from '../types/view-kind.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
 import type { TaskSummaryItem } from '@ccmonit/application/dto/task-summary-item.dto.js';
@@ -68,9 +70,21 @@ export function App({
   const [fileActivities, setFileActivities] = useState<FileActivityViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
+  const [currentView, setCurrentView] = useState<ViewKind>('dashboard');
 
-  useInput((input) => {
-    if (input === 'q') exit();
+  useInput((input, key) => {
+    if (input === 'q') { exit(); return; }
+
+    if (currentView !== 'dashboard') {
+      if (key.escape) setCurrentView('dashboard');
+      return;
+    }
+
+    // Dashboard navigation
+    if (input === 'l') setCurrentView('session-list');
+    if (input === 'e') setCurrentView('event-log');
+    if (input === 'd') setCurrentView('session-detail');
+    if (input === 'r') setCurrentView('report-preview');
   });
 
   const refresh = useCallback(async () => {
@@ -128,56 +142,83 @@ export function App({
     return () => clearInterval(id);
   }, [refresh, refreshIntervalMs]);
 
+  const renderViewContent = (): React.ReactElement => {
+    switch (currentView) {
+      case 'session-list':
+        return <SessionListView sessions={sessions} />;
+      case 'event-log':
+      case 'session-detail':
+      case 'report-preview':
+        return (
+          <Box marginTop={1}>
+            <Text color={defaultTheme.muted}>
+              {currentView} view — not yet implemented
+            </Text>
+          </Box>
+        );
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <Box flexDirection="column" borderStyle="round" borderColor={defaultTheme.border} paddingX={1}>
       {/* Header */}
       <HeaderPanel header={header} refreshedAt={lastRefresh} />
 
-      {/* Panels */}
-      <Box marginTop={1} gap={4}>
-        <Box flexGrow={1}>
-          <SummaryPanel sessions={sessions} />
-        </Box>
-        {tokenBreakdown && (
-          <Box>
-            <TokenBreakdownView breakdown={tokenBreakdown} />
+      {currentView === 'dashboard' ? (
+        <>
+          {/* Panels */}
+          <Box marginTop={1} gap={4}>
+            <Box flexGrow={1}>
+              <SummaryPanel sessions={sessions} />
+            </Box>
+            {tokenBreakdown && (
+              <Box>
+                <TokenBreakdownView breakdown={tokenBreakdown} />
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
 
-      {/* Agents / Teams */}
-      <Box marginTop={1} gap={4}>
-        <Box flexGrow={1}>
-          <SubagentPanel agents={agents} />
-        </Box>
-        <Box flexGrow={1}>
-          <TeamPanel teams={teams} />
-        </Box>
-      </Box>
+          {/* Agents / Teams */}
+          <Box marginTop={1} gap={4}>
+            <Box flexGrow={1}>
+              <SubagentPanel agents={agents} />
+            </Box>
+            <Box flexGrow={1}>
+              <TeamPanel teams={teams} />
+            </Box>
+          </Box>
 
-      {/* Skills / Tasks */}
-      <Box marginTop={1} gap={4}>
-        <Box flexGrow={1}>
-          <SkillPanel skills={skills} />
-        </Box>
-        <Box flexGrow={1}>
-          <TaskPanel tasks={tasks} />
-        </Box>
-      </Box>
+          {/* Skills / Tasks */}
+          <Box marginTop={1} gap={4}>
+            <Box flexGrow={1}>
+              <SkillPanel skills={skills} />
+            </Box>
+            <Box flexGrow={1}>
+              <TaskPanel tasks={tasks} />
+            </Box>
+          </Box>
 
-      {/* File Activity / Alerts */}
-      <Box marginTop={1} gap={4}>
-        <Box flexGrow={1}>
-          <FileActivityPanel files={fileActivities} />
+          {/* File Activity / Alerts */}
+          <Box marginTop={1} gap={4}>
+            <Box flexGrow={1}>
+              <FileActivityPanel files={fileActivities} />
+            </Box>
+            <Box flexGrow={1}>
+              <AlertsPanel alerts={alerts} />
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <Box marginTop={1}>
+          {renderViewContent()}
         </Box>
-        <Box flexGrow={1}>
-          <AlertsPanel alerts={alerts} />
-        </Box>
-      </Box>
+      )}
 
       {/* Footer */}
       <Box marginTop={1}>
-        <FooterPanel refreshIntervalMs={refreshIntervalMs} />
+        <FooterPanel refreshIntervalMs={refreshIntervalMs} currentView={currentView} />
       </Box>
     </Box>
   );
