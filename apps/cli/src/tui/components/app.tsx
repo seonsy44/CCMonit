@@ -14,13 +14,19 @@ import { HeaderPanel } from '../panels/header.panel.js';
 import { FooterPanel } from '../panels/footer.panel.js';
 import { SubagentPanel } from '../panels/subagent.panel.js';
 import { TeamPanel } from '../panels/team.panel.js';
+import { TaskPanel } from '../panels/task.panel.js';
+import { SkillPanel } from '../panels/skill.panel.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
 import type { AgentSummaryItem } from '@ccmonit/application/dto/agent-summary-item.dto.js';
+import type { TaskSummaryItem } from '@ccmonit/application/dto/task-summary-item.dto.js';
+import type { SkillSummaryItem } from '@ccmonit/application/dto/skill-summary-item.dto.js';
 import {
   SubagentPresenter,
   type AgentViewModel,
   type TeamViewModel,
 } from '../../presenters/subagent.presenter.js';
+import { TaskPresenter, type TaskViewModel } from '../../presenters/task.presenter.js';
+import { SkillPresenter, type SkillViewModel } from '../../presenters/skill.presenter.js';
 
 export interface AppProps {
   readonly sessionStore: SessionStorePort;
@@ -34,6 +40,8 @@ const tokenPresenter = new TokenPresenter();
 const alertPresenter = new AlertPresenter();
 const headerPresenter = new HeaderPresenter();
 const subagentPresenter = new SubagentPresenter();
+const taskPresenter = new TaskPresenter();
+const skillPresenter = new SkillPresenter();
 
 export function App({
   sessionStore,
@@ -48,6 +56,8 @@ export function App({
   const [tokenBreakdown, setTokenBreakdown] = useState<TokenBreakdownViewModel | null>(null);
   const [agents, setAgents] = useState<AgentViewModel[]>([]);
   const [teams, setTeams] = useState<TeamViewModel[]>([]);
+  const [tasks, setTasks] = useState<TaskViewModel[]>([]);
+  const [skills, setSkills] = useState<SkillViewModel[]>([]);
   const [alerts, setAlerts] = useState<AlertViewModel[]>([]);
   const [lastRefresh, setLastRefresh] = useState<string>('--:--:--');
 
@@ -62,6 +72,8 @@ export function App({
       let primaryToken: TokenBreakdownViewModel | null = null;
       const allAlerts: AlertViewModel[] = [];
       let allAgentItems: AgentSummaryItem[] = [];
+      let allTaskItems: TaskSummaryItem[] = [];
+      let allSkillItems: SkillSummaryItem[] = [];
 
       for (const session of recent) {
         const summary = await buildSummary.execute({
@@ -73,6 +85,8 @@ export function App({
             primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
             setHeader(headerPresenter.toViewModel(summary));
             allAgentItems = [...summary.agentSummaries];
+            allTaskItems = [...summary.taskSummaries];
+            allSkillItems = [...summary.skillSummaries];
           }
         }
 
@@ -88,6 +102,8 @@ export function App({
       setTokenBreakdown(primaryToken);
       setAgents(subagentPresenter.toAgentViewModels(allAgentItems));
       setTeams(subagentPresenter.toTeamViewModels(allAgentItems));
+      setTasks(taskPresenter.toViewModels(allTaskItems));
+      setSkills(skillPresenter.toViewModels(allSkillItems));
       setAlerts(allAlerts);
       setLastRefresh(new Date().toLocaleTimeString());
     } catch {
@@ -125,6 +141,16 @@ export function App({
         </Box>
         <Box flexGrow={1}>
           <TeamPanel teams={teams} />
+        </Box>
+      </Box>
+
+      {/* Skills / Tasks */}
+      <Box marginTop={1} gap={4}>
+        <Box flexGrow={1}>
+          <SkillPanel skills={skills} />
+        </Box>
+        <Box flexGrow={1}>
+          <TaskPanel tasks={tasks} />
         </Box>
       </Box>
 

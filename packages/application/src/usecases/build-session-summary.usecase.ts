@@ -13,6 +13,8 @@ import type { SessionStorePort } from '../ports/session-store.port.js';
 import type { ClockPort } from '../ports/clock.port.js';
 import type { SessionSummaryDto } from '../dto/session-summary.dto.js';
 import type { AgentSummaryItem } from '../dto/agent-summary-item.dto.js';
+import type { TaskSummaryItem } from '../dto/task-summary-item.dto.js';
+import type { SkillSummaryItem } from '../dto/skill-summary-item.dto.js';
 
 export interface BuildSessionSummaryInput {
   readonly sessionId: SessionId;
@@ -47,8 +49,10 @@ export class BuildSessionSummaryUsecase {
       cacheWriteTokens: tokens.cacheWriteTokens,
     });
 
-    // Agent projection
+    // Entity projections
     const agentSummaries = this.projectAgents(events);
+    const taskSummaries = this.projectTasks(events);
+    const skillSummaries = this.projectSkills(events);
 
     // Health evaluation
     const alertCount = this.countAlerts(events);
@@ -72,6 +76,8 @@ export class BuildSessionSummaryUsecase {
       alertCount,
       accuracy: session.startedAtAccuracy,
       agentSummaries,
+      taskSummaries,
+      skillSummaries,
     };
   }
 
@@ -126,6 +132,75 @@ export class BuildSessionSummaryUsecase {
             ? last.payload['toolCallCount']
             : 0,
         lastActivityAt: last.occurredAt,
+      });
+    }
+
+    return items;
+  }
+
+  private projectTasks(events: readonly EventEntity[]): TaskSummaryItem[] {
+    const taskEvents = events.filter((e) => e.entityType === 'task');
+
+    const byTask = new Map<string, EventEntity[]>();
+    for (const e of taskEvents) {
+      const list = byTask.get(e.entityId) ?? [];
+      list.push(e);
+      byTask.set(e.entityId, list);
+    }
+
+    const now = this.clock.now();
+    const items: TaskSummaryItem[] = [];
+
+    for (const [taskId, taskEvts] of byTask) {
+      const first = taskEvts[0]!;
+      const last = taskEvts[taskEvts.length - 1]!;
+
+      const startedAt = new Date(first.occurredAt);
+      const elapsedSec = (now.getTime() - startedAt.getTime()) / 1000;
+
+      items.push({
+        taskId,
+        title: String(last.payload['title'] ?? taskId),
+        status: String(last.payload['status'] ?? 'running'),
+        agentId:
+          last.payload['agentId'] != null ? String(last.payload['agentId']) : undefined,
+        elapsedSec: Math.max(0, Math.floor(elapsedSec)),
+        retryCount:
+          typeof last.payload['retryCount'] === 'number' ? last.payload['retryCount'] : 0,
+        isStuck: last.payload['isStuck'] === true,
+      });
+    }
+
+    return items;
+  }
+
+  private projectSkills(events: readonly EventEntity[]): SkillSummaryItem[] {
+    const skillEvents = events.filter((e) => e.entityType === 'skill');
+
+    const bySkill = new Map<string, EventEntity[]>();
+    for (const e of skillEvents) {
+      const list = bySkill.get(e.entityId) ?? [];
+      list.push(e);
+      bySkill.set(e.entityId, list);
+    }
+
+    const items: SkillSummaryItem[] = [];
+
+    for (const [skillId, skillEvts] of bySkill) {
+      const first = skillEvts[0]!;
+      const last = skillEvts[skillEvts.length - 1]!;
+
+      items.push({
+        skillId,
+        skillName: String(last.payload['skillName'] ?? skillId),
+        status: String(last.payload['status'] ?? 'running'),
+        taskId:
+          last.payload['taskId'] != null ? String(last.payload['taskId']) : undefined,
+        startedAt: first.occurredAt,
+        toolCallCount:
+          typeof last.payload['toolCallCount'] === 'number'
+            ? last.payload['toolCallCount']
+            : 0,
       });
     }
 
