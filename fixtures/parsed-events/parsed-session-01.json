@@ -1,9 +1,104 @@
 [
   {
-    "eventId": "evt_001",
+    "eventId": "(uuid)",
     "eventKind": "session.started",
-    "sessionId": "sess_01",
-    "timestamp": "2026-04-10T09:00:00Z",
-    "accuracy": "exact"
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:01.000Z",
+    "entityType": "session",
+    "entityId": "sess-abc-001",
+    "accuracy": "exact",
+    "payload": {
+      "cwd": "/Users/test/dev/myproject",
+      "model": null,
+      "version": "2.1.101",
+      "started_at_accuracy": "exact"
+    },
+    "_note": "user 메시지에서 sessionId 최초 등장 시 생성. model은 user 메시지에 없어 null."
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "token.updated",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:03.000Z",
+    "entityType": "session",
+    "entityId": "sess-abc-001",
+    "accuracy": "exact",
+    "payload": {
+      "input_tokens": 150,
+      "output_tokens": 80,
+      "cache_read_tokens": 1200,
+      "cache_write_tokens": 5000,
+      "total_tokens": 230,
+      "source": "runtime",
+      "model": "claude-sonnet-4-6"
+    },
+    "_note": "assistant 메시지의 usage 필드에서 추출."
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "tool.started",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:03.000Z",
+    "entityType": "tool",
+    "entityId": "toolu-read-001",
+    "payload": {
+      "tool_name": "Read",
+      "args_preview": "{\"file_path\":\"/Users/test/dev/myproject/package.json\"}"
+    },
+    "_note": "content 배열의 tool_use 블록에서 생성."
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "tool.finished",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:04.000Z",
+    "entityType": "tool",
+    "entityId": "toolu-read-001",
+    "payload": {
+      "is_error": false,
+      "output_preview": ""
+    },
+    "_note": "BUG: tool_result.content가 [{type:'text',text:'...'}] 배열이므로 output_preview가 빈 문자열."
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "tool.started",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:09.000Z",
+    "entityType": "tool",
+    "entityId": "toolu-task-001",
+    "payload": {
+      "tool_name": "TaskCreate",
+      "args_preview": "{\"subject\":\"프로젝트 구조 분석\",\"description\":\"src/ 디렉토리 구조 파악\",\"activeForm\":\"구조 분석 중\"}"
+    }
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "task.started",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:09.000Z",
+    "entityType": "task",
+    "entityId": "toolu-task-001",
+    "confidenceScore": 0.9,
+    "payload": {
+      "title": "프로젝트 구조 분석",
+      "description": "src/ 디렉토리 구조 파악",
+      "triggered_by_tool": "toolu-task-001"
+    },
+    "_note": "TaskCreate 호출에서 tool.started와 별도로 task.started 추가 생성."
+  },
+  {
+    "eventId": "(uuid)",
+    "eventKind": "task.updated",
+    "sessionId": "sess-abc-001",
+    "occurredAt": "2026-04-10T09:00:11.000Z",
+    "entityType": "task",
+    "entityId": "1",
+    "confidenceScore": 0.9,
+    "payload": {
+      "status": "in_progress",
+      "triggered_by_tool": "toolu-taskup-001"
+    },
+    "_note": "TaskUpdate — entityId는 input.taskId ('1')."
   }
 ]
