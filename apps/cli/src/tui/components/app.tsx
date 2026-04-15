@@ -16,9 +16,9 @@ import { TeamPanel } from '../panels/team.panel.js';
 import { TaskPanel } from '../panels/task.panel.js';
 import { SkillPanel } from '../panels/skill.panel.js';
 import { FileActivityPanel } from '../panels/file-activity.panel.js';
+import { SummaryPanel } from '../panels/summary.panel.js';
 import { SessionListView } from '../views/session-list.view.js';
 import { EventLogView } from '../views/event-log.view.js';
-import { SessionDetailView } from '../views/session-detail.view.js';
 import { ReportPreviewView } from '../views/report-preview.view.js';
 import type { ViewKind } from '../types/view-kind.js';
 import { HeaderPresenter, type HeaderViewModel } from '../../presenters/header.presenter.js';
@@ -102,7 +102,6 @@ export function App({
     // Dashboard navigation
     if (input === 'l') setCurrentView('session-list');
     if (input === 'e') setCurrentView('event-log');
-    if (input === 'd') setCurrentView('session-detail');
     if (input === 'r') setCurrentView('report-preview');
   });
 
@@ -182,17 +181,6 @@ export function App({
         );
       case 'event-log':
         return <EventLogView events={eventLogs} />;
-      case 'session-detail':
-        return (
-          <SessionDetailView
-            header={header}
-            tokenBreakdown={tokenBreakdown}
-            agents={agents}
-            tasks={tasks}
-            skills={skills}
-            alertCount={alerts.length}
-          />
-        );
       case 'report-preview':
         return (
           <ReportPreviewView
@@ -214,37 +202,34 @@ export function App({
 
       {currentView === 'dashboard' ? (
         <>
-          {/* Row 1: Tools | Agents */}
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
-            <Box flexGrow={1} paddingRight={2}>
-              <ToolsPanel tools={tools} />
-            </Box>
-            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
-              <SubagentPanel agents={agents} />
-            </Box>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <SummaryPanel sessions={sessions} />
           </Box>
 
-          {/* Row 2: Skills | Tasks */}
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
-            <Box flexGrow={1} paddingRight={2}>
-              <SkillPanel skills={skills} />
-            </Box>
-            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
-              <TaskPanel tasks={tasks} />
-            </Box>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <ToolsPanel tools={tools} />
           </Box>
 
-          {/* Row 3: Teams | File Activity */}
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingBottom={0}>
-            <Box flexGrow={1} paddingRight={2}>
-              <TeamPanel teams={teams} />
-            </Box>
-            <Box flexGrow={1} borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderBottom={false} borderRight={false} paddingLeft={2}>
-              <FileActivityPanel files={fileActivities} />
-            </Box>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <SubagentPanel agents={agents} />
           </Box>
 
-          {/* Row 4: Alerts (full width) */}
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <SkillPanel skills={skills} />
+          </Box>
+
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <TaskPanel tasks={tasks} />
+          </Box>
+
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <TeamPanel teams={teams} />
+          </Box>
+
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+            <FileActivityPanel files={fileActivities} />
+          </Box>
+
           <Box>
             <AlertsPanel alerts={alerts} />
           </Box>

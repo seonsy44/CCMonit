@@ -8,7 +8,7 @@ export interface FooterPanelProps {
   readonly currentView: ViewKind;
 }
 
-const DASHBOARD_HOTKEYS = 'q: quit | l: sessions | e: events | d: detail | r: report';
+const DASHBOARD_HOTKEYS = 'q: quit | l: sessions | e: events | r: report';
 const VIEW_HOTKEYS = 'Esc: back | q: quit';
 
 export function FooterPanel({ refreshIntervalMs, currentView }: FooterPanelProps): React.ReactElement {
