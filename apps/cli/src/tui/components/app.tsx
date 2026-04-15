@@ -198,39 +198,41 @@ export function App({
   return (
     <Box flexDirection="column" borderStyle="round" borderColor={defaultTheme.border} paddingX={1}>
       {/* Header */}
-      <HeaderPanel header={header} refreshedAt={lastRefresh} />
+      <Box paddingBottom={1}>
+        <HeaderPanel header={header} refreshedAt={lastRefresh} />
+      </Box>
 
       {currentView === 'dashboard' ? (
         <>
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <SummaryPanel sessions={sessions} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <ToolsPanel tools={tools} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <SubagentPanel agents={agents} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <SkillPanel skills={skills} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <TaskPanel tasks={tasks} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <TeamPanel teams={teams} />
           </Box>
 
-          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false}>
+          <Box borderStyle="single" borderColor={defaultTheme.border} borderTop={false} borderLeft={false} borderRight={false} paddingY={1}>
             <FileActivityPanel files={fileActivities} />
           </Box>
 
-          <Box>
+          <Box paddingTop={1}>
             <AlertsPanel alerts={alerts} />
           </Box>
         </>
