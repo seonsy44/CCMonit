@@ -201,7 +201,7 @@ export class BuildSessionSummaryUsecase {
 
       items.push({
         skillId,
-        skillName: String(last.payload['skillName'] ?? skillId),
+        skillName: String(last.payload['skill_name'] ?? skillId),
         status: String(last.payload['status'] ?? 'running'),
         taskId:
           last.payload['taskId'] != null ? String(last.payload['taskId']) : undefined,

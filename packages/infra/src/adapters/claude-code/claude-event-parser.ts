@@ -118,6 +118,28 @@ export class ClaudeEventParser {
       }
     }
 
+    // 5. 슬래시 커맨드 → skill.started (user 메시지의 <command-name> 태그)
+    if (line.type === 'user') {
+      const textContent =
+        typeof line.message?.content === 'string' ? line.message.content : '';
+      const skill = detectSlashCommand(textContent);
+      if (skill) {
+        events.push(
+          this.makeEvent('skill.started', 'skill', randomUUID(), {
+            sessionId,
+            occurredAt,
+            parentId: agentId,
+            confidenceScore: 0.8,
+            payload: {
+              skill_name: skill.name,
+              args: skill.args || undefined,
+              triggered_by_tool: 'slash-command',
+            },
+          }),
+        );
+      }
+    }
+
     return events;
   }
 
@@ -307,4 +329,39 @@ function extractContentText(content: string | readonly RawContentBlock[] | undef
     .filter((b) => b.type === 'text' && typeof b.text === 'string')
     .map((b) => b.text!)
     .join('\n');
+}
+
+// ── 슬래시 커맨드 감지 ─────────────────────────────────────
+
+/** Claude Code CLI 빌트인 커맨드. 스킬이 아니므로 무시한다. */
+const BUILTIN_COMMANDS = new Set([
+  'bug', 'clear', 'compact', 'config', 'context', 'cost', 'diff', 'doctor',
+  'effort', 'exit', 'fast', 'help', 'init', 'login', 'logout',
+  'memory', 'model', 'mcp', 'permissions', 'plan', 'resume', 'review',
+  'status', 'terminal-setup', 'tools', 'vim',
+]);
+
+const CMD_NAME_RE = /<command-name>\/([^<]+)<\/command-name>/;
+const CMD_ARGS_RE = /<command-args>([^<]*)<\/command-args>/;
+
+interface SlashCommand {
+  readonly name: string;
+  readonly args?: string;
+}
+
+/**
+ * user 메시지 텍스트에서 슬래시 커맨드를 감지한다.
+ * 빌트인 커맨드는 null을 반환하고, 사용자 정의 스킬만 반환한다.
+ */
+function detectSlashCommand(text: string): SlashCommand | null {
+  const nameMatch = CMD_NAME_RE.exec(text);
+  if (!nameMatch) return null;
+
+  const name = nameMatch[1]!;
+  if (BUILTIN_COMMANDS.has(name)) return null;
+
+  const argsMatch = CMD_ARGS_RE.exec(text);
+  const args = argsMatch?.[1]?.trim() || undefined;
+
+  return { name, args };
 }
