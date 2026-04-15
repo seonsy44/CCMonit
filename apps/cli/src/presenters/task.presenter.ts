@@ -12,8 +12,8 @@ export interface TaskViewModel {
 
 export class TaskPresenter {
   toViewModels(items: readonly TaskSummaryItem[]): TaskViewModel[] {
-    return items.map((t) => ({
-      id: t.taskId.length > 8 ? t.taskId.slice(0, 8) : t.taskId,
+    return items.map((t, i) => ({
+      id: `T-${i + 1}`,
       title: t.title,
       status: t.status,
       elapsedText: formatDuration(t.elapsedSec * 1000),

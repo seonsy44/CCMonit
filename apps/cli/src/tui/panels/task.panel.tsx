@@ -59,6 +59,7 @@ function TaskRow({ task }: { task: TaskViewModel }): React.ReactElement {
 
   return (
     <Box gap={1}>
+      <Text color={defaultTheme.muted}>{task.id.padEnd(5)}</Text>
       <Text color={color}>{icon}</Text>
       <Text color={defaultTheme.text}>{task.title}</Text>
       <Text color={color}>{task.status.padEnd(9)}</Text>
