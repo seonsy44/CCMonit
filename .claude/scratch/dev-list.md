@@ -2,7 +2,7 @@
 
 ## 프로젝트 상태 요약
 
-대시보드 2열 그리드 구조 구현 완료. user-req 기반으로 수직 단일열 레이아웃 전면 개편 + 세션 전환 UX 강화 예정. Cost/USD 계산 코드 전면 제거 완료.
+user-req 기반 수직 단일열 레이아웃 재작업 필요 (기존 구현 요구사항 불일치). Cost/USD 계산 코드 전면 제거 완료.
 
 최종 갱신: 2026-04-16
 
@@ -13,5 +13,4 @@
 | # | 개발건명 | slug | 예상 스프린트 | 긴급도 | 불확실성 | 선행 조건 | 비고 |
 |---|----------|------|---------------|--------|----------|-----------|------|
 | 1 | E2E 스모크 테스트 정비 | test-setup | 테스트 러너 선정, 스모크 테스트 확장, fixture 보강 | low | 낮음 | 없음 | 테스트 러너 미설정 상태 |
-| 2 | 대시보드 수직 레이아웃 개편 | dashboard-vertical | 레이아웃 구조 전환, 섹션별 포맷 구현, UI 폴리시 | normal | 보통 | 없음 | detail 화면 제거, 8개 섹션 수직 나열, T-{n} 패턴 포맷 |
-| 3 | 세션 전환 UX | session-nav | 메인 화면 세션 스위칭, sessions 화면 리워크 | normal | 보통 | dashboard-vertical | ↑↓ 세션 전환, inactive 세션 report/delete |
+| 2 | 세션 전환 UX | session-nav | 메인 화면 세션 스위칭, sessions 화면 리워크 | normal | 보통 | dashboard-vertical | ↑↓ 세션 전환, inactive 세션 report/delete |
