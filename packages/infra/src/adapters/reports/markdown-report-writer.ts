@@ -65,20 +65,6 @@ function buildMarkdown(report: ReportDto): string {
   lines.push(`| Accuracy | ${t.accuracy} |`);
   lines.push('');
 
-  if (s.cost) {
-    lines.push('## Cost Estimate');
-    lines.push('');
-    lines.push(`| Category | USD |`);
-    lines.push(`|----------|-----|`);
-    lines.push(`| Input | $${s.cost.breakdown.inputCostUsd.toFixed(4)} |`);
-    lines.push(`| Output | $${s.cost.breakdown.outputCostUsd.toFixed(4)} |`);
-    lines.push(`| Cache Read | $${s.cost.breakdown.cacheReadCostUsd.toFixed(4)} |`);
-    lines.push(`| Cache Write | $${s.cost.breakdown.cacheWriteCostUsd.toFixed(4)} |`);
-    lines.push(`| **Total** | **$${s.cost.totalCostUsd.toFixed(4)}** |`);
-    lines.push(`| Accuracy | ${s.cost.accuracy} |`);
-    lines.push('');
-  }
-
   // 알림
   if (report.alerts.length > 0) {
     lines.push('## Alerts');

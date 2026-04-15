@@ -11,7 +11,6 @@ import { BuildSessionSummaryUsecase } from '@ccmonit/application/usecases/build-
 import { DetectAlertsUsecase } from '@ccmonit/application/usecases/detect-alerts.usecase.js';
 import { GenerateReportUsecase } from '@ccmonit/application/usecases/generate-report.usecase.js';
 import { TokenAggregationService } from '@ccmonit/domain/services/token-aggregation.service.js';
-import { CostEstimationService } from '@ccmonit/domain/services/cost-estimation.service.js';
 import { SessionHealthService } from '@ccmonit/domain/services/session-health.service.js';
 import { StuckDetectionService } from '@ccmonit/domain/services/stuck-detection.service.js';
 import { MemoryEventStore } from '@ccmonit/infra/storage/memory/memory-event-store.js';
@@ -55,7 +54,6 @@ export async function createApp(): Promise<CliApp> {
 
   // ── Domain services ─────────────────────────────────
   const tokenAggregation = new TokenAggregationService();
-  const costEstimation = new CostEstimationService();
   const sessionHealth = new SessionHealthService();
   const stuckDetection = new StuckDetectionService();
 
@@ -66,7 +64,6 @@ export async function createApp(): Promise<CliApp> {
     sessionStore,
     clock,
     tokenAggregation,
-    costEstimation,
     sessionHealth,
   );
   const detectAlerts = new DetectAlertsUsecase(

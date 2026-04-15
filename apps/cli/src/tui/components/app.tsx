@@ -129,7 +129,7 @@ export function App({
             ? session.sessionId === selectedSessionId
             : !primaryToken;
           if (isTarget) {
-            primaryToken = tokenPresenter.toViewModel(summary.tokens, summary.cost);
+            primaryToken = tokenPresenter.toViewModel(summary.tokens);
             setHeader(headerPresenter.toViewModel(summary));
             allAgentItems = [...summary.agentSummaries];
             allTaskItems = [...summary.taskSummaries];

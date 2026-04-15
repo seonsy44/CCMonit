@@ -54,7 +54,6 @@ export function HeaderPanel({ header, refreshedAt }: HeaderPanelProps): React.Re
                 in {header.inputText} / out {header.outputText} / total {header.totalText}
               </Text>
             </Box>
-            <Text color={defaultTheme.muted}>{header.costText}</Text>
           </Box>
         </>
       ) : (

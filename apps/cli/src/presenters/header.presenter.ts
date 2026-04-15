@@ -11,7 +11,6 @@ export interface HeaderViewModel {
   readonly inputText: string;
   readonly outputText: string;
   readonly totalText: string;
-  readonly costText: string;
   readonly status: string;
 }
 
@@ -26,7 +25,6 @@ export class HeaderPresenter {
       inputText: formatTokens(summary.tokens.inputTokens),
       outputText: formatTokens(summary.tokens.outputTokens),
       totalText: formatTokens(summary.tokens.totalTokens),
-      costText: summary.cost ? `$${summary.cost.totalCostUsd.toFixed(4)}` : '-',
       status: summary.status,
     };
   }

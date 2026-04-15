@@ -14,7 +14,6 @@ export interface TokenUsageEntity {
   readonly cacheReadTokens?: number;
   readonly cacheWriteTokens?: number;
   readonly totalTokens?: number;
-  readonly estimatedCostUsd?: number;
   readonly accuracy: TokenAccuracy;
   readonly source: TokenSource;
   readonly recordedAt: string;

@@ -7,7 +7,6 @@ export interface SessionViewModel {
   readonly status: string;
   readonly elapsedText: string;
   readonly tokenText: string;
-  readonly costText: string;
   readonly healthLevel: string;
   readonly model: string;
 }
@@ -19,7 +18,6 @@ export class SessionPresenter {
       status: summary.status,
       elapsedText: formatDuration(summary.totalElapsedSec * 1000),
       tokenText: formatTokens(summary.tokens.totalTokens),
-      costText: summary.cost ? `$${summary.cost.totalCostUsd.toFixed(4)}` : '-',
       healthLevel: summary.healthLevel,
       model: summary.model ?? 'unknown',
     };

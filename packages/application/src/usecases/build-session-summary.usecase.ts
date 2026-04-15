@@ -3,7 +3,6 @@ import type { TokenAccuracy } from '@ccmonit/domain/value-objects/token-accuracy
 import type { TokenUsageEntity } from '@ccmonit/domain/entities/token-usage.js';
 import type { EventEntity } from '@ccmonit/domain/entities/event.js';
 import type { TokenAggregationService } from '@ccmonit/domain/services/token-aggregation.service.js';
-import type { CostEstimationService } from '@ccmonit/domain/services/cost-estimation.service.js';
 import type {
   SessionHealthService,
   SessionHealthInput,
@@ -29,7 +28,6 @@ export class BuildSessionSummaryUsecase {
     private readonly sessionStore: SessionStorePort,
     private readonly clock: ClockPort,
     private readonly tokenAggregation: TokenAggregationService,
-    private readonly costEstimation: CostEstimationService,
     private readonly sessionHealth: SessionHealthService,
   ) {}
 
@@ -42,15 +40,6 @@ export class BuildSessionSummaryUsecase {
     // Token aggregation
     const tokenUsages = this.extractTokenUsages(events);
     const tokens = this.tokenAggregation.aggregate(tokenUsages);
-
-    // Cost estimation
-    const cost = this.costEstimation.estimate({
-      model: session.model,
-      inputTokens: tokens.inputTokens,
-      outputTokens: tokens.outputTokens,
-      cacheReadTokens: tokens.cacheReadTokens,
-      cacheWriteTokens: tokens.cacheWriteTokens,
-    });
 
     // Entity projections
     const agentSummaries = this.projectAgents(events);
@@ -77,7 +66,6 @@ export class BuildSessionSummaryUsecase {
       activeAgentCount: session.activeAgentCount,
       activeTaskCount: session.activeTaskCount,
       tokens,
-      cost,
       healthLevel: health.level,
       alertCount,
       accuracy: session.startedAtAccuracy,
@@ -102,7 +90,6 @@ export class BuildSessionSummaryUsecase {
         cacheReadTokens: asOptionalNumber(e.payload['cacheReadTokens']),
         cacheWriteTokens: asOptionalNumber(e.payload['cacheWriteTokens']),
         totalTokens: asOptionalNumber(e.payload['totalTokens']),
-        estimatedCostUsd: asOptionalNumber(e.payload['estimatedCostUsd']),
         accuracy: (e.payload['accuracy'] as TokenAccuracy) ?? e.accuracy ?? 'unavailable',
         source: (e.payload['source'] as TokenUsageEntity['source']) ?? 'unknown',
         recordedAt: String(e.payload['recordedAt'] ?? e.occurredAt),

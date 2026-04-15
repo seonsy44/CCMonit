@@ -69,7 +69,6 @@ function SessionRow({ session }: { session: SessionViewModel }): React.ReactElem
       <Text color={statusColor}>{session.status.padEnd(11)}</Text>
       <Text color={defaultTheme.muted}>{session.elapsedText.padStart(8)}</Text>
       <Text color={defaultTheme.text}>{session.tokenText.padStart(8)} tok</Text>
-      <Text color={defaultTheme.muted}>{session.costText.padStart(8)}</Text>
       <Text color={healthColor}>{session.model}</Text>
     </Box>
   );

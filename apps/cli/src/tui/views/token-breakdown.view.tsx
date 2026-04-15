@@ -31,7 +31,6 @@ export function TokenBreakdownView({ breakdown }: TokenBreakdownViewProps): Reac
         <Box gap={1}>
           <Text color={defaultTheme.text}>{'Total'.padEnd(13)}</Text>
           <Text bold>{breakdown.totalText.padStart(8)}</Text>
-          <Text color={defaultTheme.muted}>{breakdown.costText}</Text>
         </Box>
         <Box marginTop={1}>
           <Text color={defaultTheme.muted}>Accuracy: </Text>

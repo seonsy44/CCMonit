@@ -20,7 +20,7 @@ export class CsvReportWriter implements ReportWriterPort {
 
     // 세션 요약 헤더 + 행
     lines.push(
-      'session_id,status,model,started_at,elapsed_sec,idle_sec,input_tokens,output_tokens,cache_read,cache_write,total_tokens,accuracy,cost_usd,health,alert_count',
+      'session_id,status,model,started_at,elapsed_sec,idle_sec,input_tokens,output_tokens,cache_read,cache_write,total_tokens,accuracy,health,alert_count',
     );
     const s = report.summary;
     const t = s.tokens;
@@ -38,7 +38,6 @@ export class CsvReportWriter implements ReportWriterPort {
         t.cacheWriteTokens,
         t.totalTokens,
         t.accuracy,
-        s.cost?.totalCostUsd ?? '',
         s.healthLevel,
         s.alertCount,
       ].join(','),

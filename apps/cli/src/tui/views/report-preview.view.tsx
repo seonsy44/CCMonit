@@ -61,7 +61,7 @@ export function ReportPreviewView({
           <Text> Output:      {tokenBreakdown.outputText}</Text>
           <Text> Cache Read:  {tokenBreakdown.cacheReadText}</Text>
           <Text> Cache Write: {tokenBreakdown.cacheWriteText}</Text>
-          <Text> Total:       {tokenBreakdown.totalText}  ({tokenBreakdown.costText})</Text>
+          <Text> Total:       {tokenBreakdown.totalText}</Text>
           <Text> Accuracy:    {tokenBreakdown.accuracy}</Text>
         </Box>
       )}

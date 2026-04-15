@@ -62,7 +62,6 @@ export function SessionDetailView({
           <InfoRow label="Cache Read" value={tokenBreakdown.cacheReadText} />
           <InfoRow label="Cache Write" value={tokenBreakdown.cacheWriteText} />
           <InfoRow label="Total" value={tokenBreakdown.totalText} />
-          <InfoRow label="Cost" value={tokenBreakdown.costText} />
           <InfoRow label="Accuracy" value={tokenBreakdown.accuracy} />
         </Box>
       )}
