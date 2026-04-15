@@ -883,7 +883,6 @@ interface TokenUsageSnapshot {
   cache_read?: MeasuredValue;
   cache_write?: MeasuredValue;
   total?: MeasuredValue;
-  estimated_cost_usd?: MeasuredValue;
 }
 
 interface MeasuredValue {
@@ -917,7 +916,7 @@ interface TokenUpdatedPayload {
 interface TokenBudgetThresholdReachedPayload {
   scope_type: 'session' | 'agent' | 'task';
   scope_id: string;
-  metric: 'total_tokens' | 'estimated_cost_usd';
+  metric: 'total_tokens';
   threshold_value: number;
   current_value: number;
 }
@@ -1276,7 +1275,6 @@ canonical event 위에 최소 아래 read model 을 둔다.
 
 - input/output/cache 분해값 없음
 - total만 exact 또는 estimated
-- cost는 token과 별도의 measured value
 
 ### 25.3 source_detail 을 남긴다
 
@@ -1465,7 +1463,6 @@ canonical event 위에 최소 아래 read model 을 둔다.
 
 - parse_failed burst 감지
 - adapter health 고도화
-- cost estimation
 - richer token anomaly rules
 
 ### Phase 4. 회고/분석 강화

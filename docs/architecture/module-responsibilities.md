@@ -467,7 +467,6 @@ CCMonit의 핵심 모듈은 다음과 같이 나눈다.
 - token aggregation by task/skill/tool
 - rate per minute 계산
 - sudden spike 감지용 지표 계산
-- cost estimation 후보 계산
 - accuracy mix ratio 계산
 
 ### 추가 권장 기능
