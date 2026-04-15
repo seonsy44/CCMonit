@@ -136,3 +136,13 @@ links:
 - TokenUsageEntity: TokenUsageId, TokenUsageScopeType, estimatedCostUsd, recordedAt 추가 (7→12필드).
 - AlertEntity: AlertId + AlertType(8종) + AlertSeverity(3종) + AlertStatus(4종) + AlertEntity(11필드). event-flow §18 기반.
 - 도메인 엔티티 계층 7개(Session, Agent, Task, Skill, ToolUsage, TokenUsage, Alert) 모두 완성. 다음: 도메인 서비스 또는 TeamId VO.
+
+## [2026-04-16] refactor | Cost/USD 계산 전면 제거 (remove-cost)
+
+- `packages/domain/src/services/cost-estimation.service.ts` 삭제.
+- `TokenUsageEntity.estimatedCostUsd` 필드 제거.
+- `SessionSummaryDto.cost` 필드, `BuildSessionSummaryUsecase` cost 로직, `TokenPresenter.costText` 등 ~16개 파일에서 cost 참조 제거.
+- `MarkdownReportWriter` Cost Estimate 섹션, `CsvReportWriter` cost_usd 컬럼, `create-app.ts` CostEstimationService 인스턴스 제거.
+- `docs/architecture/event-flow.md`: TokenUsageSnapshot의 `estimated_cost_usd` 필드, budget metric 타입, cost 설계 노트, Phase 3 로드맵 항목 제거.
+- `docs/architecture/module-responsibilities.md`: Token 모듈 대표 기능에서 "cost estimation 후보 계산" 제거.
+- 토큰 수량 집계(input/output/cache/total)만 유지.
